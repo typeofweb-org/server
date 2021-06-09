@@ -1,0 +1,5 @@
+node_modules
+dist
+coverage/
+.clinic/
+.vscode/snipsnap.code-snippets

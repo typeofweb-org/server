@@ -1,0 +1,22 @@
+{
+  "root": true,
+  "parserOptions": {
+    "project": "tsconfig.eslint.json"
+  },
+  "plugins": ["@typeofweb/eslint-plugin"],
+  "extends": ["plugin:@typeofweb/recommended"],
+  "rules": {
+    "@typescript-eslint/consistent-type-assertions": "off",
+    "eslint-comments/require-description": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "off"
+  },
+  "overrides": [
+    {
+      "files": ["src/validators/**.ts", "src/modifiers/**.ts", "src/errors.ts"],
+      "rules": {
+        "functional/no-this-expression": 0
+      }
+    }
+  ]
+}
