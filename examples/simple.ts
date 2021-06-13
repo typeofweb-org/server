@@ -57,9 +57,8 @@ app.route({
     params: {
       count: number(),
     },
-    response: number(),
+    // response: number(),
   },
-  _rawMiddlewares: [],
   handler(_request) {
     // const { query, params } = request;
     // request.server.plugins.db.findMany();

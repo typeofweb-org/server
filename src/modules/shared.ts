@@ -1,5 +1,5 @@
 import type { TypeOfWebRequestMeta, TypeOfWebServerMeta, TypeOfWebEvents } from '..';
-import type { Callback, MaybeAsync } from '../utils/types';
+import type { Callback, Json, MaybeAsync } from '../utils/types';
 import type { HttpMethod } from './httpStatusCodes';
 import type { TypeOfWebPlugin } from './plugins';
 import type { ParseRouteParams } from './router';
@@ -29,7 +29,14 @@ export interface TypeOfWebRequest<
   readonly query: Query;
   readonly payload: Payload;
 
+  /**
+   * @internal
+   */
   readonly _rawReq: Express.Request;
+
+  /**
+   * @internal
+   */
   readonly _rawRes: Express.Response;
 }
 
@@ -60,8 +67,8 @@ export interface TypeOfWebApp {
     ParamsKeys extends ParseRouteParams<Path>,
     Params extends SchemaRecord<ParamsKeys>,
     Query extends SchemaRecord<string>,
-    Payload extends SomeSchema<unknown>,
-    Response extends SomeSchema<unknown>,
+    Payload extends SomeSchema<Json>,
+    Response extends SomeSchema<Json>,
   >(config: {
     readonly path: Path;
     readonly method: HttpMethod;
@@ -71,9 +78,14 @@ export interface TypeOfWebApp {
       readonly payload?: Payload;
       readonly response?: Response;
     };
+
     handler(
       request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, TypeOf<Payload>>,
     ): MaybeAsync<TypeOf<Response>>;
+
+    /**
+     * @internal
+     */
     readonly _rawMiddlewares?: ReadonlyArray<Express.RequestHandler | Express.ErrorRequestHandler>;
   }): void;
 
@@ -81,10 +93,19 @@ export interface TypeOfWebApp {
 
   stop(): Promise<void>;
 
+  /**
+   * @internal
+   */
   readonly _rawExpressApp?: Express.Application;
 
+  /**
+   * @internal
+   */
   readonly _rawExpressServer?: StoppableServer;
 
+  /**
+   * @internal
+   */
   readonly _rawExpressRouter?: Express.Router;
 }
 
