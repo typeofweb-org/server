@@ -7,6 +7,7 @@ import type { SchemaRecord, TypeOfRecord } from './validation';
 import type { SomeSchema, TypeOf } from '@typeofweb/schema';
 import type * as Express from 'express';
 import type { StoppableServer } from 'stoppable';
+import type * as Superagent from 'superagent';
 import type { URL } from 'url';
 
 export interface AppOptions {
@@ -60,14 +61,14 @@ export interface EventBus {
 }
 
 export interface TypeOfWebApp {
-  plugin(plugin: TypeOfWebPlugin<string>): void;
+  plugin(plugin: TypeOfWebPlugin<string>): MaybeAsync<TypeOfWebApp>;
 
   route<
     Path extends string,
     ParamsKeys extends ParseRouteParams<Path>,
     Params extends SchemaRecord<ParamsKeys>,
     Query extends SchemaRecord<string>,
-    Payload extends SomeSchema<Json>,
+    Payload extends SomeSchema<any>,
     Response extends SomeSchema<Json>,
   >(config: {
     readonly path: Path;
@@ -87,7 +88,14 @@ export interface TypeOfWebApp {
      * @internal
      */
     readonly _rawMiddlewares?: ReadonlyArray<Express.RequestHandler | Express.ErrorRequestHandler>;
-  }): void;
+  }): MaybeAsync<TypeOfWebApp>;
+
+  inject(injection: {
+    readonly method: HttpMethod;
+    readonly path: string;
+    readonly payload?: string | object | undefined;
+    readonly headers?: Record<string, string>;
+  }): Promise<Superagent.Response>;
 
   start(): Promise<TypeOfWebServer>;
 
@@ -96,7 +104,7 @@ export interface TypeOfWebApp {
   /**
    * @internal
    */
-  readonly _rawExpressApp?: Express.Application;
+  readonly _rawExpressApp: Express.Application;
 
   /**
    * @internal

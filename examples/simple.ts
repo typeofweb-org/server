@@ -1,10 +1,10 @@
 import { number } from '@typeofweb/schema';
 
-import { createApp, createPlugin } from '../dist/index.js';
+import { createApp, createPlugin } from '../dist/index';
 
 declare function findOne(): unknown;
 declare function findMany(): unknown;
-declare module '../dist' {
+declare module '../dist/index' {
   interface TypeOfWebServerMeta {
     readonly db: {
       readonly findOne: typeof findOne;
@@ -47,10 +47,10 @@ const app = createApp({
   cors: [],
 });
 
-app.plugin(loggerPlugin);
-app.plugin(dbPlugin);
+void app.plugin(loggerPlugin);
+void app.plugin(dbPlugin);
 
-app.route({
+void app.route({
   path: '/health-check/:count',
   method: 'get',
   validation: {
@@ -70,6 +70,6 @@ app.route({
 app
   .start()
   .then((server) => {
-    console.log(`🙌 Server started at ${server.address.toString()}`);
+    console.log(`🙌 Server started at ${server.address?.toString()}`);
   })
   .catch(console.error);

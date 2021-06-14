@@ -41,6 +41,22 @@ export const initRouter = ({
   return router;
 };
 
+export const validateRoute = (route: TypeOfWebRoute): boolean => {
+  const segments = route.path.split('/');
+
+  const eachRouteSegmentHasAtMostOneParam = segments.every((segment) => (segment.match(/:/g) ?? []).length <= 1);
+  if (!eachRouteSegmentHasAtMostOneParam) {
+    throw new Error(`RouteValidationError: Each path segment can contain at most one param.`);
+  }
+
+  const routeDoesntHaveRegexes = segments.every((segment) => !segment.endsWith(')'));
+  if (!routeDoesntHaveRegexes) {
+    throw new Error(`RouteValidationError: Don't use regular expressions in routes. Use validators instead.`);
+  }
+
+  return true;
+};
+
 export const errorMiddleware = (
   err: unknown,
   _req: Express.Request,
@@ -146,6 +162,10 @@ export const routeToExpressHandler = <
     };
 
     await plugins.reduce(async (acc, plugin) => {
+      if (!plugin.value || !plugin.value.request) {
+        return acc;
+      }
+
       await acc;
 
       const requestMetadata = await plugin.value?.request?.(request);
@@ -180,6 +200,10 @@ export const routeToExpressHandler = <
 
     await Promise.all(
       plugins.map((plugin) => {
+        if (!plugin.value || !plugin.value.response) {
+          return;
+        }
+
         return plugin.value?.response?.(result.value);
       }),
     );

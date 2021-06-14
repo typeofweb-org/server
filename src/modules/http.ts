@@ -12,7 +12,7 @@ export const initApp = () => {
   return app;
 };
 
-export const initServer = (app: Express.Application, { port, hostname }: AppOptions) => {
+export const listenExpressServer = (app: Express.Application, { port, hostname }: AppOptions) => {
   return new Promise<Stoppable.StoppableServer>((resolve, reject) => {
     app.once('error', reject);
 

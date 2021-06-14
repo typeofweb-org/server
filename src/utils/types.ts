@@ -1,3 +1,5 @@
+import type { SomeSchema } from '../../../schema/dist';
+
 export type Pretty<X> = X extends Date
   ? X
   : X extends object | readonly unknown[]
@@ -23,3 +25,10 @@ export interface JsonObject {
   readonly [Key: number]: Json;
 }
 export type Json = JsonPrimitive | JsonObject | JsonArray;
+
+interface SchemaJsonRecord {
+  readonly [Key: string]: SomeSchema<SchemaJson>;
+  readonly [Key: number]: SomeSchema<SchemaJson>;
+}
+export interface SchemaJsonArray extends ReadonlyArray<SchemaJson> {}
+export type SchemaJson = SomeSchema<JsonPrimitive | SchemaJsonRecord | SchemaJsonArray>;

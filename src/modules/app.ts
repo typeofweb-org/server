@@ -1,7 +1,9 @@
 import { URL } from 'url';
 
+import Supertest from 'supertest';
+
 import { createEventBus } from './events';
-import { initApp, initServer } from './http';
+import { initApp, listenExpressServer } from './http';
 import { initRouter } from './router';
 
 import type { DeepWritable } from '../utils/types';
@@ -24,11 +26,17 @@ export function createApp(options: AppOptions): TypeOfWebApp {
   /* eslint-disable functional/prefer-readonly-type -- ok */
   const plugins: Array<TypeOfWebPluginInternal<string>> = [];
 
+  let mutableIsInitialised = false;
+
   function initServerPlugins() {
     return Promise.all(
       plugins.map(async (plugin) => {
+        if (!plugin.value || !plugin.value.server) {
+          return;
+        }
+
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- serverMetadata will have valid type
-        const serverMetadata = (await plugin.value?.server?.(
+        const serverMetadata = (await plugin.value.server(
           // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- make server readonly
           server as TypeOfWebServer,
         )) as unknown as TypeOfWebServerMeta[keyof TypeOfWebServerMeta];
@@ -41,30 +49,58 @@ export function createApp(options: AppOptions): TypeOfWebApp {
     );
   }
 
+  async function initialize() {
+    if (mutableIsInitialised) {
+      return;
+    }
+
+    await initServerPlugins();
+
+    app._rawExpressRouter = initRouter({ server, routes, plugins });
+    app._rawExpressApp.use(app._rawExpressRouter);
+
+    mutableIsInitialised = true;
+  }
+
   const app: DeepWritable<TypeOfWebApp> = {
+    _rawExpressApp: initApp(),
+
     async plugin(plugin) {
       const pluginDefinition = {
         name: plugin.name,
         value: await plugin.cb(app),
       };
       plugins.push(pluginDefinition);
+      return app;
     },
 
     route(route) {
       routes.push(route);
+      return app;
+    },
+
+    async inject(injection) {
+      await initialize();
+
+      let mutableTest = Supertest(app._rawExpressApp)[injection.method](injection.path);
+
+      if (injection.payload) {
+        mutableTest = mutableTest.send(injection.payload);
+      }
+      if (injection.headers) {
+        mutableTest = Object.entries(injection.headers).reduce(
+          (acc, [header, value]) => acc.set(header, value),
+          mutableTest,
+        );
+      }
+
+      const result = await mutableTest;
+      return result;
     },
 
     async start() {
-      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- make TypeOfWebServer readonly again
-      const readonlyServer = server as TypeOfWebServer;
-
-      await initServerPlugins();
-
-      app._rawExpressApp = initApp();
-
-      app._rawExpressRouter = initRouter({ server: readonlyServer, routes, plugins });
-      app._rawExpressApp.use(app._rawExpressRouter);
-      app._rawExpressServer = await initServer(app._rawExpressApp, options);
+      await initialize();
+      app._rawExpressServer = await listenExpressServer(app._rawExpressApp, options);
 
       Object.defineProperty(server, 'address', {
         get() {
@@ -79,7 +115,7 @@ export function createApp(options: AppOptions): TypeOfWebApp {
         },
       });
 
-      return readonlyServer;
+      return server;
     },
 
     stop() {

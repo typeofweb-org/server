@@ -1,19 +1,24 @@
-export default {
+import Defaults from 'jest-config';
+
+/** @type {import('@jest/types').Config.InitialOptions} */
+const config = {
   roots: ['<rootDir>'],
-  moduleFileExtensions: ['js', 'ts', 'json'],
+  preset: 'ts-jest',
+  // preset: 'ts-jest/presets/default-esm',
   testPathIgnorePatterns: ['<rootDir>[/\\\\](node_modules)[/\\\\]'],
-  transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.(ts|tsx)$'],
+  transformIgnorePatterns: ['[/\\\\]node_modules[/\\\\].+\\.ts$'],
   transform: {
-    // '^.+\\.tsx?$': 'ts-jest',
+    // '^.+\\.ts$': 'ts-jest',
   },
-  testMatch: ['**/?(*.)+(spec|test).[jt]s?(x)'],
-  setupFiles: ['./jest-setup.ts'],
+  testMatch: ['**/?(*.)+(spec|test).ts'],
   setupFilesAfterEnv: ['./jest-setup-after-env.ts'],
   extensionsToTreatAsEsm: ['.ts'],
-  preset: 'ts-jest/presets/default-esm',
+  moduleFileExtensions: [...Defaults.defaults.moduleFileExtensions, 'ts', 'tsx'],
   globals: {
     'ts-jest': {
       useESM: true,
     },
   },
 };
+
+export default config;
