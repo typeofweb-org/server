@@ -1,4 +1,4 @@
-import type { SomeSchema } from '../../../schema/dist';
+import type { SomeSchema } from '@typeofweb/schema';
 
 export type Pretty<X> = X extends Date
   ? X
