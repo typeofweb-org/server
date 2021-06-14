@@ -4,5 +4,13 @@
     "project": "tsconfig.eslint.json"
   },
   "plugins": ["@typeofweb/eslint-plugin"],
-  "extends": ["plugin:@typeofweb/recommended"]
+  "extends": ["plugin:@typeofweb/recommended"],
+  "overrides": [
+    {
+      "files": ["__tests__/**/*.ts"],
+      "rules": {
+        "@typescript-eslint/consistent-type-assertions": "off"
+      }
+    }
+  ]
 }

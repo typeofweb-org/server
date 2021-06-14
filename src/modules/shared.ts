@@ -1,5 +1,5 @@
 import type { TypeOfWebRequestMeta, TypeOfWebServerMeta, TypeOfWebEvents } from '..';
-import type { Callback, MaybeAsync } from '../utils/types';
+import type { Callback, Json, MaybeAsync } from '../utils/types';
 import type { HttpMethod } from './httpStatusCodes';
 import type { TypeOfWebPlugin } from './plugins';
 import type { ParseRouteParams } from './router';
@@ -7,6 +7,7 @@ import type { SchemaRecord, TypeOfRecord } from './validation';
 import type { SomeSchema, TypeOf } from '@typeofweb/schema';
 import type * as Express from 'express';
 import type { StoppableServer } from 'stoppable';
+import type * as Superagent from 'superagent';
 import type { URL } from 'url';
 
 export interface AppOptions {
@@ -29,7 +30,14 @@ export interface TypeOfWebRequest<
   readonly query: Query;
   readonly payload: Payload;
 
+  /**
+   * @internal
+   */
   readonly _rawReq: Express.Request;
+
+  /**
+   * @internal
+   */
   readonly _rawRes: Express.Response;
 }
 
@@ -53,15 +61,15 @@ export interface EventBus {
 }
 
 export interface TypeOfWebApp {
-  plugin(plugin: TypeOfWebPlugin<string>): void;
+  plugin(plugin: TypeOfWebPlugin<string>): MaybeAsync<TypeOfWebApp>;
 
   route<
     Path extends string,
     ParamsKeys extends ParseRouteParams<Path>,
     Params extends SchemaRecord<ParamsKeys>,
     Query extends SchemaRecord<string>,
-    Payload extends SomeSchema<unknown>,
-    Response extends SomeSchema<unknown>,
+    Payload extends SomeSchema<any>,
+    Response extends SomeSchema<Json>,
   >(config: {
     readonly path: Path;
     readonly method: HttpMethod;
@@ -71,20 +79,41 @@ export interface TypeOfWebApp {
       readonly payload?: Payload;
       readonly response?: Response;
     };
+
     handler(
       request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, TypeOf<Payload>>,
     ): MaybeAsync<TypeOf<Response>>;
+
+    /**
+     * @internal
+     */
     readonly _rawMiddlewares?: ReadonlyArray<Express.RequestHandler | Express.ErrorRequestHandler>;
-  }): void;
+  }): MaybeAsync<TypeOfWebApp>;
+
+  inject(injection: {
+    readonly method: HttpMethod;
+    readonly path: string;
+    readonly payload?: string | object | undefined;
+    readonly headers?: Record<string, string>;
+  }): Promise<Superagent.Response>;
 
   start(): Promise<TypeOfWebServer>;
 
   stop(): Promise<void>;
 
-  readonly _rawExpressApp?: Express.Application;
+  /**
+   * @internal
+   */
+  readonly _rawExpressApp: Express.Application;
 
+  /**
+   * @internal
+   */
   readonly _rawExpressServer?: StoppableServer;
 
+  /**
+   * @internal
+   */
   readonly _rawExpressRouter?: Express.Router;
 }
 
