@@ -166,7 +166,7 @@ export const routeToExpressHandler = <
     };
 
     await plugins.reduce(async (acc, plugin) => {
-      if (typeof plugin?.value?.request !== 'function') {
+      if (!plugin?.value || typeof plugin?.value.request !== 'function') {
         return acc;
       }
 
@@ -208,7 +208,8 @@ export const routeToExpressHandler = <
       return;
     }
 
-    server.events.emit(':response', result.value);
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- response is always Json or null
+    server.events.emit(':response', result.value as Json | null);
 
     if (result.value === null) {
       res.status(204).end();

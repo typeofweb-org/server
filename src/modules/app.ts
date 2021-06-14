@@ -31,7 +31,7 @@ export function createApp(options: AppOptions): TypeOfWebApp {
   function initServerPlugins() {
     return Promise.all(
       plugins.map(async (plugin) => {
-        if (typeof plugin?.value?.server !== 'function') {
+        if (!plugin?.value || typeof plugin?.value.server !== 'function') {
           return;
         }
 
