@@ -26,7 +26,7 @@ export function createApp(options: AppOptions): TypeOfWebApp {
   /* eslint-disable functional/prefer-readonly-type -- ok */
   const plugins: Array<TypeOfWebPluginInternal<string>> = [];
 
-  let mutableIsInitialised = false;
+  let mutableIsInitialized = false;
 
   function initServerPlugins() {
     return Promise.all(
@@ -50,7 +50,7 @@ export function createApp(options: AppOptions): TypeOfWebApp {
   }
 
   async function initialize() {
-    if (mutableIsInitialised) {
+    if (mutableIsInitialized) {
       return;
     }
 
@@ -59,7 +59,7 @@ export function createApp(options: AppOptions): TypeOfWebApp {
     app._rawExpressRouter = initRouter({ server, routes, plugins });
     app._rawExpressApp.use(app._rawExpressRouter);
 
-    mutableIsInitialised = true;
+    mutableIsInitialized = true;
   }
 
   const app: DeepWritable<TypeOfWebApp> = {
