@@ -31,10 +31,11 @@ export function createApp(options: AppOptions): TypeOfWebApp {
   function initServerPlugins() {
     return Promise.all(
       plugins.map(async (plugin) => {
-        if (!plugin.value || !plugin.value.server) {
+        if (typeof plugin?.value?.server !== 'function') {
           return;
         }
 
+        // @ts-expect-error
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- serverMetadata will have valid type
         const serverMetadata = (await plugin.value.server(
           // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- make server readonly
@@ -59,11 +60,13 @@ export function createApp(options: AppOptions): TypeOfWebApp {
     app._rawExpressRouter = initRouter({ server, routes, plugins });
     app._rawExpressApp.use(app._rawExpressRouter);
 
+    server.events.emit(':server', server);
     mutableIsInitialized = true;
   }
 
   const app: DeepWritable<TypeOfWebApp> = {
     _rawExpressApp: initApp(),
+    events: server.events,
 
     async plugin(plugin) {
       const pluginDefinition = {

@@ -61,6 +61,8 @@ export interface EventBus {
 }
 
 export interface TypeOfWebApp {
+  readonly events: EventBus;
+
   plugin(plugin: TypeOfWebPlugin<string>): MaybeAsync<TypeOfWebApp>;
 
   route<

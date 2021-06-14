@@ -5,7 +5,7 @@ import { HttpError, isStatusError, tryCatch } from '../utils/errors';
 
 import { HttpStatusCode } from './httpStatusCodes';
 
-import type { MaybeAsync } from '../utils/types';
+import type { Json, MaybeAsync } from '../utils/types';
 import type { TypeOfWebRequestMeta } from './augment';
 import type { HttpMethod } from './httpStatusCodes';
 import type { TypeOfWebPluginInternal } from './plugins';
@@ -37,7 +37,7 @@ export const initRouter = ({
     router[route.method](route.path, finalErrorGuard(routeToExpressHandler({ route, server, plugins })));
   });
 
-  router.use(errorMiddleware);
+  router.use(errorMiddleware(server));
   return router;
 };
 
@@ -57,43 +57,47 @@ export const validateRoute = (route: TypeOfWebRoute): boolean => {
   return true;
 };
 
-export const errorMiddleware = (
-  err: unknown,
-  _req: Express.Request,
-  res: Express.Response,
-  next: Express.NextFunction,
-) => {
-  if (res.headersSent) {
-    next(err);
-    return;
-  }
+export const errorMiddleware =
+  (server: TypeOfWebServer) =>
+  (err: unknown, _req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
+    server.events.emit(':error', err);
+    if (res.headersSent) {
+      next(err);
+      return;
+    }
 
-  if (!err) {
-    return res.status(0).end();
-  }
+    if (!err) {
+      return res.status(0).end();
+    }
 
-  if (err instanceof ValidationError) {
-    return res.status(400).json({ name: err.name, message: err.message, body: err.details });
-  }
+    if (err instanceof ValidationError) {
+      return res.status(400).json({ name: err.name, message: err.message, body: err.details });
+    }
 
-  if (err instanceof HttpError) {
-    return res.status(err.statusCode).json({ name: err.name, message: err.message, body: err.body });
-  }
+    if (err instanceof HttpError) {
+      return res.status(err.statusCode).json({ name: err.name, message: err.message, body: err.body });
+    }
 
-  if (isStatusError(err)) {
-    return res.status(err.statusCode).json({ name: HttpStatusCode[err.statusCode], body: err });
-  }
+    if (isStatusError(err)) {
+      return res.status(err.statusCode).json({ name: HttpStatusCode[err.statusCode], body: err });
+    }
 
-  // @todo if (DEBUG)
-  return res.status(500).json(err);
-};
+    // @todo if (DEBUG)
+    return res.status(500).json(err);
+  };
 
 type AsyncHandler = (
   ...args: Parameters<Express.Handler>
 ) => Promise<ReturnType<Express.Handler>> | ReturnType<Express.Handler>;
 
 const finalErrorGuard = (h: AsyncHandler): AsyncHandler => {
-  return (req, res, next) => h(req, res, next);
+  return async (req, res, next) => {
+    try {
+      await h(req, res, next);
+    } catch (err) {
+      next(err);
+    }
+  };
 };
 
 export const routeToExpressHandler = <
@@ -101,8 +105,8 @@ export const routeToExpressHandler = <
   ParamsKeys extends ParseRouteParams<Path>,
   Params extends SchemaRecord<ParamsKeys>,
   Query extends SchemaRecord<string>,
-  Payload extends SomeSchema<unknown>,
-  Response extends SomeSchema<unknown>,
+  Payload extends SomeSchema<Json>,
+  Response extends SomeSchema<Json>,
 >({
   plugins,
   route,
@@ -162,21 +166,27 @@ export const routeToExpressHandler = <
     };
 
     await plugins.reduce(async (acc, plugin) => {
-      if (!plugin.value || !plugin.value.request) {
+      if (typeof plugin?.value?.request !== 'function') {
         return acc;
       }
 
       await acc;
 
-      const requestMetadata = await plugin.value?.request?.(request);
+      // @ts-expect-error
+      const requestMetadata = await plugin.value.request(request);
       if (requestMetadata) {
+        // @ts-expect-error
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- ok
         request.plugins[plugin.name as keyof TypeOfWebRequestMeta] = requestMetadata;
       }
     }, Promise.resolve());
 
+    server.events.emit(':request', request);
+
+    const originalResult = await route.handler(request);
+
     const result = tryCatch(() =>
-      route.validation.response ? validate(route.validation.response)(route.handler(request)) : route.handler(request),
+      route.validation.response ? validate(route.validation.response)(originalResult) : originalResult,
     );
 
     if (result._t === 'left') {
@@ -198,15 +208,7 @@ export const routeToExpressHandler = <
       return;
     }
 
-    await Promise.all(
-      plugins.map((plugin) => {
-        if (!plugin.value || !plugin.value.response) {
-          return;
-        }
-
-        return plugin.value?.response?.(result.value);
-      }),
-    );
+    server.events.emit(':response', result.value);
 
     if (result.value === null) {
       res.status(204).end();
