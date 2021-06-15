@@ -2,7 +2,7 @@ import { URL } from 'url';
 
 import Supertest from 'supertest';
 
-import { generateServerId } from '../utils/counter';
+import { generateServerId } from '../utils/uniqueId';
 
 import { createEventBus } from './events';
 import { initApp, listenExpressServer } from './http';

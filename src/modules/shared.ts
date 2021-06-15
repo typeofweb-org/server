@@ -1,6 +1,6 @@
 import type { TypeOfWebRequestMeta, TypeOfWebServerMeta, TypeOfWebEvents } from '..';
-import type { RequestId, ServerId } from '../utils/counter';
 import type { Callback, Json, MaybeAsync } from '../utils/types';
+import type { RequestId, ServerId } from '../utils/uniqueId';
 import type { HttpMethod } from './httpStatusCodes';
 import type { TypeOfWebPlugin } from './plugins';
 import type { ParseRouteParams } from './router';

@@ -274,8 +274,9 @@ Object {
       expect(result.statusCode).toEqual(204);
     });
 
-    it('include request id', async () => {
-      const uniqueIds = new Set<string>();
+    it('include request and server ids', async () => {
+      const uniqueRequestIds = new Set<string>();
+      const uniqueServerIds = new Set<string>();
 
       const app = createApp({
         hostname: 'localhost',
@@ -286,8 +287,11 @@ Object {
         method: 'get',
         validation: {},
         handler: (request) => {
-          uniqueIds.add(request.id);
           expect(request.id).toEqual(expect.any(String));
+          expect(request.server.id).toEqual(expect.any(String));
+
+          uniqueRequestIds.add(request.id);
+          uniqueServerIds.add(request.server.id);
           return null;
         },
       });
@@ -299,8 +303,14 @@ Object {
           path: '/users',
         });
       }
-      expect(uniqueIds.size).toEqual(100);
-      expect.assertions(101);
+
+      // should have unique id per each request
+      expect(uniqueRequestIds.size).toEqual(100);
+
+      // should have only a single id for all server
+      expect(uniqueServerIds.size).toEqual(1);
+
+      expect.assertions(202);
     });
   });
 });
