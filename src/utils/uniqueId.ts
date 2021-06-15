@@ -53,7 +53,7 @@ export function generateServerId() {
 }
 
 export function parseServerId(id: ServerId) {
-  const serverStartedAt = Number.parseInt(id.substr(0, 4 * 2), 16);
+  const serverStartedAt = new Date(Number.parseInt(id.substr(0, 4 * 2), 16) * 1000);
   const machineId = Number.parseInt(id.substr(0 + 4 * 2, 3 * 2), 16).toString(16);
   const processId = Number.parseInt(id.substr(0 + 4 * 2 + 3 * 2, 2 * 2), 16);
   const serverCounter = Number.parseInt(id.substr(0 + 4 * 2 + 2 * 2 + 3 * 2, 3 * 2), 16);
@@ -72,7 +72,7 @@ export function generateRequestId() {
 }
 
 export function parseRequestId(id: RequestId) {
-  const requestReceivedAt = Number.parseInt(id.substr(0, 4 * 2), 16);
+  const requestReceivedAt = new Date(Number.parseInt(id.substr(0, 4 * 2), 16) * 1000);
   const requestCounter = Number.parseInt(id.substr(0 + 4 * 2, 3 * 2), 16);
 
   return { requestReceivedAt, requestCounter };
