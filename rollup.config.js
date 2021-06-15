@@ -90,7 +90,7 @@ LICENSE file in the root directory of this source tree.
 `.trim(),
       }),
     ],
-    external: ['url', 'body-parser', 'express', 'stoppable', '@typeofweb/schema'],
+    external: ['url', 'body-parser', 'express', 'stoppable', '@typeofweb/schema', 'events', 'supertest'],
   },
 ];
 // eslint-disable-next-line import/no-default-export

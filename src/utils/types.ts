@@ -1,8 +1,8 @@
 import type { SomeSchema } from '@typeofweb/schema';
 
-export type Pretty<X> = X extends Date
-  ? X
-  : X extends object | readonly unknown[]
+type AnyObject = Record<keyof any, unknown>;
+
+export type Pretty<X> = X extends AnyObject | readonly unknown[]
   ? {
       readonly [K in keyof X]: X[K];
     }
