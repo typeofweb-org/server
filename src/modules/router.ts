@@ -1,7 +1,7 @@
 import { object, validate, ValidationError } from '@typeofweb/schema';
 import Express from 'express';
 
-import { uniqueCounter } from '../utils/counter';
+import { generateRequestId } from '../utils/counter';
 import { HttpError, isStatusError, tryCatch } from '../utils/errors';
 
 import { HttpStatusCode } from './httpStatusCodes';
@@ -131,7 +131,8 @@ export const routeToExpressHandler = <
   readonly server: TypeOfWebServer;
 }): AsyncHandler => {
   return async (req, res, next) => {
-    const received = Date.now();
+    // doing this early to make timestamp more reliable
+    const requestId = generateRequestId();
 
     const params = tryCatch(() =>
       route.validation.params ? validate(object(route.validation.params)())(req.params) : req.params,
@@ -168,7 +169,7 @@ export const routeToExpressHandler = <
       _rawReq: req,
       _rawRes: res,
 
-      id: server.id + '|' + [received, uniqueCounter()].join(':'),
+      id: server.id + '|' + requestId,
     };
 
     await plugins.reduce(async (acc, plugin) => {

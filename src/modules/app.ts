@@ -1,7 +1,8 @@
-import Os from 'os';
 import { URL } from 'url';
 
 import Supertest from 'supertest';
+
+import { generateServerId } from '../utils/counter';
 
 import { createEventBus } from './events';
 import { initApp, listenExpressServer } from './http';
@@ -21,7 +22,7 @@ export function createApp(options: AppOptions): TypeOfWebApp {
       return null;
     },
 
-    id: [Os.hostname(), process.pid, Date.now().toString(36)].join(':'),
+    id: generateServerId(),
   };
 
   /* eslint-disable functional/prefer-readonly-type -- ok */

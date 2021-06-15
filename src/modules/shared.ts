@@ -1,4 +1,5 @@
 import type { TypeOfWebRequestMeta, TypeOfWebServerMeta, TypeOfWebEvents } from '..';
+import type { RequestId, ServerId } from '../utils/counter';
 import type { Callback, Json, MaybeAsync } from '../utils/types';
 import type { HttpMethod } from './httpStatusCodes';
 import type { TypeOfWebPlugin } from './plugins';
@@ -16,8 +17,6 @@ export interface AppOptions {
   readonly cors: readonly [];
 }
 
-export type Snowflake = string & { readonly __tag?: 'Snowflake' };
-
 export interface TypeOfWebRequest<
   Path extends string = string,
   Params extends {} = {},
@@ -32,7 +31,7 @@ export interface TypeOfWebRequest<
   readonly query: Query;
   readonly payload: Payload;
 
-  readonly id: Snowflake;
+  readonly id: RequestId;
 
   /**
    * @internal
@@ -49,7 +48,7 @@ export interface TypeOfWebServer {
   readonly plugins: TypeOfWebServerMeta;
   readonly events: EventBus;
   readonly address: URL | null;
-  readonly id: Snowflake;
+  readonly id: ServerId;
 }
 
 export interface EventBus {
