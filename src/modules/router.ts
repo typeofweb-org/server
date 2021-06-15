@@ -2,6 +2,7 @@ import { object, validate, ValidationError } from '@typeofweb/schema';
 import Express from 'express';
 
 import { HttpError, isStatusError, tryCatch } from '../utils/errors';
+import { generateRequestId } from '../utils/uniqueId';
 
 import { HttpStatusCode } from './httpStatusCodes';
 
@@ -61,6 +62,7 @@ export const errorMiddleware =
   (server: TypeOfWebServer) =>
   (err: unknown, _req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
     server.events.emit(':error', err);
+
     if (res.headersSent) {
       next(err);
       return;
@@ -129,6 +131,9 @@ export const routeToExpressHandler = <
   readonly server: TypeOfWebServer;
 }): AsyncHandler => {
   return async (req, res, next) => {
+    // doing this early to make timestamp more reliable
+    const requestId = generateRequestId();
+
     const params = tryCatch(() =>
       route.validation.params ? validate(object(route.validation.params)())(req.params) : req.params,
     );
@@ -163,6 +168,8 @@ export const routeToExpressHandler = <
       path: route.path,
       _rawReq: req,
       _rawRes: res,
+
+      id: requestId,
     };
 
     await plugins.reduce(async (acc, plugin) => {

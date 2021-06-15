@@ -2,9 +2,11 @@ import { URL } from 'url';
 
 import Supertest from 'supertest';
 
+import { generateServerId } from '../utils/uniqueId';
+
 import { createEventBus } from './events';
 import { initApp, listenExpressServer } from './http';
-import { initRouter } from './router';
+import { initRouter, validateRoute } from './router';
 
 import type { DeepWritable } from '../utils/types';
 import type { TypeOfWebServerMeta } from './augment';
@@ -19,6 +21,8 @@ export function createApp(options: AppOptions): TypeOfWebApp {
     get address() {
       return null;
     },
+
+    id: generateServerId(),
   };
 
   /* eslint-disable functional/prefer-readonly-type -- ok */
@@ -78,6 +82,7 @@ export function createApp(options: AppOptions): TypeOfWebApp {
     },
 
     route(route) {
+      validateRoute(route);
       routes.push(route);
       return app;
     },

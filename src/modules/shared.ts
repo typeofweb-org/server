@@ -1,5 +1,6 @@
 import type { TypeOfWebRequestMeta, TypeOfWebServerMeta, TypeOfWebEvents } from '..';
 import type { Callback, Json, MaybeAsync } from '../utils/types';
+import type { RequestId, ServerId } from '../utils/uniqueId';
 import type { HttpMethod } from './httpStatusCodes';
 import type { TypeOfWebPlugin } from './plugins';
 import type { ParseRouteParams } from './router';
@@ -30,6 +31,8 @@ export interface TypeOfWebRequest<
   readonly query: Query;
   readonly payload: Payload;
 
+  readonly id: RequestId;
+
   /**
    * @internal
    */
@@ -45,6 +48,7 @@ export interface TypeOfWebServer {
   readonly plugins: TypeOfWebServerMeta;
   readonly events: EventBus;
   readonly address: URL | null;
+  readonly id: ServerId;
 }
 
 export interface EventBus {
@@ -90,7 +94,7 @@ export interface TypeOfWebApp {
      * @internal
      */
     readonly _rawMiddlewares?: ReadonlyArray<Express.RequestHandler | Express.ErrorRequestHandler>;
-  }): MaybeAsync<TypeOfWebApp>;
+  }): TypeOfWebApp;
 
   inject(injection: {
     readonly method: HttpMethod;
