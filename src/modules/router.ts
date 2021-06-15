@@ -1,7 +1,7 @@
 import { object, validate, ValidationError } from '@typeofweb/schema';
 import Express from 'express';
 
-import { generateRequestId } from '../utils/counter';
+import { generateRequestId, ID_SEPARATOR } from '../utils/counter';
 import { HttpError, isStatusError, tryCatch } from '../utils/errors';
 
 import { HttpStatusCode } from './httpStatusCodes';
@@ -169,7 +169,7 @@ export const routeToExpressHandler = <
       _rawReq: req,
       _rawRes: res,
 
-      id: server.id + '|' + requestId,
+      id: server.id + ID_SEPARATOR + requestId,
     };
 
     await plugins.reduce(async (acc, plugin) => {
