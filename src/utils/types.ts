@@ -1,6 +1,10 @@
 import type { SomeSchema } from '@typeofweb/schema';
 
-type AnyObject = Record<keyof any, unknown>;
+export type AnyObject = Record<keyof any, unknown>;
+
+export type DeepPartial<T> = {
+  readonly [P in keyof T]?: T[P] extends AnyObject ? DeepPartial<T[P]> : T[P];
+};
 
 export type Pretty<X> = X extends AnyObject | readonly unknown[]
   ? {
@@ -32,3 +36,5 @@ interface SchemaJsonRecord {
 }
 export interface SchemaJsonArray extends ReadonlyArray<SchemaJson> {}
 export type SchemaJson = SomeSchema<JsonPrimitive | SchemaJsonRecord | SchemaJsonArray>;
+
+export type Nominal<T, K extends string> = T & { readonly __tag: K };

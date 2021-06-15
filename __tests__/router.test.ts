@@ -8,11 +8,7 @@ declare module '../src' {
 
 describe('router', () => {
   it('should not accept multiple params in path segment', () => {
-    const app = createApp({
-      hostname: 'localhost',
-      port: 3000,
-      cors: [],
-    });
+    const app = createApp({});
 
     return expect(() =>
       app.route({
@@ -30,11 +26,7 @@ describe('router', () => {
   });
 
   it('should not accept regexes', () => {
-    const app = createApp({
-      hostname: 'localhost',
-      port: 3000,
-      cors: [],
-    });
+    const app = createApp({});
 
     return expect(() =>
       app.route({

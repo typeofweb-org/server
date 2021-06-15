@@ -33,11 +33,7 @@ const loggerPlugin = createPlugin('logger', (app) => {
 });
 
 // app
-const app = createApp({
-  hostname: 'localhost',
-  port: 3000,
-  cors: [],
-});
+const app = createApp({});
 
 void app.plugin(loggerPlugin);
 void app.plugin(dbPlugin);

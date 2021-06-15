@@ -1,19 +1,32 @@
 import { URL } from 'url';
 
+import Cors from 'cors';
 import Supertest from 'supertest';
 
+import { deepMerge } from '../utils/merge';
 import { generateServerId } from '../utils/uniqueId';
 
 import { createEventBus } from './events';
 import { initApp, listenExpressServer } from './http';
 import { initRouter, validateRoute } from './router';
 
-import type { DeepWritable } from '../utils/types';
+import type { DeepPartial, DeepWritable } from '../utils/types';
 import type { TypeOfWebServerMeta } from './augment';
 import type { TypeOfWebPluginInternal } from './plugins';
 import type { AppOptions, TypeOfWebApp, TypeOfWebServer } from './shared';
 
-export function createApp(options: AppOptions): TypeOfWebApp {
+const defaultAppOptions: AppOptions = {
+  hostname: 'localhost',
+  port: 3000,
+  cors: {
+    origin: true,
+    credentials: true,
+  },
+};
+
+export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
+  const options = deepMerge(opts, defaultAppOptions);
+
   const server: DeepWritable<TypeOfWebServer> = {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- these properties are supposed to be added by the plugins inside `async start()`
     plugins: {} as TypeOfWebServer['plugins'],
@@ -59,13 +72,22 @@ export function createApp(options: AppOptions): TypeOfWebApp {
       return;
     }
 
+    if (options.cors) {
+      app._rawExpressApp.use(
+        Cors({
+          origin: options.cors.origin,
+          credentials: options.cors.credentials,
+        }),
+      );
+    }
+
     await initServerPlugins();
 
     app._rawExpressRouter = initRouter({ server, routes, plugins });
     app._rawExpressApp.use(app._rawExpressRouter);
 
-    server.events.emit(':server', server);
     mutableIsInitialized = true;
+    server.events.emit(':server', server);
   }
 
   const app: DeepWritable<TypeOfWebApp> = {
@@ -95,6 +117,7 @@ export function createApp(options: AppOptions): TypeOfWebApp {
       if (injection.payload) {
         mutableTest = mutableTest.send(injection.payload);
       }
+
       if (injection.headers) {
         mutableTest = Object.entries(injection.headers).reduce(
           (acc, [header, value]) => acc.set(header, value),

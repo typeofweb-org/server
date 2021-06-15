@@ -5,11 +5,7 @@ import { createApp } from '../src';
 describe('handler', () => {
   describe('validation', () => {
     it('should error on invalid parameters', async () => {
-      const app = createApp({
-        hostname: 'localhost',
-        port: 3000,
-        cors: [],
-      }).route({
+      const app = createApp({}).route({
         path: '/users/:userId/invoices/:invoiceId',
         method: 'get',
         validation: {
@@ -54,11 +50,7 @@ Object {
     });
 
     it('should error on invalid query', async () => {
-      const app = createApp({
-        hostname: 'localhost',
-        port: 3000,
-        cors: [],
-      }).route({
+      const app = createApp({}).route({
         path: '/users',
         method: 'get',
         validation: {
@@ -98,11 +90,7 @@ Object {
     });
 
     it('should error on invalid payload', async () => {
-      const app = createApp({
-        hostname: 'localhost',
-        port: 3000,
-        cors: [],
-      }).route({
+      const app = createApp({}).route({
         path: '/users',
         method: 'post',
         validation: {
@@ -152,11 +140,7 @@ Object {
     });
 
     it('should return 500 on invalid response', async () => {
-      const app = createApp({
-        hostname: 'localhost',
-        port: 3000,
-        cors: [],
-      }).route({
+      const app = createApp({}).route({
         path: '/users',
         method: 'get',
         validation: {
@@ -184,11 +168,7 @@ Object {
     });
 
     it('should parse and validate query, params and payload', async () => {
-      const app = createApp({
-        hostname: 'localhost',
-        port: 3000,
-        cors: [],
-      }).route({
+      const app = createApp({}).route({
         path: '/users/:userId/invoices/:invoiceId',
         method: 'post',
         validation: {
@@ -222,11 +202,7 @@ Object {
 
   describe('happy path', () => {
     it('should return data when all validation passes', async () => {
-      const app = createApp({
-        hostname: 'localhost',
-        port: 3000,
-        cors: [],
-      }).route({
+      const app = createApp({}).route({
         path: '/users/:userId/invoices/:invoiceId',
         method: 'post',
         validation: {
@@ -256,11 +232,7 @@ Object {
     });
 
     it('should return 204 on empty response', async () => {
-      const app = createApp({
-        hostname: 'localhost',
-        port: 3000,
-        cors: [],
-      }).route({
+      const app = createApp({}).route({
         path: '/users',
         method: 'get',
         validation: {},
@@ -278,11 +250,7 @@ Object {
       const uniqueRequestIds = new Set<string>();
       const uniqueServerIds = new Set<string>();
 
-      const app = createApp({
-        hostname: 'localhost',
-        port: 3000,
-        cors: [],
-      }).route({
+      const app = createApp({}).route({
         path: '/users',
         method: 'get',
         validation: {},

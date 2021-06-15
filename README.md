@@ -4,7 +4,6 @@
 const app = await createApp({
   host: 'localhost',
   port: 3000,
-  cors: [],
 });
 
 app.plugin(dbPlugin);
