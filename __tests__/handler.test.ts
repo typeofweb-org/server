@@ -5,7 +5,7 @@ import { createApp } from '../src';
 describe('handler', () => {
   describe('validation', () => {
     it('should error on invalid parameters', async () => {
-      const app = await createApp({
+      const app = createApp({
         hostname: 'localhost',
         port: 3000,
         cors: [],
@@ -54,7 +54,7 @@ Object {
     });
 
     it('should error on invalid query', async () => {
-      const app = await createApp({
+      const app = createApp({
         hostname: 'localhost',
         port: 3000,
         cors: [],
@@ -98,7 +98,7 @@ Object {
     });
 
     it('should error on invalid payload', async () => {
-      const app = await createApp({
+      const app = createApp({
         hostname: 'localhost',
         port: 3000,
         cors: [],
@@ -152,7 +152,7 @@ Object {
     });
 
     it('should return 500 on invalid response', async () => {
-      const app = await createApp({
+      const app = createApp({
         hostname: 'localhost',
         port: 3000,
         cors: [],
@@ -184,7 +184,7 @@ Object {
     });
 
     it('should parse and validate query, params and payload', async () => {
-      const app = await createApp({
+      const app = createApp({
         hostname: 'localhost',
         port: 3000,
         cors: [],
@@ -222,7 +222,7 @@ Object {
 
   describe('happy path', () => {
     it('should return data when all validation passes', async () => {
-      const app = await createApp({
+      const app = createApp({
         hostname: 'localhost',
         port: 3000,
         cors: [],
@@ -256,7 +256,7 @@ Object {
     });
 
     it('should return 204 on empty response', async () => {
-      const app = await createApp({
+      const app = createApp({
         hostname: 'localhost',
         port: 3000,
         cors: [],
@@ -272,6 +272,35 @@ Object {
         path: '/users',
       });
       expect(result.statusCode).toEqual(204);
+    });
+
+    it('include request id', async () => {
+      const uniqueIds = new Set<string>();
+
+      const app = createApp({
+        hostname: 'localhost',
+        port: 3000,
+        cors: [],
+      }).route({
+        path: '/users',
+        method: 'get',
+        validation: {},
+        handler: (request) => {
+          uniqueIds.add(request.id);
+          expect(request.id).toEqual(expect.any(String));
+          return null;
+        },
+      });
+
+      // eslint-disable-next-line functional/no-loop-statement -- test
+      for (let i = 0; i < 100; ++i) {
+        await app.inject({
+          method: 'get',
+          path: '/users',
+        });
+      }
+      expect(uniqueIds.size).toEqual(100);
+      expect.assertions(101);
     });
   });
 });

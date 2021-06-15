@@ -16,6 +16,8 @@ export interface AppOptions {
   readonly cors: readonly [];
 }
 
+export type Snowflake = string & { readonly __tag?: 'Snowflake' };
+
 export interface TypeOfWebRequest<
   Path extends string = string,
   Params extends {} = {},
@@ -29,6 +31,8 @@ export interface TypeOfWebRequest<
   readonly params: Params;
   readonly query: Query;
   readonly payload: Payload;
+
+  readonly id: Snowflake;
 
   /**
    * @internal
@@ -45,6 +49,7 @@ export interface TypeOfWebServer {
   readonly plugins: TypeOfWebServerMeta;
   readonly events: EventBus;
   readonly address: URL | null;
+  readonly id: Snowflake;
 }
 
 export interface EventBus {
@@ -90,7 +95,7 @@ export interface TypeOfWebApp {
      * @internal
      */
     readonly _rawMiddlewares?: ReadonlyArray<Express.RequestHandler | Express.ErrorRequestHandler>;
-  }): MaybeAsync<TypeOfWebApp>;
+  }): TypeOfWebApp;
 
   inject(injection: {
     readonly method: HttpMethod;

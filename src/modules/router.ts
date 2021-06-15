@@ -1,6 +1,7 @@
 import { object, validate, ValidationError } from '@typeofweb/schema';
 import Express from 'express';
 
+import { uniqueCounter } from '../utils/counter';
 import { HttpError, isStatusError, tryCatch } from '../utils/errors';
 
 import { HttpStatusCode } from './httpStatusCodes';
@@ -61,6 +62,7 @@ export const errorMiddleware =
   (server: TypeOfWebServer) =>
   (err: unknown, _req: Express.Request, res: Express.Response, next: Express.NextFunction) => {
     server.events.emit(':error', err);
+
     if (res.headersSent) {
       next(err);
       return;
@@ -129,6 +131,8 @@ export const routeToExpressHandler = <
   readonly server: TypeOfWebServer;
 }): AsyncHandler => {
   return async (req, res, next) => {
+    const received = Date.now();
+
     const params = tryCatch(() =>
       route.validation.params ? validate(object(route.validation.params)())(req.params) : req.params,
     );
@@ -163,6 +167,8 @@ export const routeToExpressHandler = <
       path: route.path,
       _rawReq: req,
       _rawRes: res,
+
+      id: server.id + '|' + [received, uniqueCounter()].join(':'),
     };
 
     await plugins.reduce(async (acc, plugin) => {
