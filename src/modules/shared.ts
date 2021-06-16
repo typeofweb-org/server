@@ -12,9 +12,14 @@ import type * as Superagent from 'superagent';
 import type { URL } from 'url';
 
 export interface AppOptions {
-  readonly hostname: 'localhost';
-  readonly port: 3000;
-  readonly cors: readonly [];
+  readonly hostname: string;
+  readonly port: number;
+  readonly cors:
+    | {
+        readonly origin: true | string;
+        readonly credentials: boolean;
+      }
+    | false;
 }
 
 export interface TypeOfWebRequest<

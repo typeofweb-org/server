@@ -10,11 +10,7 @@ declare module '../src' {
 
 describe('events', () => {
   it('should emit system events server, request and response', async () => {
-    const app = await createApp({
-      hostname: 'localhost',
-      port: 3000,
-      cors: [],
-    }).route({
+    const app = createApp({}).route({
       path: '/users/:userId/invoices/:invoiceId',
       method: 'post',
       validation: {
@@ -45,11 +41,7 @@ describe('events', () => {
   });
 
   it('should allow emitting custom events', async () => {
-    const app = await createApp({
-      hostname: 'localhost',
-      port: 3000,
-      cors: [],
-    }).route({
+    const app = createApp({}).route({
       path: '/users',
       method: 'post',
       validation: {

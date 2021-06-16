@@ -1,10 +1,11 @@
 import Os from 'os';
 
-export const ID_SEPARATOR = '|' as const;
+import type { Nominal } from './types';
+
 const MAX_NUM = 2 ** 24;
 
-export type ServerId = string & { readonly __tag: 'ServerId' };
-export type RequestId = string & { readonly __tag: 'RequestId' };
+export type ServerId = Nominal<string, 'ServerId'>;
+export type RequestId = Nominal<string, 'RequestId'>;
 
 export const uniqueCounter = (() => {
   let mutableNum = Math.floor(Math.random() * MAX_NUM);

@@ -3,11 +3,7 @@ import { expectType } from 'tsd';
 
 import { createApp } from '../src';
 
-const app = createApp({
-  hostname: 'localhost',
-  port: 3000,
-  cors: [],
-});
+const app = createApp({});
 
 void app.route({
   path: '/users/:userId/invoices/:invoiceId',
