@@ -11,15 +11,46 @@ import type { StoppableServer } from 'stoppable';
 import type * as Superagent from 'superagent';
 import type { URL } from 'url';
 
+export interface CorsOriginFunction {
+  (requestOrigin: string | undefined): MaybeAsync<CorsOrigin>;
+}
+export interface CorsOriginNodeCallback {
+  (requestOrigin: string | undefined, callback: (err: Error | null, origin?: CorsOrigin) => void): void;
+}
+
+// eslint-disable-next-line functional/prefer-readonly-type -- underlying library requirement
+export type CorsOrigin = true | string | RegExp | string[] | RegExp[];
+
 export interface AppOptions {
   readonly hostname: string;
   readonly port: number;
   readonly cors:
     | {
-        readonly origin: true | string;
+        readonly origin: CorsOrigin | CorsOriginFunction;
         readonly credentials: boolean;
       }
     | false;
+  readonly cookies: AppOptionsCookies;
+}
+
+interface AppOptionsCookies extends SetCookieOptions {
+  readonly secret: string;
+}
+
+export interface TypeOfWebRequestToolkit {
+  setCookie(name: string, value: string, options?: SetCookieOptions): this;
+  removeCookie(name: string, options?: SetCookieOptions): this;
+}
+
+export interface SetCookieOptions {
+  readonly maxAge?: number;
+  readonly encrypted?: boolean;
+  readonly expires?: Date;
+  readonly httpOnly?: boolean;
+  readonly path?: string;
+  readonly domain?: string;
+  readonly secure?: boolean;
+  readonly sameSite?: boolean | 'lax' | 'strict' | 'none';
 }
 
 export interface TypeOfWebRequest<
@@ -37,6 +68,8 @@ export interface TypeOfWebRequest<
   readonly payload: Payload;
 
   readonly id: RequestId;
+
+  readonly cookies: Record<string, string>;
 
   /**
    * @internal
@@ -93,6 +126,7 @@ export interface TypeOfWebApp {
 
     handler(
       request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, TypeOf<Payload>>,
+      toolkit: TypeOfWebRequestToolkit,
     ): MaybeAsync<TypeOf<Response>>;
 
     /**
@@ -106,6 +140,7 @@ export interface TypeOfWebApp {
     readonly path: string;
     readonly payload?: string | object | undefined;
     readonly headers?: Record<string, string>;
+    readonly cookies?: readonly `${string}=${string}`[];
   }): Promise<Superagent.Response>;
 
   start(): Promise<TypeOfWebServer>;

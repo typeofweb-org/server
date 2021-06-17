@@ -1,9 +1,11 @@
 import { URL } from 'url';
 
+import CookieParser from 'cookie-parser';
 import Cors from 'cors';
 import Supertest from 'supertest';
 
 import { deepMerge } from '../utils/merge';
+import { promiseOriginFnToNodeCallback } from '../utils/node';
 import { generateServerId } from '../utils/uniqueId';
 
 import { createEventBus } from './events';
@@ -21,6 +23,13 @@ const defaultAppOptions: AppOptions = {
   cors: {
     origin: true,
     credentials: true,
+  },
+  cookies: {
+    encrypted: true,
+    secure: true,
+    httpOnly: true,
+    sameSite: 'lax',
+    secret: '',
   },
 };
 
@@ -73,17 +82,26 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
     }
 
     if (options.cors) {
+      const origin =
+        typeof options.cors.origin === 'function'
+          ? promiseOriginFnToNodeCallback(options.cors.origin)
+          : options.cors.origin;
       app._rawExpressApp.use(
         Cors({
-          origin: options.cors.origin,
+          origin,
           credentials: options.cors.credentials,
         }),
       );
     }
 
+    app._rawExpressApp.use(CookieParser());
+    if (options.cookies.secret.length !== 32) {
+      console.warn('`options.cookies.secret` must be exactly 32 characters long.');
+    }
+
     await initServerPlugins();
 
-    app._rawExpressRouter = initRouter({ server, routes, plugins });
+    app._rawExpressRouter = initRouter({ server, appOptions: options, routes, plugins });
     app._rawExpressApp.use(app._rawExpressRouter);
 
     mutableIsInitialized = true;
@@ -123,6 +141,11 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
           (acc, [header, value]) => acc.set(header, value),
           mutableTest,
         );
+      }
+
+      if (injection.cookies) {
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- string[]
+        mutableTest = mutableTest.set('Cookie', injection.cookies as string[]);
       }
 
       const result = await mutableTest;

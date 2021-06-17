@@ -1,7 +1,9 @@
 import { object, validate, ValidationError } from '@typeofweb/schema';
 import Express from 'express';
 
+import { isSealed, seal, unseal } from '../utils/encryptCookies';
 import { HttpError, isStatusError, tryCatch } from '../utils/errors';
+import { deepMerge } from '../utils/merge';
 import { generateRequestId } from '../utils/uniqueId';
 
 import { HttpStatusCode } from './httpStatusCodes';
@@ -10,7 +12,7 @@ import type { Json, MaybeAsync } from '../utils/types';
 import type { TypeOfWebRequestMeta } from './augment';
 import type { HttpMethod } from './httpStatusCodes';
 import type { TypeOfWebPluginInternal } from './plugins';
-import type { TypeOfWebRequest, TypeOfWebRoute, TypeOfWebServer } from './shared';
+import type { AppOptions, TypeOfWebRequest, TypeOfWebRequestToolkit, TypeOfWebRoute, TypeOfWebServer } from './shared';
 import type { SchemaRecord, TypeOfRecord } from './validation';
 import type { SomeSchema, TypeOf } from '@typeofweb/schema';
 
@@ -24,10 +26,12 @@ export type ParseRouteParams<Path> = string extends Path
 
 export const initRouter = ({
   routes,
+  appOptions,
   server,
   plugins,
 }: {
   readonly routes: readonly TypeOfWebRoute[];
+  readonly appOptions: AppOptions;
   readonly server: TypeOfWebServer;
   readonly plugins: ReadonlyArray<TypeOfWebPluginInternal<string>>;
 }) => {
@@ -35,7 +39,7 @@ export const initRouter = ({
 
   // @todo sort
   routes.forEach((route) => {
-    router[route.method](route.path, finalErrorGuard(routeToExpressHandler({ route, server, plugins })));
+    router[route.method](route.path, finalErrorGuard(routeToExpressHandler({ route, server, appOptions, plugins })));
   });
 
   router.use(errorMiddleware(server));
@@ -113,6 +117,7 @@ export const routeToExpressHandler = <
   plugins,
   route,
   server,
+  appOptions,
 }: {
   readonly plugins: ReadonlyArray<TypeOfWebPluginInternal<string>>;
   readonly route: {
@@ -126,9 +131,11 @@ export const routeToExpressHandler = <
     };
     handler(
       request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, TypeOf<Payload>>,
+      toolkit: TypeOfWebRequestToolkit,
     ): MaybeAsync<TypeOf<Response>>;
   };
   readonly server: TypeOfWebServer;
+  readonly appOptions: AppOptions;
 }): AsyncHandler => {
   return async (req, res, next) => {
     // doing this early to make timestamp more reliable
@@ -155,6 +162,19 @@ export const routeToExpressHandler = <
       return next(new HttpError(HttpStatusCode.BadRequest, HttpStatusCode[HttpStatusCode.BadRequest], payload.value));
     }
 
+    const cookies: Record<string, string> = Object.fromEntries(
+      await Promise.all(
+        Object.entries(req.cookies).map(async ([name, value]) => {
+          if (typeof value === 'string' && isSealed(value)) {
+            try {
+              return [name, await unseal({ sealed: value, secret: appOptions.cookies.secret })];
+            } catch {}
+          }
+          return [name, value];
+        }),
+      ),
+    );
+
     const request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, TypeOf<Payload>> = {
       // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- these types are validated
       params: params.value as TypeOfRecord<Params>,
@@ -170,6 +190,8 @@ export const routeToExpressHandler = <
       _rawRes: res,
 
       id: requestId,
+
+      cookies,
     };
 
     await plugins.reduce(async (acc, plugin) => {
@@ -190,7 +212,8 @@ export const routeToExpressHandler = <
 
     server.events.emit(':request', request);
 
-    const originalResult = await route.handler(request);
+    const toolkit = createRequestToolkitFor({ req, res, appOptions });
+    const originalResult = await route.handler(request, toolkit);
 
     const result = tryCatch(() =>
       route.validation.response ? validate(route.validation.response)(originalResult) : originalResult,
@@ -233,3 +256,36 @@ export const routeToExpressHandler = <
     }
   };
 };
+
+function createRequestToolkitFor({
+  appOptions,
+  res,
+}: {
+  readonly req: Express.Request;
+  readonly res: Express.Response;
+  readonly appOptions: AppOptions;
+}): TypeOfWebRequestToolkit {
+  const toolkit: TypeOfWebRequestToolkit = {
+    setCookie(name, value, options = {}) {
+      const cookieOptions = deepMerge(options, appOptions.cookies);
+
+      if (cookieOptions.encrypted && appOptions.cookies.secret.length !== 32) {
+        console.warn('`options.cookies.secret` must be exactly 32 characters long.');
+        return toolkit;
+      }
+
+      const cookieValue = cookieOptions.encrypted ? seal({ value, secret: cookieOptions.secret }) : value;
+      res.cookie(name, cookieValue, cookieOptions);
+
+      return toolkit;
+    },
+    removeCookie(name, options = {}) {
+      const cookieOptions = deepMerge(options, appOptions.cookies);
+      res.clearCookie(name, cookieOptions);
+
+      return toolkit;
+    },
+  };
+
+  return toolkit;
+}
