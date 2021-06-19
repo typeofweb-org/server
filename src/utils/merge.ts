@@ -1,16 +1,18 @@
 /* eslint-disable @typescript-eslint/consistent-type-assertions -- :| */
-export const deepMerge = <T extends object, O extends object>(target: T, obj: O): T & O =>
-  (Object.keys(obj) as unknown as readonly (keyof O)[]).reduce(
-    (acc, key) => {
-      const val = obj[key];
+export const deepMerge = <T extends object, O extends object>(overrides: T, defaults: O): T & O =>
+  (Object.keys(defaults) as unknown as readonly (keyof O)[]).reduce(
+    (overrides, key) => {
+      const defaultValue = defaults[key];
       return {
-        ...acc,
+        ...overrides,
         [key]:
-          typeof val === 'object' && !Array.isArray(val) && val
-            ? deepMerge(val as unknown as object, acc[key] ?? {})
-            : val,
+          typeof defaultValue === 'object' && !Array.isArray(defaultValue) && defaultValue
+            ? deepMerge(overrides[key] ?? {}, defaultValue as unknown as object)
+            : overrides[key] === undefined
+            ? defaultValue
+            : overrides[key],
       };
     },
-    { ...target } as T & O,
+    { ...overrides } as T & O,
   );
 /* eslint-enable @typescript-eslint/consistent-type-assertions */
