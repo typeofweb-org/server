@@ -32,7 +32,7 @@ describe('encrypt', () => {
 
   it('unseals a sealed', async () => {
     const sealed =
-      'Fe26.2**0a27f421711152214f2cdd7fd8c515738204828f2d5c1ac50685231d38614de1*hUkUfX6sYUoKXh1QNx8oyw*AxjnFXiFUlQqdpNYK9lzAJzfm0S07vKo599fOi1Og7vuPaiQ6z8o487hDrs7xDu0**4eb9bef394dbaffa866f1e4246cf9d8c72a19d403da89760a3fc65c95d82301a*l65Cto8YluxfUbex2aD27hrA9Hccvhcryac0pkHfPvs';
+      'Fe26.2**SqhOkY8av81FPay7I60ktrpeOq7SgRNCcNN0rHWAMSg*3xsUfKKg2KiUWhsOmm1Nnw*_MeWO7OhJooR1Jc0cXQ5pp-wrtooQBeZsvNCSF9Yl5mm5xpCr8_SwxPJJkzwxN43**r3lxz-MMOws6YE-lDcXy6rmZc0mHHMVbXsndXmePgnA*JRDpLG7MxvgdoJqTeaTnUEQ-c0E6eyA66hVSr3f4BLmdfzZYU7fWIYGImEpEZgwzp_0jlF44R0Vr8BDQBlJiNw';
     const unsealed = await EncryptCookies.unseal({ sealed, secret });
     expect(JSON.parse(unsealed)).toEqual({
       a: 1,
@@ -45,7 +45,7 @@ describe('encrypt', () => {
 
   it('returns an error when number of sealed components is wrong', async () => {
     const sealed =
-      'x*Fe26.2**0a27f421711152214f2cdd7fd8c515738204828f2d5c1ac50685231d38614de1*hUkUfX6sYUoKXh1QNx8oyw*AxjnFXiFUlQqdpNYK9lzAJzfm0S07vKo599fOi1Og7vuPaiQ6z8o487hDrs7xDu0**4eb9bef394dbaffa866f1e4246cf9d8c72a19d403da89760a3fc65c95d82301a*l65Cto8YluxfUbex2aD27hrA9Hccvhcryac0pkHfPvs';
+      'x*Fe26.2**SqhOkY8av81FPay7I60ktrpeOq7SgRNCcNN0rHWAMSg*3xsUfKKg2KiUWhsOmm1Nnw*_MeWO7OhJooR1Jc0cXQ5pp-wrtooQBeZsvNCSF9Yl5mm5xpCr8_SwxPJJkzwxN43**r3lxz-MMOws6YE-lDcXy6rmZc0mHHMVbXsndXmePgnA*JRDpLG7MxvgdoJqTeaTnUEQ-c0E6eyA66hVSr3f4BLmdfzZYU7fWIYGImEpEZgwzp_0jlF44R0Vr8BDQBlJiNw';
     await expect(EncryptCookies.unseal({ sealed, secret })).rejects.toThrowErrorMatchingInlineSnapshot(
       `"Cannot unseal: Incorrect data format."`,
     );
@@ -53,7 +53,7 @@ describe('encrypt', () => {
 
   it('returns an error when mac prefix is wrong', async () => {
     const sealed =
-      'Fe27.2**0a27f421711152214f2cdd7fd8c515738204828f2d5c1ac50685231d38614de1*hUkUfX6sYUoKXh1QNx8oyw*AxjnFXiFUlQqdpNYK9lzAJzfm0S07vKo599fOi1Og7vuPaiQ6z8o487hDrs7xDu0**4eb9bef394dbaffa866f1e4246cf9d8c72a19d403da89760a3fc65c95d82301a*l65Cto8YluxfUbex2aD27hrA9Hccvhcryac0pkHfPvs';
+      'Fe27.2**SqhOkY8av81FPay7I60ktrpeOq7SgRNCcNN0rHWAMSg*3xsUfKKg2KiUWhsOmm1Nnw*_MeWO7OhJooR1Jc0cXQ5pp-wrtooQBeZsvNCSF9Yl5mm5xpCr8_SwxPJJkzwxN43**r3lxz-MMOws6YE-lDcXy6rmZc0mHHMVbXsndXmePgnA*JRDpLG7MxvgdoJqTeaTnUEQ-c0E6eyA66hVSr3f4BLmdfzZYU7fWIYGImEpEZgwzp_0jlF44R0Vr8BDQBlJiNw';
     await expect(EncryptCookies.unseal({ sealed, secret })).rejects.toThrowErrorMatchingInlineSnapshot(
       `"Cannot unseal: Unsupported version."`,
     );
@@ -61,7 +61,7 @@ describe('encrypt', () => {
 
   it('returns an error when integrity check fails', async () => {
     const sealed =
-      'Fe26.2**0a27f421711152214f2cdd7fd8c515738204828f2d5c1ac50685231d38614de1*hUkUfX6sYUoKXh1QNx8oyw*AxjnFXiFUlQqdpNYK9lzAJzfm0S07vKo599fOi1Og7vuPaiQ6z8o487hDrs7xDu0**4eb9bef394dbaffa866f1e4246cf9d8c72a19d403da89760a3fc65c95d82301a*l65Cto8YluxfUbex2aD27hrA9Hccvhcryac0pkHfPvsLOL';
+      'Fe26.2**SqhOkY8av81FPay7I60ktrpeOq7SgRNCcNN0rHWAMSg*3xsUfKKg2KiUWhsOmm1Nnw*_MeWO7OhJooR1Jc0cXQ5pp-wrtooQBeZsvNCSF9Yl5mm5xpCr8_SwxPJJkzwxN43**r3lxz-MMOws6YE-lDcXy6rmZc0mHHMVbXsndXmePgnA*JRDpLG7MxvgdoJqTeaTnUEQ-c0E6eyA66hVSr3f4BLmdfzZYU7fWIYGImEpEZgwzp_0jlF44R0Vr8BDQBlJiNwLOL';
     await expect(EncryptCookies.unseal({ sealed, secret })).rejects.toThrowErrorMatchingInlineSnapshot(
       `"Cannot unseal: Incorrect hmac seal value"`,
     );

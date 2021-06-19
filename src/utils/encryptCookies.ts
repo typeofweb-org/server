@@ -11,9 +11,10 @@ import Util from 'util';
 
 const asyncPbkdf2 = Util.promisify(Crypto.pbkdf2);
 
-const PREFIX = 'Fe26.2';
-const SEPARATOR = '*';
-const KEY_LEN = 32;
+const PREFIX = 'Fe26.2' as const;
+const SEPARATOR = '*' as const;
+const KEY_LEN = 32 as const;
+const PBKDF2_ITERATIONS = 10 as const;
 const SEALED_CONTENT_LENGTH: SealedContent['length'] = 8;
 
 type BaseContent = readonly [
@@ -65,13 +66,14 @@ export const seal = async ({
 
   const encryptedB64 = base64urlEncode(encrypted);
   const ivB64 = base64urlEncode(key.iv);
+  const keySaltB64 = base64urlEncode(key.salt);
   const expiration = ttl ? Date.now() + ttl : '';
-  const baseContent: BaseContent = [PREFIX, '', key.salt, ivB64, encryptedB64, String(expiration)];
+  const baseContent: BaseContent = [PREFIX, '', keySaltB64, ivB64, encryptedB64, String(expiration)];
 
   const baseString = baseContent.join(SEPARATOR);
   const hmac = await hmacWithPassword(secret, baseString);
 
-  const signature: SignatureContent = [hmac.salt, hmac.digest];
+  const signature: SignatureContent = [base64urlEncode(hmac.salt), hmac.digest];
   const sealedContent: SealedContent = [...baseContent, ...signature];
 
   return sealedContent.join(SEPARATOR);
@@ -83,7 +85,7 @@ export const unseal = async ({ sealed, secret }: { readonly sealed: string; read
     throw new Error('Cannot unseal: Incorrect data format.');
   }
 
-  const [prefix, _passwordId, keySalt, ivB64, encryptedB64, expiration, hmacSalt, hmacDigest] =
+  const [prefix, _passwordId, keySalt64, ivB64, encryptedB64, expiration, hmacSaltB64, hmacDigest] =
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- must assert
     sealedContent as unknown as SealedContent;
 
@@ -102,8 +104,10 @@ export const unseal = async ({ sealed, secret }: { readonly sealed: string; read
     }
   }
 
-  const baseContent: BaseContent = [PREFIX, '', keySalt, ivB64, encryptedB64, expiration];
+  const baseContent: BaseContent = [PREFIX, '', keySalt64, ivB64, encryptedB64, expiration];
   const baseString = baseContent.join(SEPARATOR);
+
+  const hmacSalt = base64urlDecode(hmacSaltB64);
   const mac = await hmacWithPassword(secret, baseString, hmacSalt);
 
   if (!timingSafeEqual(mac.digest, hmacDigest)) {
@@ -112,16 +116,17 @@ export const unseal = async ({ sealed, secret }: { readonly sealed: string; read
 
   const encrypted = base64urlDecode(encryptedB64);
   const iv = base64urlDecode(ivB64);
+  const keySalt = base64urlDecode(keySalt64);
 
   const key = await generateKey(secret, keySalt, iv);
   const decipher = Crypto.createDecipheriv('aes-256-cbc', key.key, key.iv);
   return decipher.update(encrypted, undefined, 'utf8') + decipher.final('utf8');
 };
 
-const generateKey = async (secret: string, maybeSalt?: string, maybeIv?: Buffer) => {
-  const salt = maybeSalt ?? Crypto.randomBytes(KEY_LEN).toString('hex');
+const generateKey = async (secret: string, maybeSalt?: Buffer, maybeIv?: Buffer) => {
+  const salt = maybeSalt ?? Crypto.randomBytes(KEY_LEN);
   const iv = maybeIv ?? Crypto.randomBytes(KEY_LEN / 2);
-  const key = await asyncPbkdf2(secret, salt, 1, KEY_LEN, 'sha256');
+  const key = await asyncPbkdf2(secret, salt, PBKDF2_ITERATIONS, KEY_LEN, 'sha512');
 
   return { key, salt, iv };
 };
@@ -139,9 +144,9 @@ const base64ToUrlEncode = (base64: string) => {
   return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/\=/g, '');
 };
 
-const hmacWithPassword = async (secret: string, baseString: string, maybeSalt?: string) => {
+const hmacWithPassword = async (secret: string, baseString: string, maybeSalt?: Buffer) => {
   const key = await generateKey(secret, maybeSalt);
-  const hmac = Crypto.createHmac('sha256', key.key).update(baseString);
+  const hmac = Crypto.createHmac('sha512', key.key).update(baseString);
   const digest = base64ToUrlEncode(hmac.digest('base64'));
 
   return {

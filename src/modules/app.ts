@@ -94,10 +94,7 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
       );
     }
 
-    app._rawExpressApp.use(CookieParser());
-    if (options.cookies.secret.length !== 32) {
-      console.warn('`options.cookies.secret` must be exactly 32 characters long.');
-    }
+    app._rawExpressApp.use(CookieParser(''));
 
     await initServerPlugins();
 

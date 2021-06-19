@@ -38,8 +38,8 @@ interface AppOptionsCookies extends SetCookieOptions {
 }
 
 export interface TypeOfWebRequestToolkit {
-  setCookie(name: string, value: string, options?: SetCookieOptions): this;
-  removeCookie(name: string, options?: SetCookieOptions): this;
+  setCookie(name: string, value: string, options?: SetCookieOptions): MaybeAsync<void>;
+  removeCookie(name: string, options?: SetCookieOptions): MaybeAsync<void>;
 }
 
 export interface SetCookieOptions {

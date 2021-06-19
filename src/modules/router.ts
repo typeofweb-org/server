@@ -266,24 +266,19 @@ function createRequestToolkitFor({
   readonly appOptions: AppOptions;
 }): TypeOfWebRequestToolkit {
   const toolkit: TypeOfWebRequestToolkit = {
-    setCookie(name, value, options = {}) {
-      const cookieOptions = deepMerge(options, appOptions.cookies);
+    async setCookie(name, value, options = {}) {
+      const { encrypted, secret, ...cookieOptions } = deepMerge(options, appOptions.cookies);
 
-      if (cookieOptions.encrypted && appOptions.cookies.secret.length !== 32) {
-        console.warn('`options.cookies.secret` must be exactly 32 characters long.');
-        return toolkit;
+      if (encrypted && secret.length !== 32) {
+        throw new Error('`options.cookies.secret` must be exactly 32 characters long.');
       }
 
-      const cookieValue = cookieOptions.encrypted ? seal({ value, secret: cookieOptions.secret }) : value;
-      res.cookie(name, cookieValue, cookieOptions);
-
-      return toolkit;
+      const cookieValue = encrypted ? await seal({ value, secret }) : value;
+      res.cookie(name, cookieValue, { ...cookieOptions, signed: false });
     },
     removeCookie(name, options = {}) {
       const cookieOptions = deepMerge(options, appOptions.cookies);
       res.clearCookie(name, cookieOptions);
-
-      return toolkit;
     },
   };
 
