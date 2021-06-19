@@ -1,4 +1,5 @@
 // @ts-check
+import BuiltinModules from 'builtin-modules';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import prettier from 'rollup-plugin-prettier';
@@ -11,6 +12,8 @@ import pkg from './package.json';
 
 const shouldCompress = process.env.COMPRESS_BUNDLES ? true : false;
 const shouldPrettify = !shouldCompress && (process.env.PRETTIFY ? true : false);
+
+const dependencies = [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})];
 
 const rollupConfig = [
   {
@@ -90,7 +93,7 @@ LICENSE file in the root directory of this source tree.
 `.trim(),
       }),
     ],
-    external: ['url', 'body-parser', 'express', 'stoppable', '@typeofweb/schema', 'events', 'supertest', 'cors', 'os'],
+    external: [...dependencies, ...BuiltinModules],
   },
 ];
 // eslint-disable-next-line import/no-default-export
