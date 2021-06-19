@@ -23,16 +23,15 @@ const assertTsd = (diagnostics: readonly Diagnostic[]) => {
 
 describe('@typeofweb/schema', () => {
   const typesTests = Globby.sync(['./__tests__/*.test-d.ts']);
-  it.each(typesTests.map((path) => ({ path, name: path.replace('./__tests__/', '').replace('.test-d.ts', '') })))(
-    'tsd $name',
-    async (dir) => {
-      assertTsd(
-        await tsd({
-          cwd: join(Path.dirname(Url.fileURLToPath(import.meta.url)), '..'),
-          typingsFile: './dist/index.d.ts',
-          testFiles: [dir.path],
-        }),
-      );
-    },
-  );
+  it.concurrent.each(
+    typesTests.map((path) => ({ path, name: path.replace('./__tests__/', '').replace('.test-d.ts', '') })),
+  )('tsd $name', async (dir) => {
+    assertTsd(
+      await tsd({
+        cwd: join(Path.dirname(Url.fileURLToPath(import.meta.url)), '..'),
+        typingsFile: './dist/index.d.ts',
+        testFiles: [dir.path],
+      }),
+    );
+  });
 });
