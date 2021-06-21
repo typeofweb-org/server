@@ -1,7 +1,7 @@
 import type { TypeOfWebRequestMeta, TypeOfWebServerMeta, TypeOfWebEvents } from '..';
 import type { Callback, Json, MaybeAsync } from '../utils/types';
 import type { RequestId, ServerId } from '../utils/uniqueId';
-import type { HttpMethod } from './httpStatusCodes';
+import type { HttpMethod, HttpStatusCode } from './httpStatusCodes';
 import type { TypeOfWebPlugin } from './plugins';
 import type { ParseRouteParams } from './router';
 import type { SchemaRecord, TypeOfRecord } from './validation';
@@ -40,6 +40,7 @@ interface AppOptionsCookies extends SetCookieOptions {
 export interface TypeOfWebRequestToolkit {
   setCookie(name: string, value: string, options?: SetCookieOptions): MaybeAsync<void>;
   removeCookie(name: string, options?: SetCookieOptions): MaybeAsync<void>;
+  setStatus(statusCode: HttpStatusCode): MaybeAsync<void>;
 }
 
 export interface SetCookieOptions {
