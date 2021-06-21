@@ -8,6 +8,7 @@ export const initApp = () => {
   const app = Express();
 
   app.use(BodyParser.json());
+  app.disable('x-powered-by');
 
   return app;
 };
