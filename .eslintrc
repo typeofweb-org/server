@@ -3,7 +3,6 @@
   "parserOptions": {
     "project": "tsconfig.eslint.json"
   },
-  "plugins": ["@typeofweb/eslint-plugin"],
   "extends": ["plugin:@typeofweb/recommended"],
   "overrides": [
     {
