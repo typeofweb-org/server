@@ -31,6 +31,9 @@ const defaultAppOptions: AppOptions = {
     sameSite: 'lax',
     secret: '',
   },
+  router: {
+    strictTrailingSlash: false,
+  },
 };
 
 export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {

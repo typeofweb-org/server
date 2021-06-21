@@ -31,6 +31,9 @@ export interface AppOptions {
       }
     | false;
   readonly cookies: AppOptionsCookies;
+  readonly router: {
+    readonly strictTrailingSlash: boolean;
+  };
 }
 
 interface AppOptionsCookies extends SetCookieOptions {

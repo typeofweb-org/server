@@ -135,4 +135,91 @@ describe('router', () => {
       expect(result.statusCode).toEqual(202);
     });
   });
+
+  describe('specificity', () => {
+    const routePaths = [
+      '/',
+      '/a',
+      '/b',
+      '/ab',
+      '/:p',
+      '/a/b',
+      '/a/:p',
+      '/b/',
+      '/a/b/c',
+      '/a/b/:p',
+      '/a/:p/b',
+      '/a/:p/c',
+      '/a/b/c/d',
+      '/a/:p/b/:x',
+      '/a/b/*',
+      '/:a/b/*',
+      '/*',
+      '/m/n/*',
+      '/m/:n/:o',
+      '/n/:p/*',
+    ].sort(() => Math.random() - 0.5);
+
+    const requests = [
+      ['/', '/'],
+      ['/a', '/a'],
+      ['/b', '/b'],
+      ['/ab', '/ab'],
+      ['/c', '/:p'],
+      ['/a/b', '/a/b'],
+      ['/a/c', '/a/:p'],
+      ['/b/', '/b/'],
+      ['/a/b/c', '/a/b/c'],
+      ['/a/b/d', '/a/b/:p'],
+      ['/a/a/b', '/a/:p/b'],
+      ['/a/d/c', '/a/:p/c'],
+      ['/a/b/c/d', '/a/b/c/d'],
+      ['/a/c/b/d', '/a/:p/b/:x'],
+      ['/a/b/c/d/e', '/a/b/*'],
+      ['/a/b/c/d/e/f', '/a/b/*'],
+      ['/x/b/c/d/e/f/g', '/:a/b/*'],
+      ['/x/y/c/d/e/f/g', '/*'],
+      ['/m/n/o', '/m/n/*'],
+      ['/m/o/p', '/m/:n/:o'],
+      ['/n/a/b/c', '/n/:p/*'],
+      ['/n/a/', '/n/:p/*'],
+    ];
+
+    const strictApp = createApp({ router: { strictTrailingSlash: true } });
+    routePaths.forEach((routePath) =>
+      strictApp.route({
+        path: routePath,
+        method: 'get',
+        validation: {},
+        handler: (req) => req.path,
+      }),
+    );
+
+    const looseApp = createApp({ router: { strictTrailingSlash: false } });
+    routePaths.forEach((routePath) =>
+      looseApp.route({
+        path: routePath,
+        method: 'get',
+        validation: {},
+        handler: (req) => req.path,
+      }),
+    );
+
+    it.each(requests)('strict: %p → %p', async (requestPath, requestRoute) => {
+      const result = await strictApp.inject({
+        method: 'get',
+        path: requestPath,
+      });
+      expect(result.body).toEqual(requestRoute);
+    });
+
+    it.each(requests)('loose: %p → %p', async (requestPath, requestRoute) => {
+      const result = await looseApp.inject({
+        method: 'get',
+        path: requestPath,
+      });
+      // trim trailing slash
+      expect(result.body).toEqual(requestRoute.replace(/(.+)\/$/, '$1'));
+    });
+  });
 });

@@ -4,6 +4,7 @@ import Express from 'express';
 import { isSealed, seal, unseal } from '../utils/encryptCookies';
 import { HttpError, isStatusError, tryCatch } from '../utils/errors';
 import { deepMerge } from '../utils/merge';
+import { calculateSpecificity } from '../utils/routeSpecificity';
 import { generateRequestId } from '../utils/uniqueId';
 
 import { HttpStatusCode } from './httpStatusCodes';
@@ -16,14 +17,6 @@ import type { AppOptions, TypeOfWebRequest, TypeOfWebRequestToolkit, TypeOfWebRo
 import type { SchemaRecord, TypeOfRecord } from './validation';
 import type { SomeSchema, TypeOf } from '@typeofweb/schema';
 
-export type ParseRouteParams<Path> = string extends Path
-  ? string
-  : Path extends `${string}/:${infer Param}/${infer Rest}`
-  ? Param | ParseRouteParams<`/${Rest}`>
-  : Path extends `${string}:${infer LastParam}`
-  ? LastParam
-  : never;
-
 export const initRouter = ({
   routes,
   appOptions,
@@ -35,12 +28,32 @@ export const initRouter = ({
   readonly server: TypeOfWebServer;
   readonly plugins: ReadonlyArray<TypeOfWebPluginInternal<string>>;
 }) => {
-  const router = Express.Router();
-
-  // @todo sort
-  routes.forEach((route) => {
-    router[route.method](route.path, finalErrorGuard(routeToExpressHandler({ route, server, appOptions, plugins })));
+  const router = Express.Router({
+    strict: appOptions.router.strictTrailingSlash,
   });
+
+  routes
+    .slice()
+    // sort lexicographically
+    .sort((a, b) => {
+      const aFirst = -1;
+      const bFirst = 1;
+
+      if (a.path === b.path) {
+        return 0;
+      }
+
+      const aSpecificity = calculateSpecificity(a.path);
+      const bSpecificity = calculateSpecificity(b.path);
+      if (aSpecificity !== bSpecificity) {
+        return aSpecificity > bSpecificity ? bFirst : aFirst;
+      }
+
+      return a.path > b.path ? bFirst : aFirst;
+    })
+    .forEach((route) => {
+      router[route.method](route.path, finalErrorGuard(routeToExpressHandler({ route, server, appOptions, plugins })));
+    });
 
   router.use(errorMiddleware(server));
   return router;
@@ -301,3 +314,11 @@ function createRequestToolkitFor({
 
   return toolkit;
 }
+
+export type ParseRouteParams<Path> = string extends Path
+  ? string
+  : Path extends `${string}/:${infer Param}/${infer Rest}`
+  ? Param | ParseRouteParams<`/${Rest}`>
+  : Path extends `${string}:${infer LastParam}`
+  ? LastParam
+  : never;
