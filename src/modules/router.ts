@@ -93,7 +93,9 @@ export const errorMiddleware =
   };
 
 type AsyncHandler = (
-  ...args: Parameters<Express.Handler>
+  req: Express.Request,
+  res: Express.Response<any, ExpressResponseLocals>,
+  next: Express.NextFunction,
 ) => Promise<ReturnType<Express.Handler>> | ReturnType<Express.Handler>;
 
 const finalErrorGuard = (h: AsyncHandler): AsyncHandler => {
@@ -241,28 +243,40 @@ export const routeToExpressHandler = <
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- response is always Json or null
     server.events.emit(':response', result.value as Json | null);
 
+    const fallbackStatusCode =
+      result.value === null || result.value === undefined ? HttpStatusCode.NoContent : HttpStatusCode.OK;
+    const statusCode = res.locals[CUSTOM_STATUS_CODE] ?? fallbackStatusCode;
+
     if (result.value === null) {
-      res.status(204).end();
+      res.status(statusCode).end();
       return;
     } else if (result.value === undefined) {
       console.warn(
         'Handler returned `undefined` which usually means you forgot to `await` something. If you want an empty response, return `null` instead.',
       );
-      res.status(204).end();
+      res.status(statusCode).end();
       return;
     } else {
-      res.status(200).json(result.value);
+      res.status(statusCode).json(result.value);
       return;
     }
   };
 };
+
+export const CUSTOM_STATUS_CODE = Symbol('CUSTOM_STATUS_CODE');
+export interface ExpressResponseLocals {
+  /* eslint-disable functional/prefer-readonly-type -- these are writable */
+  [key: string]: any;
+  [CUSTOM_STATUS_CODE]?: HttpStatusCode;
+  /* eslint-enable functional/prefer-readonly-type */
+}
 
 function createRequestToolkitFor({
   appOptions,
   res,
 }: {
   readonly req: Express.Request;
-  readonly res: Express.Response;
+  readonly res: Express.Response<any, ExpressResponseLocals>;
   readonly appOptions: AppOptions;
 }): TypeOfWebRequestToolkit {
   const toolkit: TypeOfWebRequestToolkit = {
@@ -279,6 +293,9 @@ function createRequestToolkitFor({
     removeCookie(name, options = {}) {
       const cookieOptions = deepMerge(options, appOptions.cookies);
       res.clearCookie(name, cookieOptions);
+    },
+    setStatus(statusCode: HttpStatusCode) {
+      res.locals[CUSTOM_STATUS_CODE] = statusCode;
     },
   };
 
