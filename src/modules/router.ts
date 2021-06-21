@@ -17,14 +17,6 @@ import type { AppOptions, TypeOfWebRequest, TypeOfWebRequestToolkit, TypeOfWebRo
 import type { SchemaRecord, TypeOfRecord } from './validation';
 import type { SomeSchema, TypeOf } from '@typeofweb/schema';
 
-export type ParseRouteParams<Path> = string extends Path
-  ? string
-  : Path extends `${string}/:${infer Param}/${infer Rest}`
-  ? Param | ParseRouteParams<`/${Rest}`>
-  : Path extends `${string}:${infer LastParam}`
-  ? LastParam
-  : never;
-
 export const initRouter = ({
   routes,
   appOptions,
@@ -322,3 +314,11 @@ function createRequestToolkitFor({
 
   return toolkit;
 }
+
+export type ParseRouteParams<Path> = string extends Path
+  ? string
+  : Path extends `${string}/:${infer Param}/${infer Rest}`
+  ? Param | ParseRouteParams<`/${Rest}`>
+  : Path extends `${string}:${infer LastParam}`
+  ? LastParam
+  : never;
