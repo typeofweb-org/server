@@ -1,19 +1,21 @@
 import { invariant } from '../utils/errors';
+import { stableJsonStringify } from '../utils/serializeObject';
 
+import type { Json } from '../utils/types';
 import type { TypeOfWebCacheConfig } from './shared';
 import type CacheManager from 'cache-manager';
 
 const CACHED_FUNCTION = Symbol('CACHED_FUNCTION');
 
-export interface CachedFunction<Fn extends (...args: readonly unknown[]) => any> {
-  readonly [CACHED_FUNCTION]: true;
+export interface CachedFunction<Fn extends (...args: readonly Json[]) => any> {
+  // eslint-disable-next-line functional/prefer-readonly-type -- ok
+  [CACHED_FUNCTION]: true;
   (...args: Parameters<Fn>): ReturnType<Fn>;
 }
 
-// @todo
-const serializeArgs = (args: unknown): string => JSON.stringify(args);
+const serializeArgs = (args: Json): string => stableJsonStringify(args);
 
-export const createCachedFunction = <Fn extends (...args: readonly unknown[]) => any>({
+export const createCachedFunction = <Fn extends (...args: readonly Json[]) => any>({
   fn,
   cache,
   CacheInstance,
@@ -30,18 +32,19 @@ export const createCachedFunction = <Fn extends (...args: readonly unknown[]) =>
   // cache-manager requires ttl in seconds
   const ttl = ttlMs / 1000;
 
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- CACHED_FUNCTION is added below
+  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- ok
   const cachedFunction = function (...args) {
-    const id = serializeArgs(args);
+    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- @todo ?
+    const typedArgs = args as readonly Json[];
+    const id = serializeArgs(typedArgs);
     return CacheInstance.wrap<ReturnType<Fn>>(
       id,
       () => {
-        return fn(...args);
+        return fn(...typedArgs);
       },
       { ttl },
     );
   } as CachedFunction<Fn>;
-  // @ts-ignore
   cachedFunction[CACHED_FUNCTION] = true;
   return cachedFunction;
 };
