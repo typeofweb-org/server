@@ -10,11 +10,11 @@ const serializeArgs = (args: Json): string => stableJsonStringify(args);
 export const createCachedFunction = <Fn extends (...args: readonly Json[]) => any>({
   fn,
   cache,
-  CacheInstance,
+  cacheInstance,
 }: {
   readonly fn: Fn;
   readonly cache: TypeOfWebCacheConfig;
-  readonly CacheInstance: CacheManager.Cache;
+  readonly cacheInstance: CacheManager.Cache;
 }): Fn => {
   const ttlMs = 'expireIn' in cache ? cache.expireIn : expireAtToTtlMs(cache.expireAt);
 
@@ -27,7 +27,7 @@ export const createCachedFunction = <Fn extends (...args: readonly Json[]) => an
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- ok
   return function (...args) {
     const id = serializeArgs(args);
-    return CacheInstance.wrap<ReturnType<Fn>>(
+    return cacheInstance.wrap<ReturnType<Fn>>(
       id,
       () => {
         return fn(...args);

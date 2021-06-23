@@ -85,7 +85,7 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
           ? Object.fromEntries(
               Object.entries(result).map(([key, val]) => {
                 if (typeof val === 'object' && val && 'cache' in val) {
-                  return [key, createCachedFunction({ ...val, CacheInstance: memoryCache })];
+                  return [key, createCachedFunction({ ...val, cacheInstance: memoryCache })];
                 }
                 return [key, val];
               }),
