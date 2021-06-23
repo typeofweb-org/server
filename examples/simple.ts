@@ -3,7 +3,7 @@ import { number } from '@typeofweb/schema';
 import { createApp, createPlugin } from '../dist/index';
 
 declare function findOne(): unknown;
-declare function findMany(): unknown;
+declare function findMany(): 123;
 declare module '../dist/index' {
   interface TypeOfWebServerMeta {
     readonly db: {
@@ -21,7 +21,7 @@ declare module '../dist/index' {
 export const dbPlugin = createPlugin('db', () => {
   return {
     server() {
-      return { findOne, findMany };
+      return { findOne, findMany: { cache: {}, fn: findMany } };
     },
   };
 });
@@ -49,7 +49,7 @@ void app.route({
   },
   handler(_request) {
     // const { query, params } = request;
-    // request.server.plugins.db.findMany();
+    _request.server.plugins.db.findMany();
     // request.server.events.emit('health-check', 123);
     return 1;
   },

@@ -39,3 +39,17 @@ export class HttpError extends Error implements StatusError {
 export const isStatusError = (err: unknown): err is StatusError => {
   return typeof err === 'object' && !!err && 'statusCode' in err;
 };
+
+interface ErrorCtor<T extends Error> {
+  new (...args: ConstructorParameters<typeof Error>): T;
+}
+
+export function invariant(
+  predicate: unknown,
+  message: string,
+  ErrorConstructor: ErrorCtor<Error> = Error,
+): asserts predicate {
+  if (!predicate) {
+    throw new ErrorConstructor(message);
+  }
+}

@@ -2,7 +2,7 @@ import { object, validate, ValidationError } from '@typeofweb/schema';
 import Express from 'express';
 
 import { isSealed, seal, unseal } from '../utils/encryptCookies';
-import { HttpError, isStatusError, tryCatch } from '../utils/errors';
+import { HttpError, invariant, isStatusError, tryCatch } from '../utils/errors';
 import { deepMerge } from '../utils/merge';
 import { calculateSpecificity } from '../utils/routeSpecificity';
 import { generateRequestId } from '../utils/uniqueId';
@@ -13,7 +13,14 @@ import type { Json, MaybeAsync } from '../utils/types';
 import type { TypeOfWebRequestMeta } from './augment';
 import type { HttpMethod } from './httpStatusCodes';
 import type { TypeOfWebPluginInternal } from './plugins';
-import type { AppOptions, TypeOfWebRequest, TypeOfWebRequestToolkit, TypeOfWebRoute, TypeOfWebServer } from './shared';
+import type {
+  AppOptions,
+  HandlerArguments,
+  TypeOfWebRequest,
+  TypeOfWebRequestToolkit,
+  TypeOfWebRoute,
+  TypeOfWebServer,
+} from './shared';
 import type { SchemaRecord, TypeOfRecord } from './validation';
 import type { SomeSchema, TypeOf } from '@typeofweb/schema';
 
@@ -63,14 +70,16 @@ export const validateRoute = (route: TypeOfWebRoute): boolean => {
   const segments = route.path.split('/');
 
   const eachRouteSegmentHasAtMostOneParam = segments.every((segment) => (segment.match(/:/g) ?? []).length <= 1);
-  if (!eachRouteSegmentHasAtMostOneParam) {
-    throw new Error(`RouteValidationError: Each path segment can contain at most one param.`);
-  }
+  invariant(
+    eachRouteSegmentHasAtMostOneParam,
+    `RouteValidationError: Each path segment can contain at most one param.`,
+  );
 
   const routeDoesntHaveRegexes = segments.every((segment) => !segment.endsWith(')'));
-  if (!routeDoesntHaveRegexes) {
-    throw new Error(`RouteValidationError: Don't use regular expressions in routes. Use validators instead.`);
-  }
+  invariant(
+    routeDoesntHaveRegexes,
+    `RouteValidationError: Don't use regular expressions in routes. Use validators instead.`,
+  );
 
   return true;
 };
@@ -216,8 +225,10 @@ export const routeToExpressHandler = <
 
       await acc;
 
-      // @ts-expect-error
-      const requestMetadata = await plugin.value.request(request);
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- augmentation
+      const pluginRequest = plugin.value.request as unknown as (...args: HandlerArguments) => MaybeAsync<unknown>;
+
+      const requestMetadata = await pluginRequest(request, toolkit);
       if (requestMetadata) {
         // @ts-expect-error
         // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- ok
@@ -296,9 +307,7 @@ function createRequestToolkitFor({
     async setCookie(name, value, options = {}) {
       const { encrypted, secret, ...cookieOptions } = deepMerge(options, appOptions.cookies);
 
-      if (encrypted && secret.length !== 32) {
-        throw new Error('`options.cookies.secret` must be exactly 32 characters long.');
-      }
+      invariant(!encrypted || secret.length === 32, '`options.cookies.secret` must be exactly 32 characters long.');
 
       const cookieValue = encrypted ? await seal({ value, secret }) : value;
       res.cookie(name, cookieValue, { ...cookieOptions, signed: false });
@@ -307,8 +316,11 @@ function createRequestToolkitFor({
       const cookieOptions = deepMerge(options, appOptions.cookies);
       res.clearCookie(name, cookieOptions);
     },
-    setStatus(statusCode: HttpStatusCode) {
+    setStatus(statusCode) {
       res.locals[CUSTOM_STATUS_CODE] = statusCode;
+    },
+    setHeader(name, value) {
+      res.setHeader(name, value);
     },
   };
 

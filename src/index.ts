@@ -2,6 +2,7 @@ export { HttpError, isStatusError } from './utils/errors';
 export { createApp } from './modules/app';
 export { HttpStatusCode } from './modules/httpStatusCodes';
 export { createPlugin } from './modules/plugins';
+export { createCachedFunction } from './modules/cache';
 
 export type { HttpMethod } from './modules/httpStatusCodes';
 export type { TypeOfWebApp, AppOptions, TypeOfWebServer } from './modules/shared';

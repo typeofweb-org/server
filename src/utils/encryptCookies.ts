@@ -9,6 +9,8 @@
 import Crypto from 'crypto';
 import Util from 'util';
 
+import { invariant } from './errors';
+
 const asyncPbkdf2 = Util.promisify(Crypto.pbkdf2);
 
 const PREFIX = 'Fe26.2' as const;
@@ -55,9 +57,7 @@ export const seal = async ({
   readonly secret: string;
   readonly ttl?: number;
 }) => {
-  if (secret.length !== KEY_LEN) {
-    throw new Error(`Secret must be exactly ${KEY_LEN} characters long!`);
-  }
+  invariant(secret.length === KEY_LEN, `Secret must be exactly ${KEY_LEN} characters long!`);
 
   const key = await generateKey(secret);
 
@@ -81,27 +81,19 @@ export const seal = async ({
 
 export const unseal = async ({ sealed, secret }: { readonly sealed: string; readonly secret: string }) => {
   const sealedContent = sealed.split(SEPARATOR);
-  if (sealedContent.length !== SEALED_CONTENT_LENGTH) {
-    throw new Error('Cannot unseal: Incorrect data format.');
-  }
+  invariant(sealedContent.length === SEALED_CONTENT_LENGTH, 'Cannot unseal: Incorrect data format.');
 
   const [prefix, _passwordId, keySalt64, ivB64, encryptedB64, expiration, hmacSaltB64, hmacDigest] =
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- must assert
     sealedContent as unknown as SealedContent;
 
-  if (prefix !== PREFIX) {
-    throw new Error('Cannot unseal: Unsupported version.');
-  }
+  invariant(prefix === PREFIX, 'Cannot unseal: Unsupported version.');
 
   if (expiration) {
-    if (!Number.isInteger(Number(expiration))) {
-      throw new Error('Cannot unseal: Invalid expiration');
-    }
+    invariant(Number.isInteger(Number(expiration)), 'Cannot unseal: Invalid expiration');
 
     const exp = Number.parseInt(expiration, 10);
-    if (exp <= Date.now()) {
-      throw new Error('Cannot unseal: Expired seal');
-    }
+    invariant(exp > Date.now(), 'Cannot unseal: Expired seal');
   }
 
   const baseContent: BaseContent = [PREFIX, '', keySalt64, ivB64, encryptedB64, expiration];
@@ -110,9 +102,7 @@ export const unseal = async ({ sealed, secret }: { readonly sealed: string; read
   const hmacSalt = base64urlDecode(hmacSaltB64);
   const mac = await hmacWithPassword(secret, baseString, hmacSalt);
 
-  if (!timingSafeEqual(mac.digest, hmacDigest)) {
-    throw new Error('Cannot unseal: Incorrect hmac seal value');
-  }
+  invariant(timingSafeEqual(mac.digest, hmacDigest), 'Cannot unseal: Incorrect hmac seal value');
 
   const encrypted = base64urlDecode(encryptedB64);
   const iv = base64urlDecode(ivB64);

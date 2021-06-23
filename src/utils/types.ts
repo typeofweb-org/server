@@ -6,6 +6,10 @@ export type DeepPartial<T> = {
   readonly [P in keyof T]?: T[P] extends AnyObject ? DeepPartial<T[P]> : T[P];
 };
 
+export type AnyFunction = (...args: readonly any[]) => any;
+
+export type AnyAsyncFunction = (...args: readonly any[]) => Promise<any>;
+
 export type Pretty<X> = X extends AnyObject | readonly unknown[]
   ? {
       readonly [K in keyof X]: X[K];
