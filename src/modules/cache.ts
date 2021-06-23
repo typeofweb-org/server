@@ -5,14 +5,6 @@ import type { Json } from '../utils/types';
 import type { TypeOfWebCacheConfig } from './shared';
 import type CacheManager from 'cache-manager';
 
-const CACHED_FUNCTION = Symbol('CACHED_FUNCTION');
-
-export interface CachedFunction<Fn extends (...args: readonly Json[]) => any> {
-  // eslint-disable-next-line functional/prefer-readonly-type -- ok
-  [CACHED_FUNCTION]: true;
-  (...args: Parameters<Fn>): ReturnType<Fn>;
-}
-
 const serializeArgs = (args: Json): string => stableJsonStringify(args);
 
 export const createCachedFunction = <Fn extends (...args: readonly Json[]) => any>({
@@ -23,7 +15,7 @@ export const createCachedFunction = <Fn extends (...args: readonly Json[]) => an
   readonly fn: Fn;
   readonly cache: TypeOfWebCacheConfig;
   readonly CacheInstance: CacheManager.Cache;
-}): CachedFunction<Fn> => {
+}): Fn => {
   const ttlMs = 'expireIn' in cache ? cache.expireIn : expireAtToTtlMs(cache.expireAt);
 
   invariant(ttlMs, 'TTL is undefined - something went wrong');
@@ -33,20 +25,16 @@ export const createCachedFunction = <Fn extends (...args: readonly Json[]) => an
   const ttl = ttlMs / 1000;
 
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- ok
-  const cachedFunction = function (...args) {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- @todo ?
-    const typedArgs = args as readonly Json[];
-    const id = serializeArgs(typedArgs);
+  return function (...args) {
+    const id = serializeArgs(args);
     return CacheInstance.wrap<ReturnType<Fn>>(
       id,
       () => {
-        return fn(...typedArgs);
+        return fn(...args);
       },
       { ttl },
     );
-  } as CachedFunction<Fn>;
-  cachedFunction[CACHED_FUNCTION] = true;
-  return cachedFunction;
+  } as Fn;
 };
 
 function expireAtToTtlMs(expireAt: Exclude<TypeOfWebCacheConfig['expireAt'], undefined>) {
