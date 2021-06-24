@@ -4,6 +4,7 @@ import { jest } from '@jest/globals';
 import { number } from '@typeofweb/schema';
 
 import { createApp, createPlugin } from '../src';
+import { ms } from '../src/utils/ms';
 import { wait } from '../src/utils/utils';
 
 declare module '../src' {
@@ -24,7 +25,7 @@ describe('plugins', () => {
             someValue: 42,
             getUserById: {
               cache: {
-                expireIn: 1,
+                expireIn: ms('1 ms'),
               },
               fn: (id) => Promise.resolve(id.split('').map(Number)),
             },
@@ -100,7 +101,7 @@ describe('plugins', () => {
             someValue: 42,
             getUserById: {
               cache: {
-                expireIn: 10,
+                expireIn: ms('10 ms'),
               },
               fn,
             },
@@ -141,7 +142,7 @@ describe('plugins', () => {
             someValue: 42,
             getUserById: {
               cache: {
-                expireIn: 1000,
+                expireIn: ms('1 second'),
               },
               fn,
             },
@@ -187,7 +188,7 @@ describe('plugins', () => {
   });
 
   it('should call the function only once even when multiple requests are in parallel', async () => {
-    const FUNCTION_STALLING = 1000; // 1 second
+    const FUNCTION_STALLING = ms('1 second');
 
     const fn = jest.fn(async (id: string) => {
       await wait(FUNCTION_STALLING);
@@ -201,7 +202,7 @@ describe('plugins', () => {
             someValue: 42,
             getUserById: {
               cache: {
-                expireIn: 1000 * 60, // 1 minute
+                expireIn: ms('1 minute'),
               },
               fn,
             },
