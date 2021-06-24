@@ -1,14 +1,25 @@
-import type { MaybeAsync } from '../utils/types';
+import type { AnyAsyncFunction, MaybeAsync } from '../utils/types';
 import type { TypeOfWebServerMeta, TypeOfWebRequestMeta } from './augment';
-import type { TypeOfWebRequest, TypeOfWebApp, TypeOfWebServer } from './shared';
+import type { TypeOfWebApp, TypeOfWebServer, HandlerArguments, TypeOfWebCacheConfig } from './shared';
 
 type PluginName_ = keyof TypeOfWebServerMeta | keyof TypeOfWebRequestMeta;
 
+export type TypeOfWebServerMetaWithCachedFunctions<PluginName extends keyof TypeOfWebServerMeta> = {
+  readonly [K in keyof TypeOfWebServerMeta[PluginName]]: TypeOfWebServerMeta[PluginName][K] extends AnyAsyncFunction
+    ?
+        | TypeOfWebServerMeta[PluginName][K]
+        | { readonly cache: TypeOfWebCacheConfig; readonly fn: TypeOfWebServerMeta[PluginName][K] }
+    : TypeOfWebServerMeta[PluginName][K];
+};
+
 type PluginCallbackReturnServer<PluginName extends string> = PluginName extends keyof TypeOfWebServerMeta
-  ? { readonly server: (server: TypeOfWebServer) => MaybeAsync<TypeOfWebServerMeta[PluginName]> }
+  ? { readonly server: (server: TypeOfWebServer) => MaybeAsync<TypeOfWebServerMetaWithCachedFunctions<PluginName>> }
   : { readonly server?: never };
+
 type PluginCallbackReturnRequest<PluginName extends string> = PluginName extends keyof TypeOfWebRequestMeta
-  ? { readonly request: (request: TypeOfWebRequest) => MaybeAsync<TypeOfWebRequestMeta[PluginName]> }
+  ? {
+      readonly request: (...args: HandlerArguments) => MaybeAsync<TypeOfWebRequestMeta[PluginName]>;
+    }
   : { readonly request?: never };
 
 export type PluginCallbackReturnValue<PluginName extends string> = PluginCallbackReturnServer<PluginName> &

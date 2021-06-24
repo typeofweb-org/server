@@ -44,6 +44,7 @@ export interface TypeOfWebRequestToolkit {
   setCookie(name: string, value: string, options?: SetCookieOptions): MaybeAsync<void>;
   removeCookie(name: string, options?: SetCookieOptions): MaybeAsync<void>;
   setStatus(statusCode: HttpStatusCode): MaybeAsync<void>;
+  setHeader(headerName: string, value: string): MaybeAsync<void>;
 }
 
 export interface SetCookieOptions {
@@ -168,3 +169,21 @@ export interface TypeOfWebApp {
 }
 
 export type TypeOfWebRoute = Parameters<TypeOfWebApp['route']>[0];
+
+export type HandlerArguments = Parameters<TypeOfWebRoute['handler']>;
+
+// prettier-ignore
+type Hours = `${0|1}${0|1|2|3|4|5|6|7|8|9}`|`2${0|1|2|3}`;
+// type Minutes = `${0|1|2|3|4|5}${0|1|2|3|4|5|6|7|8|9}`;
+type Minutes = '00' | '15' | '30' | '45';
+
+type ExpireAt = `${Hours}:${Minutes}`;
+export type TypeOfWebCacheConfig =
+  | {
+      readonly expireIn: number;
+      readonly expireAt?: undefined;
+    }
+  | {
+      readonly expireIn?: undefined;
+      readonly expireAt: ExpireAt;
+    };

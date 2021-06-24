@@ -1,5 +1,6 @@
 import { URL } from 'url';
 
+import CacheManager from 'cache-manager';
 import CookieParser from 'cookie-parser';
 import Cors from 'cors';
 import Supertest from 'supertest';
@@ -8,14 +9,15 @@ import { deepMerge } from '../utils/merge';
 import { promiseOriginFnToNodeCallback } from '../utils/node';
 import { generateServerId } from '../utils/uniqueId';
 
+import { createCachedFunction } from './cache';
 import { createEventBus } from './events';
 import { initApp, listenExpressServer } from './http';
 import { initRouter, validateRoute } from './router';
 
-import type { DeepPartial, DeepWritable } from '../utils/types';
+import type { AnyFunction, DeepPartial, DeepWritable, JsonPrimitive, MaybeAsync } from '../utils/types';
 import type { TypeOfWebServerMeta } from './augment';
 import type { TypeOfWebPluginInternal } from './plugins';
-import type { AppOptions, TypeOfWebApp, TypeOfWebServer } from './shared';
+import type { AppOptions, TypeOfWebRoute, TypeOfWebApp, TypeOfWebServer, TypeOfWebCacheConfig } from './shared';
 
 const defaultAppOptions: AppOptions = {
   hostname: 'localhost',
@@ -38,6 +40,7 @@ const defaultAppOptions: AppOptions = {
 
 export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
   const options = deepMerge(opts, defaultAppOptions);
+  const memoryCache = CacheManager.caching({ store: 'memory', ttl: 0 });
 
   const server: DeepWritable<TypeOfWebServer> = {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- these properties are supposed to be added by the plugins inside `async start()`
@@ -51,7 +54,7 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
   };
 
   /* eslint-disable functional/prefer-readonly-type -- ok */
-  const routes: Array<Parameters<TypeOfWebApp['route']>[0]> = [];
+  const routes: Array<TypeOfWebRoute> = [];
   /* eslint-disable functional/prefer-readonly-type -- ok */
   const plugins: Array<TypeOfWebPluginInternal<string>> = [];
 
@@ -64,14 +67,33 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
           return;
         }
 
-        // @ts-expect-error
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- serverMetadata will have valid type
-        const serverMetadata = (await plugin.value.server(
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- make server readonly
-          server as TypeOfWebServer,
-        )) as unknown as TypeOfWebServerMeta[keyof TypeOfWebServerMeta];
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- ok
+        const pluginServer = plugin.value.server as unknown as (server: TypeOfWebServer) => MaybeAsync<
+          Record<
+            string,
+            | JsonPrimitive
+            | AnyFunction
+            | {
+                readonly cache: TypeOfWebCacheConfig;
+                readonly fn: AnyFunction;
+              }
+          >
+        >;
+
+        const result = await pluginServer(server);
+        const serverMetadata = result
+          ? Object.fromEntries(
+              Object.entries(result).map(([key, val]) => {
+                if (typeof val === 'object' && val && 'cache' in val) {
+                  return [key, createCachedFunction({ ...val, cacheInstance: memoryCache })];
+                }
+                return [key, val];
+              }),
+            )
+          : null;
 
         if (serverMetadata) {
+          // @ts-expect-error
           // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- if serverMetadata exists then plugin name is keyof TypeOfWebServerMeta
           server.plugins[plugin.name as keyof TypeOfWebServerMeta] = serverMetadata;
         }
