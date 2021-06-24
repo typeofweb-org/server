@@ -1,6 +1,6 @@
-import type { Json, JsonObject } from './types';
+import { isObject } from './utils';
 
-const isObject = (val: unknown): val is JsonObject => typeof val === 'object' && !!val && !Array.isArray(val);
+import type { Json, JsonObject } from './types';
 
 export const stableJsonStringify = (arg: Json): string => {
   return JSON.stringify(isObject(arg) ? sortObjProperties(arg) : arg);

@@ -1,4 +1,4 @@
-export type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head';
+export type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options';
 
 /**
  * This is a list of Hypertext Transfer Protocol (HTTP) response status codes.

@@ -114,6 +114,68 @@ describe('router', () => {
         `"RouteValidationError: Don't use regular expressions in routes. Use validators instead."`,
       );
     });
+
+    it('should remove cookies', async () => {
+      const app = createApp({ cookies: { secret: 'a'.repeat(32) } }).route({
+        path: '/users',
+        method: 'get',
+        validation: {},
+        handler: async (_request, t) => {
+          await t.removeCookie('test', { encrypted: false });
+          return null;
+        },
+      });
+
+      const result = await app.inject({
+        method: 'get',
+        path: '/users',
+      });
+
+      expect(result.headers['set-cookie']).toEqual([
+        'test=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT; HttpOnly; Secure; SameSite=Lax',
+      ]);
+    });
+  });
+
+  describe('headers', () => {
+    it('should set headers', async () => {
+      const app = createApp({}).route({
+        path: '/test',
+        method: 'get',
+        validation: {},
+        handler: async (_request, t) => {
+          await t.setHeader('test', 'testowa');
+          return null;
+        },
+      });
+
+      const result = await app.inject({
+        method: 'get',
+        path: '/test',
+      });
+
+      expect(result.headers['test']).toEqual('testowa');
+    });
+
+    it('should ignore result when response was sent manually', async () => {
+      const app = createApp({}).route({
+        path: '/test',
+        method: 'get',
+        validation: {},
+        handler: (request) => {
+          request._rawRes.status(203).end();
+          return { a: 123 };
+        },
+      });
+
+      const result = await app.inject({
+        method: 'get',
+        path: '/test',
+      });
+
+      expect(result.body).toEqual({});
+      expect(result.statusCode).toEqual(203);
+    });
   });
 
   describe('status code', () => {

@@ -38,6 +38,7 @@ export const createCachedFunction = <Fn extends (...args: readonly Json[]) => an
 };
 
 function expireAtToTtlMs(expireAt: Exclude<TypeOfWebCacheConfig['expireAt'], undefined>) {
+  /* istanbul ignore next */
   const [hours = '00', minutes = '00'] = expireAt.split(':');
   const expireAtDate = new Date();
   expireAtDate.setHours(Number.parseInt(hours));

@@ -14,6 +14,12 @@ declare module '../src' {
       getUserById(id: string): Promise<readonly number[]>;
     };
   }
+
+  interface TypeOfWebRequestMeta {
+    readonly costam: {
+      readonly auth: { readonly id: number };
+    };
+  }
 }
 
 describe('plugins', () => {
@@ -233,5 +239,76 @@ describe('plugins', () => {
     const after = performance.now();
     expect(after - before).toBeLessThan(2 * FUNCTION_STALLING);
     expect(fn).toHaveBeenCalledTimes(1);
+  });
+
+  it('should work when expireAt is used', async () => {
+    const FUNCTION_STALLING = ms('1 second');
+
+    const fn = jest.fn(async (id: string) => {
+      await wait(FUNCTION_STALLING);
+      return id.split('').map(Number);
+    });
+
+    const plugin = createPlugin('myPlugin', (_app) => {
+      return {
+        server(_server) {
+          return {
+            someValue: 42,
+            getUserById: {
+              cache: {
+                expireAt: '22:15',
+              },
+              fn,
+            },
+          };
+        },
+      };
+    });
+
+    const app = createApp({}).route({
+      path: '/cache',
+      method: 'get',
+      validation: {},
+      handler: (request, _t) => {
+        return request.server.plugins.myPlugin.getUserById('123');
+      },
+    });
+    await app.plugin(plugin);
+
+    const before = performance.now();
+    await Promise.all(
+      Array.from({ length: 20 }).map(() =>
+        app.inject({
+          method: 'get',
+          path: '/cache',
+        }),
+      ),
+    );
+    const after = performance.now();
+    expect(after - before).toBeLessThan(2 * FUNCTION_STALLING);
+    expect(fn).toHaveBeenCalledTimes(1);
+  });
+
+  it.only('should work when plugin returns only some properties', async () => {
+    const plugin = createPlugin('costam', (_app) => {
+      return {
+        request() {
+          return { auth: { id: 123 } };
+        },
+      };
+    });
+
+    const app = createApp({}).route({
+      path: '/test',
+      method: 'get',
+      validation: {},
+      handler: (request) => {
+        return request.plugins.costam.auth;
+      },
+    });
+    await app.plugin(plugin);
+
+    const result = await app.inject({ path: '/test', method: 'get' });
+    expect(result.body).toEqual({ id: 123 });
   });
 });

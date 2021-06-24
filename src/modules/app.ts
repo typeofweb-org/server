@@ -47,6 +47,7 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
     plugins: {} as TypeOfWebServer['plugins'],
     events: createEventBus(),
     get address() {
+      /* istanbul ignore next */
       return null;
     },
 
@@ -174,6 +175,7 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
       return result;
     },
 
+    /* istanbul ignore next */
     async start() {
       await initialize();
       app._rawExpressServer = await listenExpressServer(app._rawExpressApp, options);
@@ -194,6 +196,7 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
       return server;
     },
 
+    /* istanbul ignore next */
     stop() {
       return new Promise((resolve, reject) => {
         if (!app._rawExpressServer) {

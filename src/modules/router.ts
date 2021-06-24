@@ -46,10 +46,6 @@ export const initRouter = ({
       const aFirst = -1;
       const bFirst = 1;
 
-      if (a.path === b.path) {
-        return 0;
-      }
-
       const aSpecificity = calculateSpecificity(a.path);
       const bSpecificity = calculateSpecificity(b.path);
       if (aSpecificity !== bSpecificity) {
@@ -94,10 +90,6 @@ export const errorMiddleware =
       return;
     }
 
-    if (!err) {
-      return res.status(0).end();
-    }
-
     if (err instanceof ValidationError) {
       return res.status(400).json({ name: err.name, message: err.message, body: err.details });
     }
@@ -125,7 +117,7 @@ const finalErrorGuard = (h: AsyncHandler): AsyncHandler => {
     try {
       await h(req, res, next);
     } catch (err) {
-      next(err);
+      next(err ?? {});
     }
   };
 };
@@ -208,7 +200,8 @@ export const routeToExpressHandler = <
       payload: payload.value as TypeOf<Payload>,
 
       server,
-      plugins: [],
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- plugins are set below
+      plugins: {} as any,
       path: route.path,
       _rawReq: req,
       _rawRes: res,
@@ -217,6 +210,7 @@ export const routeToExpressHandler = <
 
       cookies,
     };
+    const toolkit = createRequestToolkitFor({ req, res, appOptions });
 
     await plugins.reduce(async (acc, plugin) => {
       if (!plugin?.value || typeof plugin?.value.request !== 'function') {
@@ -238,7 +232,6 @@ export const routeToExpressHandler = <
 
     server.events.emit(':request', request);
 
-    const toolkit = createRequestToolkitFor({ req, res, appOptions });
     const originalResult = await route.handler(request, toolkit);
 
     const result = tryCatch(() =>
