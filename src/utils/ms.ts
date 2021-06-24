@@ -11,6 +11,7 @@ const units = [
 type Unit = typeof units[number]['dictionary'][number];
 type ValidArg = `${number} ${Unit}`;
 
+/* istanbul ignore next */
 export const ms = (arg: ValidArg): number => {
   const [value, unit] = arg.split(/\s+/);
   invariant(value != null, 'Missing value');

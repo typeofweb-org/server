@@ -1,3 +1,7 @@
+import Os from 'os';
+
+import { jest } from '@jest/globals';
+
 import { generateRequestId, generateServerId, parseRequestId, parseServerId } from '../src/utils/uniqueId';
 
 import type { RequestId, ServerId } from '../src/utils/uniqueId';
@@ -41,5 +45,13 @@ describe('uniqueId', () => {
       serverCounter: 15710356,
       serverStartedAt: new Date('2021-06-15T16:52:40.000Z'),
     });
+  });
+
+  it('should fallback to randomized mac', () => {
+    jest.spyOn(Os, 'networkInterfaces').mockImplementation(() => {
+      return {};
+    });
+    const ids = Array.from({ length: 10000 }).map(() => generateServerId());
+    expect(new Set(ids).size).toEqual(10000);
   });
 });

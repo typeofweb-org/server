@@ -121,9 +121,8 @@ const generateKey = async (secret: string, maybeSalt?: Buffer, maybeIv?: Buffer)
   return { key, salt, iv };
 };
 
-const base64urlEncode = (value: string | Buffer) => {
-  const buf = Buffer.isBuffer(value) ? value : Buffer.from(value, 'binary');
-  return base64ToUrlEncode(buf.toString('base64'));
+const base64urlEncode = (value: Buffer) => {
+  return base64ToUrlEncode(value.toString('base64'));
 };
 
 const base64urlDecode = (base64: string) => {

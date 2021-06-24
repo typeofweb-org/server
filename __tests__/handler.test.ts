@@ -1,6 +1,6 @@
 import { number, object, string } from '@typeofweb/schema';
 
-import { createApp } from '../src';
+import { createApp, HttpError } from '../src';
 
 describe('handler', () => {
   describe('validation', () => {
@@ -231,12 +231,27 @@ Object {
       expect(result.body).toEqual({ message: 'Wszystko ok!' });
     });
 
-    it('should return 204 on empty response', async () => {
+    it('should return 204 on null response', async () => {
       const app = createApp({}).route({
         path: '/users',
         method: 'get',
         validation: {},
         handler: () => null,
+      });
+
+      const result = await app.inject({
+        method: 'get',
+        path: '/users',
+      });
+      expect(result.statusCode).toEqual(204);
+    });
+
+    it('should return 204 on undefined response', async () => {
+      const app = createApp({}).route({
+        path: '/users',
+        method: 'get',
+        validation: {},
+        handler: () => undefined as any,
       });
 
       const result = await app.inject({
@@ -279,6 +294,93 @@ Object {
       expect(uniqueServerIds.size).toEqual(1);
 
       expect.assertions(202);
+    });
+  });
+
+  describe('errors', () => {
+    it('should handle incorrect http code', async () => {
+      const app = createApp({}).route({
+        path: '/test',
+        method: 'get',
+        validation: {},
+        handler: () => {
+          throw new HttpError(700);
+        },
+      });
+
+      const result = await app.inject({
+        path: '/test',
+        method: 'get',
+      });
+      expect(result.statusCode).toEqual(500);
+    });
+
+    it('should handle throwing null', async () => {
+      const app = createApp({}).route({
+        path: '/test',
+        method: 'get',
+        validation: {},
+        handler: () => {
+          throw null;
+        },
+      });
+
+      const result = await app.inject({
+        path: '/test',
+        method: 'get',
+      });
+      expect(result.statusCode).toEqual(500);
+    });
+
+    it('should handle throwing custom error with status code', async () => {
+      const app = createApp({}).route({
+        path: '/test',
+        method: 'get',
+        validation: {},
+        handler: () => {
+          throw { statusCode: 404 };
+        },
+      });
+
+      const result = await app.inject({
+        path: '/test',
+        method: 'get',
+      });
+      expect(result.statusCode).toEqual(404);
+    });
+
+    it('should handle throwing undefined', async () => {
+      const app = createApp({}).route({
+        path: '/test',
+        method: 'get',
+        validation: {},
+        handler: () => {
+          throw undefined;
+        },
+      });
+
+      const result = await app.inject({
+        path: '/test',
+        method: 'get',
+      });
+      expect(result.statusCode).toEqual(500);
+    });
+
+    it('should handle throwing {}', async () => {
+      const app = createApp({}).route({
+        path: '/test',
+        method: 'get',
+        validation: {},
+        handler: () => {
+          throw {};
+        },
+      });
+
+      const result = await app.inject({
+        method: 'get',
+        path: '/test',
+      });
+      expect(result.statusCode).toEqual(500);
     });
   });
 });

@@ -1,3 +1,5 @@
+import { isObject } from './utils';
+
 /* eslint-disable @typescript-eslint/consistent-type-assertions -- :| */
 export const deepMerge = <T extends object, O extends object>(overrides: T, defaults: O): T & O =>
   (Object.keys(defaults) as unknown as readonly (keyof O)[]).reduce(
@@ -6,8 +8,8 @@ export const deepMerge = <T extends object, O extends object>(overrides: T, defa
       return {
         ...overrides,
         [key]:
-          typeof defaultValue === 'object' && !Array.isArray(defaultValue) && defaultValue
-            ? deepMerge(overrides[key] ?? {}, defaultValue as unknown as object)
+          isObject(overrides[key]) && isObject(defaultValue)
+            ? deepMerge(overrides[key] as unknown as object, defaultValue as unknown as object)
             : overrides[key] === undefined
             ? defaultValue
             : overrides[key],

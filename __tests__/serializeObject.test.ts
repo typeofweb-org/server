@@ -13,4 +13,10 @@ describe('stableJsonStringify', () => {
 
     expect(stableJsonStringify(obj)).toEqual(stableJsonStringify({ a: 123, b: 333, e: 222, d: 0 }));
   });
+
+  it('should stable sort nested objects', () => {
+    expect(stableJsonStringify({ a: 123, c: { a: 1, c: 2, b: 3 }, b: 444 })).toEqual(
+      stableJsonStringify({ a: 123, b: 444, c: { a: 1, b: 3, c: 2 } }),
+    );
+  });
 });

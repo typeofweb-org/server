@@ -1,7 +1,7 @@
+import { jest } from '@jest/globals';
 import { number, object, string } from '@typeofweb/schema';
 
 import { createApp } from '../src';
-
 declare module '../src' {
   interface TypeOfWebEvents {
     readonly HELLO_EVENTS_TEST: number;
@@ -76,5 +76,32 @@ describe('events', () => {
       payload: payload[2],
     });
     expect.assertions(3);
+  });
+
+  it('should allow removing listeners', async () => {
+    const app = createApp({}).route({
+      path: '/test',
+      method: 'get',
+      validation: {},
+      handler: () => {
+        return null;
+      },
+    });
+
+    const handler = jest.fn();
+
+    app.events.on(':response', handler);
+    await app.inject({
+      method: 'get',
+      path: '/test',
+    });
+    expect(handler).toHaveBeenCalledTimes(1);
+
+    app.events.off(':response', handler);
+    await app.inject({
+      method: 'get',
+      path: '/test',
+    });
+    expect(handler).toHaveBeenCalledTimes(1);
   });
 });

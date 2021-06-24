@@ -11,6 +11,7 @@ export const uniqueCounter = (() => {
   let mutableNum = Math.floor(Math.random() * MAX_NUM);
 
   return () => {
+    /* istanbul ignore if */
     if (mutableNum >= MAX_NUM) {
       mutableNum = 0;
     }
