@@ -223,7 +223,7 @@ describe('plugins', () => {
 
     const before = performance.now();
     await Promise.all(
-      Array.from({ length: 100 }).map(() =>
+      Array.from({ length: 20 }).map(() =>
         app.inject({
           method: 'get',
           path: '/cache',
