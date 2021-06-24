@@ -6,7 +6,7 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-[![codecov](https://codecov.io/gh/typeofweb/server/branch/main/graph/badge.svg?token=6DNCIHEEUO)](https://codecov.io/gh/typeofweb/server)
+[![codecov](https://codecov.io/gh/typeofweb/server/branch/main/graph/badge.svg?token=X1Z8BQ0TFG)](https://codecov.io/gh/typeofweb/server)
 [![npm](https://img.shields.io/npm/v/@typeofweb/server.svg)](https://www.npmjs.com/package/@typeofweb/server)
 
 ## Docs
