@@ -19,4 +19,8 @@ describe('stableJsonStringify', () => {
       stableJsonStringify({ a: 123, b: 444, c: { a: 1, b: 3, c: 2 } }),
     );
   });
+
+  it('should work for primitives', () => {
+    expect(stableJsonStringify(1)).toEqual('1');
+  });
 });
