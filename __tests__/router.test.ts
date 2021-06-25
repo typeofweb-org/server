@@ -176,6 +176,26 @@ describe('router', () => {
       expect(result.body).toEqual({});
       expect(result.statusCode).toEqual(203);
     });
+
+    it('should ignore result when error was sent manually', async () => {
+      const app = createApp({}).route({
+        path: '/test',
+        method: 'get',
+        validation: {},
+        handler: (request) => {
+          request._rawRes.status(501).end();
+          throw new Error();
+        },
+      });
+
+      const result = await app.inject({
+        method: 'get',
+        path: '/test',
+      });
+
+      expect(result.body).toEqual({});
+      expect(result.statusCode).toEqual(501);
+    });
   });
 
   describe('status code', () => {
