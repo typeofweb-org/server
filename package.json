@@ -45,8 +45,11 @@
     "cookie-parser": "1.4.5",
     "cors": "2.8.5",
     "express": "4.17.1",
+    "openapi-types": "9.0.3",
+    "prettier": "2.3.2",
     "stoppable": "1.1.0",
-    "supertest": "6.1.3"
+    "supertest": "6.1.3",
+    "typeconv": "1.4.1"
   },
   "peerDependencies": {},
   "devDependencies": {
@@ -68,7 +71,6 @@
     "jest": "27.0.4",
     "lint-staged": "11.0.0",
     "nodemon": "2.0.7",
-    "prettier": "2.3.1",
     "rimraf": "3.0.2",
     "rollup": "2.52.2",
     "rollup-plugin-filesize": "9.1.1",
@@ -82,7 +84,7 @@
     "typescript": "4.3.4"
   },
   "scripts": {
-    "prejest": "yarn build",
+    "pretest": "yarn build",
     "jest": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test": "yarn jest --detectOpenHandles --forceExit --coverage",
     "test:dev": "yarn jest --watch",
