@@ -957,6 +957,14 @@
   dependencies:
     "@types/superagent" "*"
 
+"@types/swagger-ui-express@4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@types/swagger-ui-express/-/swagger-ui-express-4.1.2.tgz#cfc884904a104c3193f46f423d04ee0416be1ef4"
+  integrity sha512-t9teFTU8dKe69rX9EwL6OM2hbVquYdFM+sQ0REny4RalPlxAm+zyP04B12j4c7qEuDS6CnlwICywqWStPA3v4g==
+  dependencies:
+    "@types/express" "*"
+    "@types/serve-static" "*"
+
 "@types/yargs-parser@*":
   version "20.2.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-20.2.0.tgz#dd3e6699ba3237f0348cd085e4698780204842f9"
@@ -6222,6 +6230,18 @@ suretype@^2.3.0:
     ajv "^6.11.0"
     awesome-ajv-errors "^1.0.1"
     meta-types "^1.1.0"
+
+swagger-ui-dist@^3.18.1:
+  version "3.51.0"
+  resolved "https://registry.yarnpkg.com/swagger-ui-dist/-/swagger-ui-dist-3.51.0.tgz#69ac8dcf540d189601f479c6fb2d7d5462756867"
+  integrity sha512-DX8RuAyXBjd2J4mjCLLUaodbtZ2z6dF05l6IF3hO++erXM+CR3QVX9TqYX3374hW5BOeLrr7gujoSdY8jIvI2A==
+
+swagger-ui-express@4.1.6:
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/swagger-ui-express/-/swagger-ui-express-4.1.6.tgz#682294af3d5c70f74a1fa4d6a9b503a9ee55ea82"
+  integrity sha512-Xs2BGGudvDBtL7RXcYtNvHsFtP1DBFPMJFRxHe5ez/VG/rzVOEjazJOOSc/kSCyxreCTKfJrII6MJlL9a6t8vw==
+  dependencies:
+    swagger-ui-dist "^3.18.1"
 
 symbol-tree@^3.2.4:
   version "3.2.4"

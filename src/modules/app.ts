@@ -12,6 +12,7 @@ import { generateServerId } from '../utils/uniqueId';
 import { createCachedFunction } from './cache';
 import { createEventBus } from './events';
 import { initApp, listenExpressServer } from './http';
+import { getOpenApiForRoutes } from './openapi';
 import { initRouter, validateRoute } from './router';
 
 import type { AnyFunction, DeepPartial, DeepWritable, JsonPrimitive, MaybeAsync } from '../utils/types';
@@ -36,6 +37,7 @@ const defaultAppOptions: AppOptions = {
   router: {
     strictTrailingSlash: false,
   },
+  openapi: false,
 };
 
 export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
@@ -126,6 +128,15 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
 
     app._rawExpressRouter = initRouter({ server, appOptions: options, routes, plugins });
     app._rawExpressApp.use(app._rawExpressRouter);
+
+    if (options.openapi) {
+      const SwaggerUiExpress = await import('swagger-ui-express');
+      const openapi = await getOpenApiForRoutes(routes, options.openapi);
+      const path = options.openapi.path ?? '/documentation';
+
+      app._rawExpressRouter.use(path, SwaggerUiExpress.serve);
+      app._rawExpressRouter.get(path, SwaggerUiExpress.setup(openapi));
+    }
 
     mutableIsInitialized = true;
     server.events.emit(':server', server);

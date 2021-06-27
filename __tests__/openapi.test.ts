@@ -1,15 +1,26 @@
-import { array, number, object, string } from '@typeofweb/schema';
+import { array, boolean, number, object, oneOf, string } from '@typeofweb/schema';
 
-import { routeConfigToOpenApi } from '../src/modules/openapi';
+import { routeConfigToOpenApiPathsDefinitions } from '../src/modules/openapi';
 
 describe('routeConfigToOpenApi', () => {
   it('should work', async () => {
-    await routeConfigToOpenApi({
+    await routeConfigToOpenApiPathsDefinitions({
       path: '/users/:userId/invoices',
-      method: 'get',
+      method: 'post',
       validation: {
         params: {
           userId: string(),
+        },
+        payload: object({
+          id: string(),
+          item: object({
+            price: number(),
+          })(),
+        })(),
+        query: {
+          isFun: boolean(),
+          search: string(),
+          category: oneOf(['html', 'css'])(),
         },
         response: array(
           object({

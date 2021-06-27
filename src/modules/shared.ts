@@ -34,6 +34,14 @@ export interface AppOptions {
   readonly router: {
     readonly strictTrailingSlash: boolean;
   };
+  readonly openapi:
+    | {
+        readonly title: string;
+        readonly description: string;
+        readonly version: string;
+        readonly path?: string;
+      }
+    | false;
 }
 
 interface AppOptionsCookies extends SetCookieOptions {

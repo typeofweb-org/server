@@ -4,6 +4,9 @@
     "project": "tsconfig.eslint.json"
   },
   "extends": ["plugin:@typeofweb/recommended"],
+  "rules": {
+    "import/dynamic-import-chunkname": "off"
+  },
   "overrides": [
     {
       "files": ["__tests__/**/*.ts"],
