@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`routeConfigToOpenApi should work 1`] = `
+Object {
+  "definitions": Object {
+    "PostUsersByUserIdInvoicesParams": Object {
+      "additionalProperties": false,
+      "properties": Object {
+        "userId": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "userId",
+      ],
+      "type": "object",
+    },
+    "PostUsersByUserIdInvoicesPayload": Object {
+      "additionalProperties": false,
+      "properties": Object {
+        "id": Object {
+          "type": "string",
+        },
+        "item": Object {
+          "additionalProperties": false,
+          "properties": Object {
+            "price": Object {
+              "type": "number",
+            },
+          },
+          "required": Array [
+            "price",
+          ],
+          "type": "object",
+        },
+      },
+      "required": Array [
+        "id",
+        "item",
+      ],
+      "type": "object",
+    },
+    "PostUsersByUserIdInvoicesQuery": Object {
+      "additionalProperties": false,
+      "properties": Object {
+        "category": Object {
+          "anyOf": Array [
+            Object {
+              "const": "html",
+              "type": "string",
+            },
+            Object {
+              "const": "css",
+              "type": "string",
+            },
+          ],
+        },
+        "isFun": Object {
+          "type": "boolean",
+        },
+        "search": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "isFun",
+        "search",
+        "category",
+      ],
+      "type": "object",
+    },
+    "PostUsersByUserIdInvoicesResponse": Object {
+      "items": Object {
+        "additionalProperties": false,
+        "properties": Object {
+          "id": Object {
+            "type": "string",
+          },
+          "total": Object {
+            "type": "number",
+          },
+        },
+        "required": Array [
+          "id",
+          "total",
+        ],
+        "type": "object",
+      },
+      "type": "array",
+    },
+  },
+  "paths": Object {
+    "/users/{userId}/invoices": Object {
+      "post": Object {
+        "operationId": "PostUsersByUserIdInvoices",
+        "parameters": Array [
+          Object {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "type": "string",
+          },
+          Object {
+            "in": "body",
+            "name": "payload",
+            "schema": Object {
+              "$ref": "#/definitions/PostUsersByUserIdInvoicesPayload",
+            },
+          },
+          Object {
+            "in": "query",
+            "name": "isFun",
+            "required": true,
+            "type": "boolean",
+          },
+          Object {
+            "in": "query",
+            "name": "search",
+            "required": true,
+            "type": "string",
+          },
+          Object {
+            "enum": Array [
+              "html",
+              "css",
+            ],
+            "in": "query",
+            "name": "category",
+            "required": true,
+            "type": "string",
+          },
+        ],
+        "responses": Object {
+          "default": Object {
+            "description": "PostUsersByUserIdInvoicesResponse",
+            "schema": Object {
+              "$ref": "#/definitions/PostUsersByUserIdInvoicesResponse",
+            },
+          },
+        },
+      },
+    },
+  },
+}
+`;

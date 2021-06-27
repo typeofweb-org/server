@@ -4,7 +4,7 @@ import { routeConfigToOpenApiPathsDefinitions } from '../src/modules/openapi';
 
 describe('routeConfigToOpenApi', () => {
   it('should work', async () => {
-    await routeConfigToOpenApiPathsDefinitions({
+    const openapi = await routeConfigToOpenApiPathsDefinitions({
       path: '/users/:userId/invoices',
       method: 'post',
       validation: {
@@ -30,5 +30,7 @@ describe('routeConfigToOpenApi', () => {
         )(),
       },
     });
+
+    expect(openapi).toMatchSnapshot();
   });
 });

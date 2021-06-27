@@ -113,7 +113,6 @@ const getOpenApiPathForRoute = (
                 // @todo
                 return;
               }
-              console.log(enumType);
 
               return {
                 name: queryParamName,
