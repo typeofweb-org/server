@@ -5,3 +5,4 @@ rollup.config.js
 dist
 coverage
 __tests__/bench.js
+acceptance_tests

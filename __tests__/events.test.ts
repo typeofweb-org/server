@@ -30,7 +30,7 @@ describe('events', () => {
       expect(request.query).toEqual({});
       expect(request.payload).toEqual({ test: 'test' });
     });
-    app.events.on(':response', (response) => expect(response).toEqual({ message: 'OKEJ' }));
+    app.events.on(':afterResponse', (response) => expect(response).toEqual({ message: 'OKEJ' }));
 
     await app.inject({
       method: 'post',
@@ -90,14 +90,14 @@ describe('events', () => {
 
     const handler = jest.fn();
 
-    app.events.on(':response', handler);
+    app.events.on(':afterResponse', handler);
     await app.inject({
       method: 'get',
       path: '/test',
     });
     expect(handler).toHaveBeenCalledTimes(1);
 
-    app.events.off(':response', handler);
+    app.events.off(':afterResponse', handler);
     await app.inject({
       method: 'get',
       path: '/test',

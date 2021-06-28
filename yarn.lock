@@ -716,10 +716,10 @@
     eslint-plugin-import "^2.23.4"
     eslint-plugin-unicorn "^33.0.1"
 
-"@typeofweb/schema@0.8.0-5":
-  version "0.8.0-5"
-  resolved "https://registry.yarnpkg.com/@typeofweb/schema/-/schema-0.8.0-5.tgz#ff80edf8ce06201d6e51d646e1358630e2f30283"
-  integrity sha512-WhuUo3TH9MoSSzumZ+izl9FoeFTbXHPCREkI+OKKlSo7rEXAELAk2Ta4wohugE12+cVs16kz1edgjnsbFUa4oQ==
+"@typeofweb/schema@0.8.0-6":
+  version "0.8.0-6"
+  resolved "https://registry.yarnpkg.com/@typeofweb/schema/-/schema-0.8.0-6.tgz#a8bd27e40092e9f44d4f0d4005efbff2011b2a95"
+  integrity sha512-wGwojkRGWWRXy9m9KIG+kTfyemZfllRacB+qKvCbR0f/cLj4vSYoia9j75Vxc9/Jakt156HXlZ0YXMvb4eQmCw==
 
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.14":
   version "7.1.14"

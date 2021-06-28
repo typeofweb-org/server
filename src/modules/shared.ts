@@ -81,6 +81,7 @@ export interface TypeOfWebRequest<
   readonly payload: Payload;
 
   readonly id: RequestId;
+  readonly timestamp: ReturnType<typeof performance.now>;
 
   readonly cookies: Record<string, string>;
 
@@ -93,6 +94,14 @@ export interface TypeOfWebRequest<
    * @internal
    */
   readonly _rawRes: Express.Response;
+}
+
+export interface TypeOfWebResponse {
+  readonly payload: Json | null;
+  readonly request: TypeOfWebRequest;
+  readonly statusCode: number;
+  readonly _rawRes: Express.Response;
+  readonly timestamp: ReturnType<typeof performance.now>;
 }
 
 export interface TypeOfWebServer {

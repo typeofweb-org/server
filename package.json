@@ -3,11 +3,12 @@
   "version": "0.1.1",
   "type": "module",
   "exports": {
+    "require": "./dist/index.cjs",
     "import": "./dist/index.js",
-    "default": "./dist/index.js",
-    "require": "./dist/index.cjs"
+    "default": "./dist/index.js"
   },
   "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
   "types": "dist/index.d.ts",
   "sideEffects": false,
   "repository": "git://github.com/typeofweb/server",
@@ -34,7 +35,7 @@
     "api"
   ],
   "dependencies": {
-    "@typeofweb/schema": "0.8.0-5",
+    "@typeofweb/schema": "0.8.0-6",
     "@types/cache-manager": "3.4.0",
     "@types/cookie-parser": "1.4.2",
     "@types/cors": "2.8.10",

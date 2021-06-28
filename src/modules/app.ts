@@ -64,44 +64,47 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
   let mutableIsInitialized = false;
 
   function initServerPlugins() {
-    return Promise.all(
-      plugins.map(async (plugin) => {
-        if (!plugin?.value || typeof plugin?.value.server !== 'function') {
-          return;
-        }
+    return plugins.reduce(async (acc, plugin) => {
+      if (!plugin?.value || typeof plugin?.value.server !== 'function') {
+        return acc;
+      }
 
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- ok
-        const pluginServer = plugin.value.server as unknown as (server: TypeOfWebServer) => MaybeAsync<
-          Record<
-            string,
-            | JsonPrimitive
-            | AnyFunction
-            | {
-                readonly cache: TypeOfWebCacheConfig;
-                readonly fn: AnyFunction;
+      await acc;
+
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- ok
+      const pluginServer = plugin.value.server as unknown as (server: TypeOfWebServer) => MaybeAsync<
+        Record<
+          string,
+          | JsonPrimitive
+          | AnyFunction
+          | {
+              readonly cache: TypeOfWebCacheConfig;
+              readonly fn: AnyFunction;
+            }
+        >
+      >;
+
+      const result = await pluginServer(server);
+      const serverMetadata = !result
+        ? null
+        : // skip iterating over instances of custom classes
+        result.constructor !== Object
+        ? result
+        : Object.fromEntries(
+            Object.entries(result).map(([key, val]) => {
+              if (typeof val === 'object' && val && 'cache' in val) {
+                return [key, createCachedFunction({ ...val, cacheInstance: memoryCache })];
               }
-          >
-        >;
+              return [key, val];
+            }),
+          );
 
-        const result = await pluginServer(server);
-        const serverMetadata = result
-          ? Object.fromEntries(
-              Object.entries(result).map(([key, val]) => {
-                if (typeof val === 'object' && val && 'cache' in val) {
-                  return [key, createCachedFunction({ ...val, cacheInstance: memoryCache })];
-                }
-                return [key, val];
-              }),
-            )
-          : null;
-
-        if (serverMetadata) {
-          // @ts-expect-error
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- if serverMetadata exists then plugin name is keyof TypeOfWebServerMeta
-          server.plugins[plugin.name as keyof TypeOfWebServerMeta] = serverMetadata;
-        }
-      }),
-    );
+      if (serverMetadata) {
+        // @ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- if serverMetadata exists then plugin name is keyof TypeOfWebServerMeta
+        server.plugins[plugin.name as keyof TypeOfWebServerMeta] = serverMetadata;
+      }
+    }, Promise.resolve());
   }
 
   async function initialize() {

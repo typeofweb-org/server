@@ -73,25 +73,8 @@ const getOpenApiPathForRoute = (
   const operation: OpenAPIV2.OperationObject = {
     operationId: identifier,
     parameters: [
-      ...(route.validation.params
-        ? Object.keys(route.validation.params)
-            .map((paramName): OpenAPIV2.GeneralParameterObject | undefined => {
-              const paramSchema = definitions[schemaToName(identifier, 'params')];
-              const type = paramSchema?.properties?.[paramName]?.type;
-              if (Array.isArray(type)) {
-                // @todo
-                return;
-              }
-
-              return {
-                name: paramName,
-                in: 'path',
-                required: paramSchema?.required?.includes(paramName) ?? true,
-                type: type ?? 'string',
-              };
-            })
-            .filter((x): x is OpenAPIV2.GeneralParameterObject => typeof x !== 'undefined')
-        : []),
+      ...schemaParamToOpenApi(route, 'params', identifier, definitions),
+      ...schemaParamToOpenApi(route, 'query', identifier, definitions),
       ...(route.validation.payload
         ? [
             {
@@ -102,31 +85,6 @@ const getOpenApiPathForRoute = (
               },
             },
           ]
-        : []),
-      ...(route.validation.query
-        ? Object.keys(route.validation.query)
-            .map((queryParamName): OpenAPIV2.GeneralParameterObject | undefined => {
-              const querySchema = definitions[schemaToName(identifier, 'query')];
-              const type = querySchema?.properties?.[queryParamName]?.type;
-              const enumType = querySchema?.properties?.[queryParamName]?.anyOf;
-              if (Array.isArray(type)) {
-                // @todo
-                return;
-              }
-
-              return {
-                name: queryParamName,
-                in: 'query',
-                required: querySchema?.required?.includes(queryParamName) ?? true,
-                type: type ?? 'string',
-                ...(enumType && {
-                  enum: enumType
-                    .map((v: IJsonSchema & { readonly const?: string }) => v.const)
-                    .filter((x): x is string => !!x),
-                }),
-              };
-            })
-            .filter((x): x is OpenAPIV2.GeneralParameterObject => typeof x !== 'undefined')
         : []),
     ],
     responses: {
@@ -147,6 +105,40 @@ const getOpenApiPathForRoute = (
     [expressRoutePathToSwaggerPath(route.path)]: pathItemObject,
   };
   return pathsObject;
+};
+
+const schemaParamToOpenApi = (
+  route: RouteSubset,
+  kind: 'query' | 'params',
+  identifier: string,
+  definitions: OpenAPIV2.DefinitionsObject,
+) => {
+  const schema = route.validation[kind];
+  if (!schema) {
+    return [];
+  }
+  return Object.keys(schema)
+    .map((paramName: string): OpenAPIV2.GeneralParameterObject | undefined => {
+      const openApiParamIn = kind === 'params' ? 'path' : kind;
+      const schema = definitions[schemaToName(identifier, kind)];
+      const type = schema?.properties?.[paramName]?.type;
+      const enumType = schema?.properties?.[paramName]?.anyOf;
+      if (Array.isArray(type)) {
+        // @todo
+        return;
+      }
+
+      return {
+        name: paramName,
+        in: openApiParamIn,
+        required: schema?.required?.includes(paramName) ?? true,
+        type: type ?? 'string',
+        ...(enumType && {
+          enum: enumType.map((v: IJsonSchema & { readonly const?: string }) => v.const).filter((x): x is string => !!x),
+        }),
+      };
+    })
+    .filter((x): x is OpenAPIV2.GeneralParameterObject => typeof x !== 'undefined');
 };
 
 const getOpenApiResultForRoute = async (
