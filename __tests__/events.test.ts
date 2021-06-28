@@ -24,20 +24,33 @@ describe('events', () => {
       },
     });
 
-    app.events.on(':server', (server) => expect(server).toBeDefined());
-    app.events.on(':request', (request) => {
-      expect(request.params).toEqual({ userId: 123, invoiceId: 'bbb' });
-      expect(request.query).toEqual({});
-      expect(request.payload).toEqual({ test: 'test' });
-    });
-    app.events.on(':afterResponse', (response) => expect(response).toEqual({ message: 'OKEJ' }));
+    const onServer = jest.fn();
+    const onRequest = jest.fn();
+    const onAfterResponse = jest.fn();
+
+    app.events.on(':server', onServer);
+    app.events.on(':request', onRequest);
+    app.events.on(':afterResponse', onAfterResponse);
 
     await app.inject({
       method: 'post',
       path: '/users/123/invoices/bbb',
       payload: { test: 'test' },
     });
-    expect.assertions(5);
+
+    expect(onServer).toHaveBeenCalledTimes(1);
+
+    expect(onRequest).toHaveBeenCalledTimes(1);
+    expect(onRequest).toHaveBeenCalledWith(
+      expect.objectContaining({
+        params: { userId: 123, invoiceId: 'bbb' },
+        query: {},
+        payload: { test: 'test' },
+      }),
+    );
+
+    expect(onAfterResponse).toHaveBeenCalledTimes(1);
+    expect(onAfterResponse).toHaveBeenCalledWith(expect.objectContaining({ payload: { message: 'OKEJ' } }));
   });
 
   it('should allow emitting custom events', async () => {
@@ -56,9 +69,11 @@ describe('events', () => {
     });
 
     const payload = [{ id: Math.random() }, { id: Math.random() }, { id: Math.random() }];
-    let mutableI = 0;
 
-    app.events.on('HELLO_EVENTS_TEST', (id) => expect(id).toEqual(payload[mutableI++]?.id));
+    // eslint-disable-next-line functional/prefer-readonly-type -- ok
+    const onHelloEvent = jest.fn();
+
+    app.events.on('HELLO_EVENTS_TEST', onHelloEvent);
 
     await app.inject({
       method: 'post',
@@ -75,7 +90,11 @@ describe('events', () => {
       path: '/users',
       payload: payload[2],
     });
-    expect.assertions(3);
+
+    expect(onHelloEvent).toHaveBeenCalledTimes(3);
+    expect(onHelloEvent).toHaveBeenNthCalledWith(1, payload[0]?.id);
+    expect(onHelloEvent).toHaveBeenNthCalledWith(2, payload[1]?.id);
+    expect(onHelloEvent).toHaveBeenNthCalledWith(3, payload[2]?.id);
   });
 
   it('should allow removing listeners', async () => {
