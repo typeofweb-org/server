@@ -26,9 +26,9 @@
     "wait-on": "6.0.0"
   },
   "scripts": {
-    "dev:cjs": "yarn rollup:build && concurrently 'npm:rollup:watch' 'nodemon dist/index.cjs --on-change-only'",
-    "dev:esm": "yarn rollup:build && concurrently 'npm:rollup:watch' 'nodemon dist/index.mjs --on-change-only'",
-    "rollup:build": "rimraf dist && rollup --config",
+    "dev:cjs": "yarn build && concurrently 'npm:rollup:watch' 'nodemon dist/index.cjs --on-change-only'",
+    "dev:esm": "yarn build && concurrently 'npm:rollup:watch' 'nodemon dist/index.mjs --on-change-only'",
+    "build": "rimraf dist && rollup --config",
     "rollup:watch": "rollup --config --watch"
   }
 }
