@@ -48,6 +48,7 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- these properties are supposed to be added by the plugins inside `async start()`
     plugins: {} as TypeOfWebServer['plugins'],
     events: createEventBus(),
+    /* istanbul ignore next */
     get address() {
       /* istanbul ignore next */
       return null;
@@ -132,6 +133,7 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
     app._rawExpressRouter = initRouter({ server, appOptions: options, routes, plugins });
     app._rawExpressApp.use(app._rawExpressRouter);
 
+    /* istanbul ignore if */
     if (options.openapi) {
       const SwaggerUiExpress = await import('swagger-ui-express');
       const openapi = await getOpenApiForRoutes(routes, options.openapi);
