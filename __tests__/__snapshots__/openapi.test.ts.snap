@@ -101,13 +101,6 @@ Object {
             "type": "string",
           },
           Object {
-            "in": "body",
-            "name": "payload",
-            "schema": Object {
-              "$ref": "#/definitions/PostUsersByUserIdInvoicesPayload",
-            },
-          },
-          Object {
             "in": "query",
             "name": "isFun",
             "required": true,
@@ -128,6 +121,13 @@ Object {
             "name": "category",
             "required": true,
             "type": "string",
+          },
+          Object {
+            "in": "body",
+            "name": "payload",
+            "schema": Object {
+              "$ref": "#/definitions/PostUsersByUserIdInvoicesPayload",
+            },
           },
         ],
         "responses": Object {

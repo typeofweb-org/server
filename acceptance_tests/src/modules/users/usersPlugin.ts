@@ -1,6 +1,7 @@
 import { array, number, object, string } from '@typeofweb/schema';
 import { createPlugin, HttpError, HttpStatusCode } from '@typeofweb/server';
 import { usersServicePlugin } from './usersServicePlugin';
+import { userInputSchema, userSchema } from './usersValidators';
 
 export const usersPlugin = createPlugin('users', async (app) => {
   await app.plugin(usersServicePlugin);
@@ -13,13 +14,7 @@ export const usersPlugin = createPlugin('users', async (app) => {
         limit: number(),
         skip: number(),
       },
-      response: array(
-        object({
-          id: number(),
-          name: string(),
-          age: number(),
-        })(),
-      )(),
+      response: array(userSchema)(),
     },
     handler(request) {
       return request.server.plugins.usersService.findAllUsers(request.query);
@@ -30,16 +25,20 @@ export const usersPlugin = createPlugin('users', async (app) => {
     method: 'post',
     path: '/users/',
     validation: {
-      payload: object({
-        name: string(),
-        age: number(),
-      })(),
+      payload: userInputSchema,
+      response: userSchema,
     },
     async handler(request) {
-      const res = await request.server.plugins.usersService.createUser(request.payload);
-      console.log(res);
+      const userId = await request.server.plugins.usersService.createUser(request.payload);
+      const user = await request.server.plugins.usersService.findUserById(userId);
 
-      return null;
+      if (!user) {
+        throw new HttpError(HttpStatusCode.InternalServerError);
+      }
+
+      request.server.events.emit('user-created', user);
+
+      return user;
     },
   });
 
@@ -50,11 +49,7 @@ export const usersPlugin = createPlugin('users', async (app) => {
       params: {
         userId: number(),
       },
-      response: object({
-        id: number(),
-        name: string(),
-        age: number(),
-      })(),
+      response: userSchema,
     },
     async handler(request) {
       const { userId } = request.params;

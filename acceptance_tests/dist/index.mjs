@@ -6,7 +6,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { number, array, object, string } from '@typeofweb/schema';
+import { object, string, number, array } from '@typeofweb/schema';
 import { createPlugin, HttpError, HttpStatusCode, createApp } from '@typeofweb/server';
 import sqlite3 from 'sqlite3';
 import { open } from 'sqlite';
@@ -35,13 +35,27 @@ const usersServicePlugin = createPlugin('usersService', (app) => {
           }
           return server.plugins.db.all('SELECT * FROM users');
         },
-        createUser(data) {
-          return server.plugins.db.run('INSERT INTO users VALUES(?,?,?)', undefined, data.name, data.age);
+        async createUser(data) {
+          const res = await server.plugins.db.run('INSERT INTO users VALUES(?,?,?)', undefined, data.name, data.age);
+          if (!res.lastID) {
+            throw new Error(`Couldn't insert user into the database`);
+          }
+          return res.lastID;
         },
       };
     },
   };
 });
+
+const userInputSchema = object({
+  name: string(),
+  age: number(),
+})();
+const userSchema = object({
+  id: number(),
+  name: string(),
+  age: number(),
+})();
 
 const usersPlugin = createPlugin('users', async (app) => {
   await app.plugin(usersServicePlugin);
@@ -53,13 +67,7 @@ const usersPlugin = createPlugin('users', async (app) => {
         limit: number(),
         skip: number(),
       },
-      response: array(
-        object({
-          id: number(),
-          name: string(),
-          age: number(),
-        })(),
-      )(),
+      response: array(userSchema)(),
     },
     handler(request) {
       return request.server.plugins.usersService.findAllUsers(request.query);
@@ -69,15 +77,17 @@ const usersPlugin = createPlugin('users', async (app) => {
     method: 'post',
     path: '/users/',
     validation: {
-      payload: object({
-        name: string(),
-        age: number(),
-      })(),
+      payload: userInputSchema,
+      response: userSchema,
     },
     async handler(request) {
-      const res = await request.server.plugins.usersService.createUser(request.payload);
-      console.log(res);
-      return null;
+      const userId = await request.server.plugins.usersService.createUser(request.payload);
+      const user = await request.server.plugins.usersService.findUserById(userId);
+      if (!user) {
+        throw new HttpError(HttpStatusCode.InternalServerError);
+      }
+      request.server.events.emit('user-created', user);
+      return user;
     },
   });
   app.route({
@@ -87,11 +97,7 @@ const usersPlugin = createPlugin('users', async (app) => {
       params: {
         userId: number(),
       },
-      response: object({
-        id: number(),
-        name: string(),
-        age: number(),
-      })(),
+      response: userSchema,
     },
     async handler(request) {
       const { userId } = request.params;

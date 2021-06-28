@@ -43,13 +43,27 @@ const usersServicePlugin = server.createPlugin('usersService', (app) => {
           }
           return server.plugins.db.all('SELECT * FROM users');
         },
-        createUser(data) {
-          return server.plugins.db.run('INSERT INTO users VALUES(?,?,?)', undefined, data.name, data.age);
+        async createUser(data) {
+          const res = await server.plugins.db.run('INSERT INTO users VALUES(?,?,?)', undefined, data.name, data.age);
+          if (!res.lastID) {
+            throw new Error(`Couldn't insert user into the database`);
+          }
+          return res.lastID;
         },
       };
     },
   };
 });
+
+const userInputSchema = schema.object({
+  name: schema.string(),
+  age: schema.number(),
+})();
+const userSchema = schema.object({
+  id: schema.number(),
+  name: schema.string(),
+  age: schema.number(),
+})();
 
 const usersPlugin = server.createPlugin('users', async (app) => {
   await app.plugin(usersServicePlugin);
@@ -61,13 +75,7 @@ const usersPlugin = server.createPlugin('users', async (app) => {
         limit: schema.number(),
         skip: schema.number(),
       },
-      response: schema.array(
-        schema.object({
-          id: schema.number(),
-          name: schema.string(),
-          age: schema.number(),
-        })(),
-      )(),
+      response: schema.array(userSchema)(),
     },
     handler(request) {
       return request.server.plugins.usersService.findAllUsers(request.query);
@@ -77,15 +85,17 @@ const usersPlugin = server.createPlugin('users', async (app) => {
     method: 'post',
     path: '/users/',
     validation: {
-      payload: schema.object({
-        name: schema.string(),
-        age: schema.number(),
-      })(),
+      payload: userInputSchema,
+      response: userSchema,
     },
     async handler(request) {
-      const res = await request.server.plugins.usersService.createUser(request.payload);
-      console.log(res);
-      return null;
+      const userId = await request.server.plugins.usersService.createUser(request.payload);
+      const user = await request.server.plugins.usersService.findUserById(userId);
+      if (!user) {
+        throw new server.HttpError(server.HttpStatusCode.InternalServerError);
+      }
+      request.server.events.emit('user-created', user);
+      return user;
     },
   });
   app.route({
@@ -95,11 +105,7 @@ const usersPlugin = server.createPlugin('users', async (app) => {
       params: {
         userId: schema.number(),
       },
-      response: schema.object({
-        id: schema.number(),
-        name: schema.string(),
-        age: schema.number(),
-      })(),
+      response: userSchema,
     },
     async handler(request) {
       const { userId } = request.params;

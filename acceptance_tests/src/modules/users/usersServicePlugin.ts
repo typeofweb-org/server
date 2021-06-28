@@ -5,7 +5,7 @@ declare module '@typeofweb/server' {
     usersService: {
       findUserById: (id: User['id']) => Promise<User | undefined>;
       findAllUsers: (args?: { skip: number; limit: number }) => Promise<User[]>;
-      createUser: (data: Omit<User, 'id'>) => Promise<unknown>;
+      createUser: (data: Omit<User, 'id'>) => Promise<User['id']>;
     };
   }
 
@@ -45,8 +45,14 @@ export const usersServicePlugin = createPlugin('usersService', (app) => {
           }
           return server.plugins.db.all<User[]>('SELECT * FROM users');
         },
-        createUser(data) {
-          return server.plugins.db.run('INSERT INTO users VALUES(?,?,?)', undefined, data.name, data.age);
+        async createUser(data) {
+          const res = await server.plugins.db.run('INSERT INTO users VALUES(?,?,?)', undefined, data.name, data.age);
+
+          if (!res.lastID) {
+            throw new Error(`Couldn't insert user into the database`);
+          }
+
+          return res.lastID;
         },
       };
     },

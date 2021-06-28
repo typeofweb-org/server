@@ -1,5 +1,5 @@
 import type { TypeOfWebRequestMeta, TypeOfWebServerMeta, TypeOfWebEvents } from '..';
-import type { Callback, Json, MaybeAsync } from '../utils/types';
+import type { Callback, Json, MaybeAsync, Pretty } from '../utils/types';
 import type { RequestId, ServerId } from '../utils/uniqueId';
 import type { HttpMethod, HttpStatusCode } from './httpStatusCodes';
 import type { TypeOfWebPlugin } from './plugins';
@@ -134,7 +134,7 @@ export interface TypeOfWebApp {
     ParamsKeys extends ParseRouteParams<Path>,
     Params extends SchemaRecord<ParamsKeys>,
     Query extends SchemaRecord<string>,
-    Payload extends SomeSchema<any>,
+    Payload extends SomeSchema<Json>,
     Response extends SomeSchema<Json>,
   >(config: {
     readonly path: Path;
@@ -147,7 +147,7 @@ export interface TypeOfWebApp {
     };
 
     handler(
-      request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, TypeOf<Payload>>,
+      request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, Pretty<TypeOf<Payload>>>,
       toolkit: TypeOfWebRequestToolkit,
     ): MaybeAsync<TypeOf<Response>>;
 
