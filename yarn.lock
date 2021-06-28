@@ -2384,7 +2384,7 @@ eslint-config-prettier@^8.3.0:
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.3.0.tgz#f7471b20b6fe8a9a9254cc684454202886a2dd7a"
   integrity sha512-BgZuLUSeKzvlL/VUjx/Yb787VQ26RU3gGjA3iiFvdsp/2bMfVIWUVP7tjxtjS0e+HP409cPlPvNkQloz8C91ew==
 
-eslint-formatter-pretty@^4.1.0:
+eslint-formatter-pretty@^4.0.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/eslint-formatter-pretty/-/eslint-formatter-pretty-4.1.0.tgz#7a6877c14ffe2672066c853587d89603e97c7708"
   integrity sha512-IsUTtGxF1hrH6lMWiSl1WbGaiP01eT6kzywdY1U+zLc0MP+nwEnUiS9UI8IaOTUhTeQJLlCEWIbXINBH4YJbBQ==
@@ -6456,12 +6456,13 @@ tsconfig-paths@^3.9.0:
     minimist "^1.2.0"
     strip-bom "^3.0.0"
 
-"tsd@https://github.com/typeofweb/tsd#8c3eb937bbf72da695d9eac8c12494b2db748567":
+tsd@0.17.0:
   version "0.17.0"
-  resolved "https://github.com/typeofweb/tsd#8c3eb937bbf72da695d9eac8c12494b2db748567"
+  resolved "https://registry.yarnpkg.com/tsd/-/tsd-0.17.0.tgz#e5aa66d6598d0b66628784ecb4c0c27795b47317"
+  integrity sha512-+HUwya2NgoP/g9t2gRCC3I8VtGu65NgG9Lv75vNzMaxjMFo+0VXF9c4sj3remSzJYeBHLNKzWMbFOinPqrL20Q==
   dependencies:
     "@tsd/typescript" "~4.3.2"
-    eslint-formatter-pretty "^4.1.0"
+    eslint-formatter-pretty "^4.0.0"
     globby "^11.0.1"
     meow "^9.0.0"
     path-exists "^4.0.0"

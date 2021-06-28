@@ -82,7 +82,7 @@
     "rollup-plugin-terser": "7.0.2",
     "ts-jest": "27.0.3",
     "ts-node": "10.0.0",
-    "tsd": "https://github.com/typeofweb/tsd#8c3eb937bbf72da695d9eac8c12494b2db748567",
+    "tsd": "0.17.0",
     "tslib": "2.3.0",
     "typescript": "4.3.4"
   },
