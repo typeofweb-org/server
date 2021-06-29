@@ -119,6 +119,18 @@ Object {
       },
       "type": "array",
     },
+    "PutUsersByUserIdInvoicesParams": Object {
+      "additionalProperties": false,
+      "properties": Object {
+        "userId": Object {
+          "type": "string",
+        },
+      },
+      "required": Array [
+        "userId",
+      ],
+      "type": "object",
+    },
   },
   "info": Object {
     "title": "Swagger",
@@ -126,8 +138,8 @@ Object {
   },
   "paths": Object {
     "/users/{userId}/invoices": Object {
-      "get": Object {
-        "operationId": "GetUsersByUserIdInvoices",
+      "put": Object {
+        "operationId": "PutUsersByUserIdInvoices",
         "parameters": Array [
           Object {
             "in": "path",
@@ -138,10 +150,7 @@ Object {
         ],
         "responses": Object {
           "default": Object {
-            "description": "GetUsersByUserIdInvoicesResponse",
-            "schema": Object {
-              "$ref": "#/definitions/GetUsersByUserIdInvoicesResponse",
-            },
+            "description": "Unknown response",
           },
         },
       },

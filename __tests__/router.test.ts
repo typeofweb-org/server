@@ -1,7 +1,12 @@
 import Crypto from 'crypto';
 
+import { jest } from '@jest/globals';
+
 import { createApp, HttpStatusCode } from '../src';
 import { unseal } from '../src/utils/encryptCookies';
+
+import type { HandlerArguments } from '../src/modules/shared';
+import type { Json } from '../src/utils/types';
 
 declare module '../src' {
   interface TypeOfWebEvents {
@@ -54,15 +59,13 @@ describe('router', () => {
     });
 
     it('should read all cookies', async () => {
+      const handler = jest.fn<Json, HandlerArguments>().mockReturnValue(null);
+
       const app = createApp({ cookies: { secret: 'a'.repeat(32) } }).route({
         path: '/users',
         method: 'get',
         validation: {},
-        handler: (request) => {
-          expect(request.cookies['test']).toEqual('testowa');
-          expect(request.cookies['secret']).toEqual('testowa');
-          return null;
-        },
+        handler,
       });
 
       await app.inject({
@@ -74,7 +77,10 @@ describe('router', () => {
         ],
       });
 
-      expect.assertions(2);
+      expect(handler).toHaveBeenCalledWith(
+        expect.objectContaining({ cookies: { test: 'testowa', secret: 'testowa' } }),
+        expect.any(Object),
+      );
     });
 
     it('should not accept multiple params in path segment', () => {

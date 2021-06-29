@@ -77,6 +77,16 @@ describe('open api generator', () => {
           )(),
         },
       },
+      {
+        // unknown response
+        path: '/users/:userId/invoices',
+        method: 'put',
+        validation: {
+          params: {
+            userId: string(),
+          },
+        },
+      },
     ] as const;
 
     const openapi = await getOpenApiForRoutes(routes, {

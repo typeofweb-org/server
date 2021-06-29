@@ -123,6 +123,8 @@ const schemaParamToOpenApi = (
       const schema = definitions[schemaToName(identifier, kind)];
       const type = schema?.properties?.[paramName]?.type;
       const enumType = schema?.properties?.[paramName]?.anyOf;
+
+      /* istanbul ignore if */
       if (Array.isArray(type)) {
         // @todo
         return;

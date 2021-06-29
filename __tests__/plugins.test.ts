@@ -289,7 +289,7 @@ describe('plugins', () => {
     expect(fn).toHaveBeenCalledTimes(1);
   });
 
-  it.only('should work when plugin returns only some properties', async () => {
+  it('should work when plugin returns only some properties', async () => {
     const plugin = createPlugin('costam', (_app) => {
       return {
         request() {
