@@ -1,5 +1,5 @@
 import type { TypeOfWebRequestMeta, TypeOfWebServerMeta, TypeOfWebEvents } from '..';
-import type { Callback, Json, MaybeAsync } from '../utils/types';
+import type { Callback, Json, MaybeAsync, Pretty } from '../utils/types';
 import type { RequestId, ServerId } from '../utils/uniqueId';
 import type { HttpMethod, HttpStatusCode } from './httpStatusCodes';
 import type { TypeOfWebPlugin } from './plugins';
@@ -34,6 +34,14 @@ export interface AppOptions {
   readonly router: {
     readonly strictTrailingSlash: boolean;
   };
+  readonly openapi:
+    | {
+        readonly title: string;
+        readonly description: string;
+        readonly version: string;
+        readonly path?: string;
+      }
+    | false;
 }
 
 interface AppOptionsCookies extends SetCookieOptions {
@@ -73,6 +81,7 @@ export interface TypeOfWebRequest<
   readonly payload: Payload;
 
   readonly id: RequestId;
+  readonly timestamp: ReturnType<typeof performance.now>;
 
   readonly cookies: Record<string, string>;
 
@@ -85,6 +94,14 @@ export interface TypeOfWebRequest<
    * @internal
    */
   readonly _rawRes: Express.Response;
+}
+
+export interface TypeOfWebResponse {
+  readonly payload: Json | null;
+  readonly request: TypeOfWebRequest;
+  readonly statusCode: number;
+  readonly _rawRes: Express.Response;
+  readonly timestamp: ReturnType<typeof performance.now>;
 }
 
 export interface TypeOfWebServer {
@@ -117,7 +134,7 @@ export interface TypeOfWebApp {
     ParamsKeys extends ParseRouteParams<Path>,
     Params extends SchemaRecord<ParamsKeys>,
     Query extends SchemaRecord<string>,
-    Payload extends SomeSchema<any>,
+    Payload extends SomeSchema<Json>,
     Response extends SomeSchema<Json>,
   >(config: {
     readonly path: Path;
@@ -130,7 +147,7 @@ export interface TypeOfWebApp {
     };
 
     handler(
-      request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, TypeOf<Payload>>,
+      request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, Pretty<TypeOf<Payload>>>,
       toolkit: TypeOfWebRequestToolkit,
     ): MaybeAsync<TypeOf<Response>>;
 

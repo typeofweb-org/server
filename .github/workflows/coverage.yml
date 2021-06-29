@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 1
+          fetch-depth: 0
 
       - name: Read .nvmrc
         run: echo "##[set-output name=NVMRC;]$(cat .nvmrc)"
@@ -48,3 +48,11 @@ jobs:
 
       - name: Collect coverage
         run: curl -s https://codecov.io/bash | bash
+
+      - name: Smoke test
+        run: |
+          yarn link
+          cd acceptance_tests
+          yarn install --frozen-lockfile
+          yarn link "@typeofweb/server"
+          yarn build

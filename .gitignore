@@ -4,3 +4,5 @@ coverage/
 .clinic/
 .vscode/snipsnap.code-snippets
 *.log
+.rollup.cache
+!acceptance_tests/dist

@@ -1,3 +1,5 @@
+import { performance } from 'perf_hooks';
+
 import { object, validate, ValidationError } from '@typeofweb/schema';
 import Express from 'express';
 
@@ -117,6 +119,7 @@ const finalErrorGuard = (h: AsyncHandler): AsyncHandler => {
     try {
       await h(req, res, next);
     } catch (err) {
+      console.error(err);
       next(err ?? {});
     }
   };
@@ -154,7 +157,6 @@ export const routeToExpressHandler = <
   readonly appOptions: AppOptions;
 }): AsyncHandler => {
   return async (req, res, next) => {
-    // doing this early to make timestamp more reliable
     const requestId = generateRequestId();
 
     const params = tryCatch(() =>
@@ -207,6 +209,7 @@ export const routeToExpressHandler = <
       _rawRes: res,
 
       id: requestId,
+      timestamp: performance.now(),
 
       cookies,
     };
@@ -234,9 +237,9 @@ export const routeToExpressHandler = <
 
     const originalResult = await route.handler(request, toolkit);
 
-    const result = tryCatch(() =>
-      route.validation.response ? validate(route.validation.response)(originalResult) : originalResult,
-    );
+    const result = tryCatch(() => {
+      return route.validation.response ? validate(route.validation.response)(originalResult) : originalResult;
+    });
 
     if (result._t === 'left') {
       const err = result.value;
@@ -257,26 +260,28 @@ export const routeToExpressHandler = <
       return;
     }
 
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- response is always Json or null
-    server.events.emit(':response', result.value as Json | null);
-
     const fallbackStatusCode =
       result.value === null || result.value === undefined ? HttpStatusCode.NoContent : HttpStatusCode.OK;
     const statusCode = res.locals[CUSTOM_STATUS_CODE] ?? fallbackStatusCode;
 
     if (result.value === null) {
       res.status(statusCode).end();
-      return;
     } else if (result.value === undefined) {
       console.warn(
         'Handler returned `undefined` which usually means you forgot to `await` something. If you want an empty response, return `null` instead.',
       );
       res.status(statusCode).end();
-      return;
     } else {
       res.status(statusCode).json(result.value);
-      return;
     }
+
+    server.events.emit(':afterResponse', {
+      payload: result.value,
+      request,
+      statusCode,
+      _rawRes: res,
+      timestamp: performance.now(),
+    });
   };
 };
 

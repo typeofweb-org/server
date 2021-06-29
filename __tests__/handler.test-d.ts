@@ -67,7 +67,7 @@ void app.route({
     expectType<number>(request.params.userId);
     expectType<string>(request.params.invoiceId);
     expectType<{ readonly search: string | undefined }>(request.query);
-    expectType<{ readonly id?: number }>(request.payload);
+    expectType<{ readonly id?: number | undefined }>(request.payload);
 
     return [1, 2, 3];
   },

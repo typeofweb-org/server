@@ -27,7 +27,7 @@ export const dbPlugin = createPlugin('db', () => {
 });
 
 const loggerPlugin = createPlugin('logger', (app) => {
-  app.events.on(':response', () => console.info(`The server has responded.`));
+  app.events.on(':afterResponse', () => console.info(`The server has responded.`));
   app.events.on(':server', () => console.info('Server started!'));
   app.events.on(':request', () => console.info(`Request coming through!`));
 });

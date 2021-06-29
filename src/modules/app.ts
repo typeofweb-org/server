@@ -12,6 +12,7 @@ import { generateServerId } from '../utils/uniqueId';
 import { createCachedFunction } from './cache';
 import { createEventBus } from './events';
 import { initApp, listenExpressServer } from './http';
+import { getOpenApiForRoutes } from './openapi';
 import { initRouter, validateRoute } from './router';
 
 import type { AnyFunction, DeepPartial, DeepWritable, JsonPrimitive, MaybeAsync } from '../utils/types';
@@ -36,6 +37,7 @@ const defaultAppOptions: AppOptions = {
   router: {
     strictTrailingSlash: false,
   },
+  openapi: false,
 };
 
 export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
@@ -46,6 +48,7 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
     // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- these properties are supposed to be added by the plugins inside `async start()`
     plugins: {} as TypeOfWebServer['plugins'],
     events: createEventBus(),
+    /* istanbul ignore next */
     get address() {
       /* istanbul ignore next */
       return null;
@@ -62,44 +65,47 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
   let mutableIsInitialized = false;
 
   function initServerPlugins() {
-    return Promise.all(
-      plugins.map(async (plugin) => {
-        if (!plugin?.value || typeof plugin?.value.server !== 'function') {
-          return;
-        }
+    return plugins.reduce(async (acc, plugin) => {
+      if (!plugin?.value || typeof plugin?.value.server !== 'function') {
+        return acc;
+      }
 
-        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- ok
-        const pluginServer = plugin.value.server as unknown as (server: TypeOfWebServer) => MaybeAsync<
-          Record<
-            string,
-            | JsonPrimitive
-            | AnyFunction
-            | {
-                readonly cache: TypeOfWebCacheConfig;
-                readonly fn: AnyFunction;
+      await acc;
+
+      // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- ok
+      const pluginServer = plugin.value.server as unknown as (server: TypeOfWebServer) => MaybeAsync<
+        Record<
+          string,
+          | JsonPrimitive
+          | AnyFunction
+          | {
+              readonly cache: TypeOfWebCacheConfig;
+              readonly fn: AnyFunction;
+            }
+        >
+      >;
+
+      const result = await pluginServer(server);
+      const serverMetadata = !result
+        ? null
+        : // skip iterating over instances of custom classes
+        result.constructor !== Object
+        ? result
+        : Object.fromEntries(
+            Object.entries(result).map(([key, val]) => {
+              if (typeof val === 'object' && val && 'cache' in val) {
+                return [key, createCachedFunction({ ...val, cacheInstance: memoryCache })];
               }
-          >
-        >;
+              return [key, val];
+            }),
+          );
 
-        const result = await pluginServer(server);
-        const serverMetadata = result
-          ? Object.fromEntries(
-              Object.entries(result).map(([key, val]) => {
-                if (typeof val === 'object' && val && 'cache' in val) {
-                  return [key, createCachedFunction({ ...val, cacheInstance: memoryCache })];
-                }
-                return [key, val];
-              }),
-            )
-          : null;
-
-        if (serverMetadata) {
-          // @ts-expect-error
-          // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- if serverMetadata exists then plugin name is keyof TypeOfWebServerMeta
-          server.plugins[plugin.name as keyof TypeOfWebServerMeta] = serverMetadata;
-        }
-      }),
-    );
+      if (serverMetadata) {
+        // @ts-expect-error
+        // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- if serverMetadata exists then plugin name is keyof TypeOfWebServerMeta
+        server.plugins[plugin.name as keyof TypeOfWebServerMeta] = serverMetadata;
+      }
+    }, Promise.resolve());
   }
 
   async function initialize() {
@@ -126,6 +132,16 @@ export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
 
     app._rawExpressRouter = initRouter({ server, appOptions: options, routes, plugins });
     app._rawExpressApp.use(app._rawExpressRouter);
+
+    /* istanbul ignore if */
+    if (options.openapi) {
+      const SwaggerUiExpress = await import('swagger-ui-express');
+      const openapi = await getOpenApiForRoutes(routes, options.openapi);
+      const path = options.openapi.path ?? '/documentation';
+
+      app._rawExpressRouter.use(path, SwaggerUiExpress.serve);
+      app._rawExpressRouter.get(path, SwaggerUiExpress.setup(openapi));
+    }
 
     mutableIsInitialized = true;
     server.events.emit(':server', server);

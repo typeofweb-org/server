@@ -1,12 +1,11 @@
-import type { Json } from '../utils/types';
-import type { TypeOfWebRequest, TypeOfWebServer } from './shared';
+import type { TypeOfWebRequest, TypeOfWebServer, TypeOfWebResponse } from './shared';
 
 export interface TypeOfWebServerMeta {}
 
 export interface TypeOfWebRequestMeta {}
 
 export interface TypeOfWebEvents {
-  readonly ':response': Json | null;
+  readonly ':afterResponse': TypeOfWebResponse;
   readonly ':server': TypeOfWebServer;
   readonly ':request': TypeOfWebRequest;
   readonly ':error': unknown;

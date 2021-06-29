@@ -10,7 +10,7 @@ export type AnyFunction = (...args: readonly any[]) => any;
 
 export type AnyAsyncFunction = (...args: readonly any[]) => Promise<any>;
 
-export type Pretty<X> = X extends AnyObject | readonly unknown[]
+export type Pretty<X> = X extends AnyObject
   ? {
       readonly [K in keyof X]: X[K];
     }

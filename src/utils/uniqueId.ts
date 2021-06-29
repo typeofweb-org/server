@@ -45,7 +45,7 @@ export function generateServerId() {
   // a 2-byte process.pid
   // a 3-byte incrementing counter, initialized to a random value
 
-  const timestamp = toBytes(Math.round(Date.now() / 1000), 4);
+  const timestamp = toBytes(Math.floor(Date.now() / 1000), 4);
   const machineId = toBytes(getMachineId(), 3);
   const processId = toBytes(process.pid, 2);
   const c = toBytes(uniqueCounter(), 3);
@@ -66,7 +66,7 @@ export function parseServerId(id: ServerId) {
 export function generateRequestId() {
   // a 4-byte timestamp value in seconds
   // a 3-byte incrementing counter, initialized to a random value
-  const received = toBytes(Math.round(Date.now() / 1000), 4);
+  const received = toBytes(Math.floor(Date.now() / 1000), 4);
   const requestCounter = toBytes(uniqueCounter(), 3);
 
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions -- RequestId
