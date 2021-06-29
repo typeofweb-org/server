@@ -5,8 +5,10 @@ import type { Json } from '../utils/types';
 import type { TypeOfWebCacheConfig } from './shared';
 import type CacheManager from 'cache-manager';
 
+/* istanbul ignore next */
 const serializeArgs = (args: Json): string => stableJsonStringify(args);
 
+/* istanbul ignore next */
 export const createCachedFunction = <Fn extends (...args: readonly Json[]) => any>({
   fn,
   cache,
@@ -37,6 +39,7 @@ export const createCachedFunction = <Fn extends (...args: readonly Json[]) => an
   } as Fn;
 };
 
+/* istanbul ignore next */
 function expireAtToTtlMs(expireAt: Exclude<TypeOfWebCacheConfig['expireAt'], undefined>) {
   /* istanbul ignore next */
   const [hours = '00', minutes = '00'] = expireAt.split(':');
