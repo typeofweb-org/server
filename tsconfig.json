@@ -17,7 +17,7 @@
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
     "allowUnreachableCode": true,
-    "stripInternal": true,
+    "stripInternal": false,
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,

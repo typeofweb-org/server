@@ -1,8 +1,12 @@
+/**
+ * @beta
+ */
 export type HttpMethod = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options';
 
 /**
- * This is a list of Hypertext Transfer Protocol (HTTP) response status codes.
- * @link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+ * This is a list of Hypertext Transfer Protocol (HTTP) response status codes. {@link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes}
+ *
+ * @beta
  */
 export enum HttpStatusCode {
   /**

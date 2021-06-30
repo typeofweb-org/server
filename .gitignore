@@ -6,3 +6,4 @@ coverage/
 *.log
 .rollup.cache
 !acceptance_tests/dist
+temp

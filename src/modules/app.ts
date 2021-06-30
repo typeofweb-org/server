@@ -15,10 +15,10 @@ import { initApp, listenExpressServer } from './http';
 import { getOpenApiForRoutes } from './openapi';
 import { initRouter, validateRoute } from './router';
 
-import type { AnyFunction, DeepPartial, DeepWritable, JsonPrimitive, MaybeAsync } from '../utils/types';
 import type { TypeOfWebServerMeta } from './augment';
 import type { TypeOfWebPluginInternal } from './plugins';
 import type { AppOptions, TypeOfWebRoute, TypeOfWebApp, TypeOfWebServer, TypeOfWebCacheConfig } from './shared';
+import type { AnyFunction, DeepPartial, DeepWritable, JsonPrimitive, MaybeAsync } from '@typeofweb/utils';
 
 const defaultAppOptions: AppOptions = {
   hostname: 'localhost',
@@ -40,6 +40,9 @@ const defaultAppOptions: AppOptions = {
   openapi: false,
 };
 
+/**
+ * @beta
+ */
 export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {
   const options = deepMerge(opts, defaultAppOptions);
   const memoryCache = CacheManager.caching({ store: 'memory', ttl: 0 });

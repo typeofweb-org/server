@@ -1,6 +1,6 @@
-import { isObject } from './utils';
+import { isObject } from '@typeofweb/utils';
 
-import type { Json, JsonObject } from './types';
+import type { Json, JsonObject } from '@typeofweb/utils';
 
 export const stableJsonStringify = (arg: Json): string => {
   return JSON.stringify(isObject(arg) ? sortObjProperties(arg) : arg);

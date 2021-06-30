@@ -2,10 +2,10 @@ import { performance } from 'perf_hooks';
 
 import { jest } from '@jest/globals';
 import { number } from '@typeofweb/schema';
+import { wait } from '@typeofweb/utils';
 
 import { createApp, createPlugin } from '../src';
 import { ms } from '../src/utils/ms';
-import { wait } from '../src/utils/utils';
 
 declare module '../src' {
   interface TypeOfWebServerMeta {

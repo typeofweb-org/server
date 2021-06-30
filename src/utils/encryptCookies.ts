@@ -9,7 +9,7 @@
 import Crypto from 'crypto';
 import Util from 'util';
 
-import { invariant } from './errors';
+import { invariant } from '@typeofweb/utils';
 
 const asyncPbkdf2 = Util.promisify(Crypto.pbkdf2);
 

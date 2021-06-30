@@ -1,4 +1,4 @@
-import { invariant } from './errors';
+import { invariant } from '@typeofweb/utils';
 
 const units = [
   { value: 1, dictionary: ['ms', 'millisecond', 'milliseconds'] },

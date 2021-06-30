@@ -1,16 +1,18 @@
 import type { TypeOfWebRequestMeta, TypeOfWebServerMeta, TypeOfWebEvents } from '..';
-import type { Callback, Json, MaybeAsync, Pretty } from '../utils/types';
 import type { RequestId, ServerId } from '../utils/uniqueId';
 import type { HttpMethod, HttpStatusCode } from './httpStatusCodes';
 import type { TypeOfWebPlugin } from './plugins';
 import type { ParseRouteParams } from './router';
-import type { SchemaRecord, TypeOfRecord } from './validation';
-import type { SomeSchema, TypeOf } from '@typeofweb/schema';
+import type { SchemaRecord, TypeOfRecord, SomeSchema, TypeOf } from '@typeofweb/schema';
+import type { Callback, Json, MaybeAsync, Pretty } from '@typeofweb/utils';
 import type * as Express from 'express';
 import type { StoppableServer } from 'stoppable';
 import type * as Superagent from 'superagent';
 import type { URL } from 'url';
 
+/**
+ * @beta
+ */
 export interface CorsOriginFunction {
   (requestOrigin: string | undefined): MaybeAsync<CorsOrigin>;
 }
@@ -18,9 +20,15 @@ export interface CorsOriginNodeCallback {
   (requestOrigin: string | undefined, callback: (err: Error | null, origin?: CorsOrigin) => void): void;
 }
 
+/**
+ * @beta
+ */
 // eslint-disable-next-line functional/prefer-readonly-type -- underlying library requirement
 export type CorsOrigin = true | string | RegExp | string[] | RegExp[];
 
+/**
+ * @beta
+ */
 export interface AppOptions {
   readonly hostname: string;
   readonly port: number;
@@ -44,10 +52,16 @@ export interface AppOptions {
     | false;
 }
 
-interface AppOptionsCookies extends SetCookieOptions {
+/**
+ * @beta
+ */
+export interface AppOptionsCookies extends SetCookieOptions {
   readonly secret: string;
 }
 
+/**
+ * @beta
+ */
 export interface TypeOfWebRequestToolkit {
   setCookie(name: string, value: string, options?: SetCookieOptions): MaybeAsync<void>;
   removeCookie(name: string, options?: SetCookieOptions): MaybeAsync<void>;
@@ -66,6 +80,9 @@ export interface SetCookieOptions {
   readonly sameSite?: boolean | 'lax' | 'strict' | 'none';
 }
 
+/**
+ * @beta
+ */
 export interface TypeOfWebRequest<
   Path extends string = string,
   Params extends {} = {},
@@ -86,16 +103,19 @@ export interface TypeOfWebRequest<
   readonly cookies: Record<string, string>;
 
   /**
-   * @internal
+   * @alpha
    */
   readonly _rawReq: Express.Request;
 
   /**
-   * @internal
+   * @alpha
    */
   readonly _rawRes: Express.Response;
 }
 
+/**
+ * @beta
+ */
 export interface TypeOfWebResponse {
   readonly payload: Json | null;
   readonly request: TypeOfWebRequest;
@@ -104,6 +124,9 @@ export interface TypeOfWebResponse {
   readonly timestamp: ReturnType<typeof performance.now>;
 }
 
+/**
+ * @beta
+ */
 export interface TypeOfWebServer {
   readonly plugins: TypeOfWebServerMeta;
   readonly events: EventBus;
@@ -111,6 +134,9 @@ export interface TypeOfWebServer {
   readonly id: ServerId;
 }
 
+/**
+ * @beta
+ */
 export interface EventBus {
   readonly emit: <Name extends keyof TypeOfWebEvents>(
     name: Name,
@@ -124,6 +150,9 @@ export interface EventBus {
   readonly off: <Name extends keyof TypeOfWebEvents>(name: Name, cb: Callback<TypeOfWebEvents[Name]>) => void;
 }
 
+/**
+ * @beta
+ */
 export interface TypeOfWebApp {
   readonly events: EventBus;
 
@@ -152,7 +181,7 @@ export interface TypeOfWebApp {
     ): MaybeAsync<TypeOf<Response>>;
 
     /**
-     * @internal
+     * @alpha
      */
     readonly _rawMiddlewares?: ReadonlyArray<Express.RequestHandler | Express.ErrorRequestHandler>;
   }): TypeOfWebApp;
@@ -170,17 +199,17 @@ export interface TypeOfWebApp {
   stop(): Promise<void>;
 
   /**
-   * @internal
+   * @alpha
    */
   readonly _rawExpressApp: Express.Application;
 
   /**
-   * @internal
+   * @alpha
    */
   readonly _rawExpressServer?: StoppableServer;
 
   /**
-   * @internal
+   * @alpha
    */
   readonly _rawExpressRouter?: Express.Router;
 }

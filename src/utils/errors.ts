@@ -12,11 +12,17 @@ export function tryCatch<T>(fn: () => T): Either<T, any> {
   }
 }
 
-/* eslint-disable functional/no-this-expression -- need to set properties in error classes */
+/**
+ * @beta
+ */
 export interface StatusError {
   readonly statusCode: HttpStatusCode;
 }
 
+/**
+ * @beta
+ */
+/* eslint-disable functional/no-this-expression -- need to set properties in error classes */
 export class HttpError extends Error implements StatusError {
   constructor(
     public readonly statusCode: HttpStatusCode,
@@ -36,20 +42,9 @@ export class HttpError extends Error implements StatusError {
 }
 /* eslint-enable functional/no-this-expression */
 
+/**
+ * @beta
+ */
 export const isStatusError = (err: unknown): err is StatusError => {
   return typeof err === 'object' && !!err && 'statusCode' in err;
 };
-
-interface ErrorCtor<T extends Error> {
-  new (...args: ConstructorParameters<typeof Error>): T;
-}
-
-export function invariant(
-  predicate: unknown,
-  message: string,
-  ErrorConstructor: ErrorCtor<Error> = Error,
-): asserts predicate {
-  if (!predicate) {
-    throw new ErrorConstructor(message);
-  }
-}

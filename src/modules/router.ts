@@ -1,17 +1,17 @@
 import { performance } from 'perf_hooks';
 
 import { object, validate, ValidationError } from '@typeofweb/schema';
+import { invariant } from '@typeofweb/utils';
 import Express from 'express';
 
 import { isSealed, seal, unseal } from '../utils/encryptCookies';
-import { HttpError, invariant, isStatusError, tryCatch } from '../utils/errors';
+import { HttpError, isStatusError, tryCatch } from '../utils/errors';
 import { deepMerge } from '../utils/merge';
 import { calculateSpecificity } from '../utils/routeSpecificity';
 import { generateRequestId } from '../utils/uniqueId';
 
 import { HttpStatusCode } from './httpStatusCodes';
 
-import type { Json, MaybeAsync } from '../utils/types';
 import type { TypeOfWebRequestMeta } from './augment';
 import type { HttpMethod } from './httpStatusCodes';
 import type { TypeOfWebPluginInternal } from './plugins';
@@ -23,8 +23,8 @@ import type {
   TypeOfWebRoute,
   TypeOfWebServer,
 } from './shared';
-import type { SchemaRecord, TypeOfRecord } from './validation';
-import type { SomeSchema, TypeOf } from '@typeofweb/schema';
+import type { SchemaRecord, TypeOfRecord, SomeSchema, TypeOf } from '@typeofweb/schema';
+import type { Json, MaybeAsync } from '@typeofweb/utils';
 
 export const initRouter = ({
   routes,
@@ -325,6 +325,9 @@ function createRequestToolkitFor({
   return toolkit;
 }
 
+/**
+ * @beta
+ */
 export type ParseRouteParams<Path> = string extends Path
   ? string
   : Path extends `${string}/:${infer Param}/${infer Rest}`
