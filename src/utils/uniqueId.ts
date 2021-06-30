@@ -1,10 +1,16 @@
 import Os from 'os';
 
-import type { Nominal } from './types';
+import type { Nominal } from '@typeofweb/utils';
 
 const MAX_NUM = 2 ** 24;
 
+/**
+ * @beta
+ */
 export type ServerId = Nominal<string, 'ServerId'>;
+/**
+ * @beta
+ */
 export type RequestId = Nominal<string, 'RequestId'>;
 
 export const uniqueCounter = (() => {
@@ -54,6 +60,9 @@ export function generateServerId() {
   return (timestamp + machineId + processId + c) as ServerId;
 }
 
+/**
+ * @beta
+ */
 export function parseServerId(id: ServerId) {
   const serverStartedAt = new Date(Number.parseInt(id.substr(0, 4 * 2), 16) * 1000);
   const machineId = Number.parseInt(id.substr(0 + 4 * 2, 3 * 2), 16).toString(16);
@@ -73,6 +82,9 @@ export function generateRequestId() {
   return (received + requestCounter) as RequestId;
 }
 
+/**
+ * @beta
+ */
 export function parseRequestId(id: RequestId) {
   const requestReceivedAt = new Date(Number.parseInt(id.substr(0, 4 * 2), 16) * 1000);
   const requestCounter = Number.parseInt(id.substr(0 + 4 * 2, 3 * 2), 16);

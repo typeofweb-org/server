@@ -1,4 +1,4 @@
-import { isObject } from './utils';
+import { isObject } from '@typeofweb/utils';
 
 /* eslint-disable @typescript-eslint/consistent-type-assertions -- :| */
 export const deepMerge = <T extends object, O extends object>(overrides: T, defaults: O): T & O =>

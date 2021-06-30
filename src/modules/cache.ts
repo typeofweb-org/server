@@ -1,8 +1,9 @@
-import { invariant } from '../utils/errors';
+import { invariant } from '@typeofweb/utils';
+
 import { stableJsonStringify } from '../utils/serializeObject';
 
-import type { Json } from '../utils/types';
 import type { TypeOfWebCacheConfig } from './shared';
+import type { Json } from '@typeofweb/utils';
 import type CacheManager from 'cache-manager';
 
 const serializeArgs = (args: Json): string => stableJsonStringify(args);

@@ -6,7 +6,7 @@ import { createApp, HttpStatusCode } from '../src';
 import { unseal } from '../src/utils/encryptCookies';
 
 import type { HandlerArguments } from '../src/modules/shared';
-import type { Json } from '../src/utils/types';
+import type { Json } from '@typeofweb/utils';
 
 declare module '../src' {
   interface TypeOfWebEvents {

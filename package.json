@@ -9,7 +9,7 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/server.d.ts",
   "sideEffects": false,
   "repository": "git://github.com/typeofweb/server",
   "bugs": {
@@ -35,7 +35,8 @@
     "api"
   ],
   "dependencies": {
-    "@typeofweb/schema": "0.8.0-6",
+    "@typeofweb/schema": "0.8.0-8",
+    "@typeofweb/utils": "0.3.0",
     "@types/cache-manager": "3.4.0",
     "@types/cookie-parser": "1.4.2",
     "@types/cors": "2.8.10",
@@ -56,6 +57,7 @@
   },
   "peerDependencies": {},
   "devDependencies": {
+    "@microsoft/api-extractor": "7.16.1",
     "@rollup/plugin-commonjs": "19.0.0",
     "@rollup/plugin-json": "4.1.0",
     "@rollup/plugin-typescript": "8.2.1",
@@ -90,8 +92,10 @@
     "pretest": "yarn build",
     "jest": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test": "yarn jest --detectOpenHandles --forceExit --coverage",
+    "build": "yarn rollup:build && yarn api-extractor:build",
     "test:dev": "yarn jest --watch",
-    "build": "rimraf dist && rollup --config",
+    "rollup:build": "rimraf dist && rollup --config",
+    "api-extractor:build": "api-extractor run --verbose",
     "build:watch": "rollup --config --watch",
     "prepublishOnly": "yarn build",
     "prepare": "husky install",
