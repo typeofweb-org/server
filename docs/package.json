@@ -1,0 +1,40 @@
+{
+  "name": "docs",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "dev": "next dev",
+    "build": "yarn build:api && yarn build:next",
+    "start": "next start",
+    "build:next": "next build",
+    "build:api": "api-documenter markdown --input-folder . --output-folder src/pages/reference/"
+  },
+  "dependencies": {
+    "next": "11.0.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "typescript": "4.3.4"
+  },
+  "devDependencies": {
+    "@mdx-js/loader": "1.6.22",
+    "@microsoft/api-documenter": "7.13.26",
+    "@microsoft/api-extractor-model": "7.13.3",
+    "@next/mdx": "11.0.1",
+    "@types/mdx-js__react": "1.5.3",
+    "@types/react": "17.0.13",
+    "@types/react-dom": "17.0.8",
+    "eslint-config-next": "11.0.1",
+    "gray-matter": "4.0.3",
+    "next-optimized-images": "2.6.2",
+    "remark-autolink-headings": "6.0.1",
+    "remark-emoji": "2.2.0",
+    "remark-footnotes": "3.0.0",
+    "remark-github": "10.1.0",
+    "remark-images": "2.0.0",
+    "remark-remove-comments": "0.2.0",
+    "remark-slug": "6.0.0",
+    "remark-toc": "7.2.0",
+    "remark-unwrap-images": "2.1.0"
+  }
+}
