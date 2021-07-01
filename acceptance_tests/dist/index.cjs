@@ -83,7 +83,7 @@ const usersPlugin = server.createPlugin('users', async (app) => {
   });
   app.route({
     method: 'post',
-    path: '/users/',
+    path: '/users',
     validation: {
       payload: userInputSchema,
       response: userSchema,

@@ -1,0 +1,4432 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.16.1",
+    "schemaVersion": 1004,
+    "oldestForwardsCompatibleVersion": 1001,
+    "tsdocConfig": {
+      "$schema": "https://developer.microsoft.com/json-schemas/tsdoc/v0/tsdoc.schema.json",
+      "noStandardTags": true,
+      "tagDefinitions": [
+        {
+          "tagName": "@alpha",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@beta",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@defaultValue",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@decorator",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@deprecated",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@eventProperty",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@example",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@experimental",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@inheritDoc",
+          "syntaxKind": "inline"
+        },
+        {
+          "tagName": "@internal",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@label",
+          "syntaxKind": "inline"
+        },
+        {
+          "tagName": "@link",
+          "syntaxKind": "inline",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@override",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@packageDocumentation",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@param",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@privateRemarks",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@public",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@readonly",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@remarks",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@returns",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@sealed",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@see",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@throws",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@typeParam",
+          "syntaxKind": "block",
+          "allowMultiple": true
+        },
+        {
+          "tagName": "@virtual",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@betaDocumentation",
+          "syntaxKind": "modifier"
+        },
+        {
+          "tagName": "@internalRemarks",
+          "syntaxKind": "block"
+        },
+        {
+          "tagName": "@preapproved",
+          "syntaxKind": "modifier"
+        }
+      ],
+      "supportForTags": {
+        "@alpha": true,
+        "@beta": true,
+        "@defaultValue": true,
+        "@decorator": true,
+        "@deprecated": true,
+        "@eventProperty": true,
+        "@example": true,
+        "@experimental": true,
+        "@inheritDoc": true,
+        "@internal": true,
+        "@label": true,
+        "@link": true,
+        "@override": true,
+        "@packageDocumentation": true,
+        "@param": true,
+        "@privateRemarks": true,
+        "@public": true,
+        "@readonly": true,
+        "@remarks": true,
+        "@returns": true,
+        "@sealed": true,
+        "@see": true,
+        "@throws": true,
+        "@typeParam": true,
+        "@virtual": true,
+        "@betaDocumentation": true,
+        "@internalRemarks": true,
+        "@preapproved": true
+      }
+    }
+  },
+  "kind": "Package",
+  "canonicalReference": "@typeofweb/server!",
+  "docComment": "",
+  "name": "@typeofweb/server",
+  "members": [
+    {
+      "kind": "EntryPoint",
+      "canonicalReference": "@typeofweb/server!",
+      "name": "",
+      "members": [
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!AppOptions:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface AppOptions "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "AppOptions",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!AppOptions#cookies:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly cookies: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "AppOptionsCookies",
+                  "canonicalReference": "@typeofweb/server!AppOptionsCookies:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "cookies",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!AppOptions#cors:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly cors: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{\n        readonly origin: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CorsOrigin",
+                  "canonicalReference": "@typeofweb/server!CorsOrigin:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CorsOriginFunction",
+                  "canonicalReference": "@typeofweb/server!CorsOriginFunction:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";\n        readonly credentials: boolean;\n    } | false"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "cors",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 6
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!AppOptions#hostname:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly hostname: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "hostname",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!AppOptions#openapi:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly openapi: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{\n        readonly title: string;\n        readonly description: string;\n        readonly version: string;\n        readonly path?: string;\n    } | false"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "openapi",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!AppOptions#port:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly port: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "port",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!AppOptions#router:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly router: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{\n        readonly strictTrailingSlash: boolean;\n    }"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "router",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!AppOptionsCookies:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface AppOptionsCookies extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "SetCookieOptions",
+              "canonicalReference": "@typeofweb/server!SetCookieOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "AppOptionsCookies",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!AppOptionsCookies#secret:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly secret: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "secret",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": [
+            {
+              "startIndex": 1,
+              "endIndex": 3
+            }
+          ]
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@typeofweb/server!CorsOrigin:type",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type CorsOrigin = "
+            },
+            {
+              "kind": "Content",
+              "text": "true | string | "
+            },
+            {
+              "kind": "Reference",
+              "text": "RegExp",
+              "canonicalReference": "!RegExp:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " | string[] | "
+            },
+            {
+              "kind": "Reference",
+              "text": "RegExp",
+              "canonicalReference": "!RegExp:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "[]"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "CorsOrigin",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 6
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!CorsOriginFunction:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface CorsOriginFunction "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "CorsOriginFunction",
+          "members": [
+            {
+              "kind": "CallSignature",
+              "canonicalReference": "@typeofweb/server!CorsOriginFunction:call(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "(requestOrigin: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | undefined"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybeAsync",
+                  "canonicalReference": "@typeofweb/utils!MaybeAsync:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CorsOrigin",
+                  "canonicalReference": "@typeofweb/server!CorsOrigin:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 7
+              },
+              "releaseTag": "Beta",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "requestOrigin",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ]
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@typeofweb/server!createApp:function(1)",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function createApp(opts: "
+            },
+            {
+              "kind": "Reference",
+              "text": "DeepPartial",
+              "canonicalReference": "@typeofweb/utils!DeepPartial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "AppOptions",
+              "canonicalReference": "@typeofweb/server!AppOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "TypeOfWebApp",
+              "canonicalReference": "@typeofweb/server!TypeOfWebApp:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
+          "releaseTag": "Beta",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "opts",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "name": "createApp"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@typeofweb/server!createPlugin:function(1)",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function createPlugin<PluginName extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ">(name: "
+            },
+            {
+              "kind": "Content",
+              "text": "PluginName"
+            },
+            {
+              "kind": "Content",
+              "text": ", cb: "
+            },
+            {
+              "kind": "Reference",
+              "text": "TypeOfWebPlugin",
+              "canonicalReference": "@typeofweb/server!TypeOfWebPlugin:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<PluginName>['cb']"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "TypeOfWebPlugin",
+              "canonicalReference": "@typeofweb/server!TypeOfWebPlugin:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<PluginName>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 10
+          },
+          "releaseTag": "Beta",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "name",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              }
+            },
+            {
+              "parameterName": "cb",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 7
+              }
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "PluginName",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "createPlugin"
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!EventBus:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface EventBus "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "EventBus",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!EventBus#emit:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly emit: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Name extends keyof "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebEvents",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebEvents:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">(name: Name, ...arg: undefined extends "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebEvents",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebEvents:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[Name] ? readonly [arg?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebEvents",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebEvents:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[Name]] : readonly [arg: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebEvents",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebEvents:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[Name]]) => void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "emit",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 10
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!EventBus#off:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly off: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Name extends keyof "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebEvents",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebEvents:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">(name: Name, cb: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Callback",
+                  "canonicalReference": "@typeofweb/utils!Callback:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebEvents",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebEvents:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[Name]>) => void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "off",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 8
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!EventBus#on:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly on: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Name extends keyof "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebEvents",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebEvents:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">(name: Name, cb: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Callback",
+                  "canonicalReference": "@typeofweb/utils!Callback:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebEvents",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebEvents:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "[Name]>) => void"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "on",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 8
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "@typeofweb/server!HttpError:class",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class HttpError extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "Error",
+              "canonicalReference": "!Error:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            },
+            {
+              "kind": "Content",
+              "text": "implements "
+            },
+            {
+              "kind": "Reference",
+              "text": "StatusError",
+              "canonicalReference": "@typeofweb/server!StatusError:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "HttpError",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@typeofweb/server!HttpError:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `HttpError` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(statusCode: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpStatusCode",
+                  "canonicalReference": "@typeofweb/server!HttpStatusCode:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", message?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", body?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "unknown"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Beta",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "statusCode",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "message",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "body",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@typeofweb/server!HttpError#body:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly body?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "unknown"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Beta",
+              "name": "body",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            },
+            {
+              "kind": "Property",
+              "canonicalReference": "@typeofweb/server!HttpError#statusCode:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly statusCode: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpStatusCode",
+                  "canonicalReference": "@typeofweb/server!HttpStatusCode:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "statusCode",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isStatic": false
+            }
+          ],
+          "extendsTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          },
+          "implementsTokenRanges": [
+            {
+              "startIndex": 4,
+              "endIndex": 6
+            }
+          ]
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@typeofweb/server!HttpMethod:type",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type HttpMethod = "
+            },
+            {
+              "kind": "Content",
+              "text": "'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options'"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "HttpMethod",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Enum",
+          "canonicalReference": "@typeofweb/server!HttpStatusCode:enum",
+          "docComment": "/**\n * This is a list of Hypertext Transfer Protocol (HTTP) response status codes. {@link https://en.wikipedia.org/wiki/List_of_HTTP_status_codes}\n *\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare enum HttpStatusCode "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "HttpStatusCode",
+          "members": [
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.Accepted:member",
+              "docComment": "/**\n * The request has been accepted for processing, but the processing has not been completed. The request might or might not be eventually acted upon, and may be disallowed when processing occurs.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Accepted = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "202"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "Accepted",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.AlreadyReported:member",
+              "docComment": "/**\n * The members of a DAV binding have already been enumerated in a preceding part of the (multistatus) response, and are not being included again.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "AlreadyReported = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "208"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "AlreadyReported",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.BadGateway:member",
+              "docComment": "/**\n * The server was acting as a gateway or proxy and received an invalid response from the upstream server.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "BadGateway = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "502"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "BadGateway",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.BadRequest:member",
+              "docComment": "/**\n * The server cannot or will not process the request due to an apparent client error (e.g., malformed request syntax, size too large, invalid request message framing, or deceptive request routing).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "BadRequest = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "400"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "BadRequest",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.Conflict:member",
+              "docComment": "/**\n * Indicates that the request could not be processed because of conflict in the current state of the resource, such as an edit conflict between multiple simultaneous updates.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Conflict = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "409"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "Conflict",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.Continue:member",
+              "docComment": "/**\n * The server has received the request headers and the client should proceed to send the request body (in the case of a request for which a body needs to be sent; for example, a POST request). Sending a large request body to a server after a request has been rejected for inappropriate headers would be inefficient. To have a server check the request's headers, a client must send Expect: 100-continue as a header in its initial request and receive a 100 Continue status code in response before sending the body. If the client receives an error code such as 403 (Forbidden) or 405 (Method Not Allowed) then it should not send the request's body. The response 417 Expectation Failed indicates that the request should be repeated without the Expect header as it indicates that the server does not support expectations (this is the case, for example, of HTTP/1.0 servers).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Continue = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "100"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "Continue",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.Created:member",
+              "docComment": "/**\n * The request has been fulfilled, resulting in the creation of a new resource.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Created = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "201"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "Created",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.EarlyHints:member",
+              "docComment": "/**\n * Used to return some response headers before final HTTP message.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "EarlyHints = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "103"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "EarlyHints",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.ExpectationFailed:member",
+              "docComment": "/**\n * The server cannot meet the requirements of the Expect request-header field.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ExpectationFailed = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "417"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "ExpectationFailed",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.FailedDependency:member",
+              "docComment": "/**\n * The request failed because it depended on another request and that request failed (e.g., a PROPPATCH).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "FailedDependency = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "424"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "FailedDependency",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.Forbidden:member",
+              "docComment": "/**\n * The request contained valid data and was understood by the server, but the server is refusing action. This may be due to the user not having the necessary permissions for a resource or needing an account of some sort, or attempting a prohibited action (e.g. creating a duplicate record where only one is allowed). This code is also typically used if the request provided authentication by answering the WWW-Authenticate header field challenge, but the server did not accept that authentication. The request should not be repeated.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Forbidden = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "403"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "Forbidden",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.Found:member",
+              "docComment": "/**\n * Tells the client to look at (browse to) another URL. 302 has been superseded by 303 and 307. This is an example of industry practice contradicting the standard. The HTTP/1.0 specification (RFC 1945) required the client to perform a temporary redirect (the original describing phrase was \"Moved Temporarily\"), but popular browsers implemented 302 with the functionality of a 303 See Other. Therefore, HTTP/1.1 added status codes 303 and 307 to distinguish between the two behaviours. However, some Web applications and frameworks use the 302 status code as if it were the 303.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Found = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "302"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "Found",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.GatewayTimeout:member",
+              "docComment": "/**\n * The server was acting as a gateway or proxy and did not receive a timely response from the upstream server.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "GatewayTimeout = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "504"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "GatewayTimeout",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.Gone:member",
+              "docComment": "/**\n * Indicates that the resource requested is no longer available and will not be available again. This should be used when a resource has been intentionally removed and the resource should be purged. Upon receiving a 410 status code, the client should not request the resource in the future. Clients such as search engines should remove the resource from their indices. Most use cases do not require clients and search engines to purge the resource, and a \"404 Not Found\" may be used instead.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Gone = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "410"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "Gone",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.HTTPVersionNotSupported:member",
+              "docComment": "/**\n * The server does not support the HTTP protocol version used in the request.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "HTTPVersionNotSupported = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "505"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "HTTPVersionNotSupported",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.ImaTeapot:member",
+              "docComment": "/**\n * This code was defined in 1998 as one of the traditional IETF April Fools' jokes, in RFC 2324, Hyper Text Coffee Pot Control Protocol, and is not expected to be implemented by actual HTTP servers. The RFC specifies this code should be returned by teapots requested to brew coffee. This HTTP status is used as an Easter egg in some websites, such as Google.com's I'm a teapot easter egg.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ImaTeapot = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "418"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "ImaTeapot",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.IMUsed:member",
+              "docComment": "/**\n * The server has fulfilled a request for the resource, and the response is a representation of the result of one or more instance-manipulations applied to the current instance.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "IMUsed = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "226"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "IMUsed",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.InsufficientStorage:member",
+              "docComment": "/**\n * The server is unable to store the representation needed to complete the request.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "InsufficientStorage = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "507"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "InsufficientStorage",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.InternalServerError:member",
+              "docComment": "/**\n * A generic error message, given when an unexpected condition was encountered and no more specific message is suitable.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "InternalServerError = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "500"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "InternalServerError",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.LengthRequired:member",
+              "docComment": "/**\n * The request did not specify the length of its content, which is required by the requested resource.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "LengthRequired = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "411"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "LengthRequired",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.Locked:member",
+              "docComment": "/**\n * The resource that is being accessed is locked.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Locked = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "423"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "Locked",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.LoopDetected:member",
+              "docComment": "/**\n * The server detected an infinite loop while processing the request (sent instead of 208 Already Reported).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "LoopDetected = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "508"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "LoopDetected",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.MethodNotAllowed:member",
+              "docComment": "/**\n * A request method is not supported for the requested resource; for example, a GET request on a form that requires data to be presented via POST, or a PUT request on a read-only resource.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MethodNotAllowed = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "405"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "MethodNotAllowed",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.MisdirectedRequest:member",
+              "docComment": "/**\n * The request was directed at a server that is not able to produce a response (for example because of connection reuse).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MisdirectedRequest = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "421"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "MisdirectedRequest",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.MovedPermanently:member",
+              "docComment": "/**\n * This and all future requests should be directed to the given URI.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MovedPermanently = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "301"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "MovedPermanently",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.MultipleChoices:member",
+              "docComment": "/**\n * Indicates multiple options for the resource from which the client may choose (via agent-driven content negotiation). For example, this code could be used to present multiple video format options, to list files with different filename extensions, or to suggest word-sense disambiguation.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MultipleChoices = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "300"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "MultipleChoices",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.MultiStatus:member",
+              "docComment": "/**\n * The message body that follows is by default an XML message and can contain a number of separate response codes, depending on how many sub-requests were made.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "MultiStatus = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "207"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "MultiStatus",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.NetworkAuthenticationRequired:member",
+              "docComment": "/**\n * The client needs to authenticate to gain network access. Intended for use by intercepting proxies used to control access to the network (e.g., \"captive portals\" used to require agreement to Terms of Service before granting full Internet access via a Wi-Fi hotspot).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "NetworkAuthenticationRequired = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "511"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "NetworkAuthenticationRequired",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.NoContent:member",
+              "docComment": "/**\n * The server successfully processed the request, and is not returning any content.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "NoContent = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "204"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "NoContent",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.NonAuthoritativeInformation:member",
+              "docComment": "/**\n * The server is a transforming proxy (e.g. a Web accelerator) that received a 200 OK from its origin, but is returning a modified version of the origin's response.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "NonAuthoritativeInformation = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "203"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "NonAuthoritativeInformation",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.NotAcceptable:member",
+              "docComment": "/**\n * The requested resource is capable of generating only content not acceptable according to the Accept headers sent in the request. See Content negotiation.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "NotAcceptable = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "406"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "NotAcceptable",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.NotExtended:member",
+              "docComment": "/**\n * Further extensions to the request are required for the server to fulfil it.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "NotExtended = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "510"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "NotExtended",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.NotFound:member",
+              "docComment": "/**\n * The requested resource could not be found but may be available in the future. Subsequent requests by the client are permissible.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "NotFound = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "404"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "NotFound",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.NotImplemented:member",
+              "docComment": "/**\n * The server either does not recognize the request method, or it lacks the ability to fulfil the request. Usually this implies future availability (e.g., a new feature of a web-service API).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "NotImplemented = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "501"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "NotImplemented",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.NotModified:member",
+              "docComment": "/**\n * Indicates that the resource has not been modified since the version specified by the request headers If-Modified-Since or If-None-Match. In such case, there is no need to retransmit the resource since the client still has a previously-downloaded copy.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "NotModified = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "304"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "NotModified",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.OK:member",
+              "docComment": "/**\n * Standard response for successful HTTP requests. The actual response will depend on the request method used. In a GET request, the response will contain an entity corresponding to the requested resource. In a POST request, the response will contain an entity describing or containing the result of the action.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "OK = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "200"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "OK",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.PartialContent:member",
+              "docComment": "/**\n * The server is delivering only part of the resource (byte serving) due to a range header sent by the client. The range header is used by HTTP clients to enable resuming of interrupted downloads, or split a download into multiple simultaneous streams.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "PartialContent = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "206"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "PartialContent",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.PayloadTooLarge:member",
+              "docComment": "/**\n * The request is larger than the server is willing or able to process. Previously called \"Request Entity Too Large\".\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "PayloadTooLarge = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "413"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "PayloadTooLarge",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.PaymentRequired:member",
+              "docComment": "/**\n * Reserved for future use. The original intention was that this code might be used as part of some form of digital cash or micropayment scheme, as proposed, for example, by GNU Taler, but that has not yet happened, and this code is not widely used. Google Developers API uses this status if a particular developer has exceeded the daily limit on requests. Sipgate uses this code if an account does not have sufficient funds to start a call. Shopify uses this code when the store has not paid their fees and is temporarily disabled. Stripe uses this code for failed payments where parameters were correct, for example blocked fraudulent payments.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "PaymentRequired = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "402"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "PaymentRequired",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.PermanentRedirect:member",
+              "docComment": "/**\n * The request and all future requests should be repeated using another URI. 307 and 308 parallel the behaviors of 302 and 301, but do not allow the HTTP method to change. So, for example, submitting a form to a permanently redirected resource may continue smoothly.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "PermanentRedirect = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "308"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "PermanentRedirect",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.PreconditionFailed:member",
+              "docComment": "/**\n * The server does not meet one of the preconditions that the requester put on the request header fields.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "PreconditionFailed = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "412"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "PreconditionFailed",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.PreconditionRequired:member",
+              "docComment": "/**\n * The origin server requires the request to be conditional. Intended to prevent the 'lost update' problem, where a client GETs a resource's state, modifies it, and PUTs it back to the server, when meanwhile a third party has modified the state on the server, leading to a conflict.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "PreconditionRequired = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "428"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "PreconditionRequired",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.Processing:member",
+              "docComment": "/**\n * A WebDAV request may contain many sub-requests involving file operations, requiring a long time to complete the request. This code indicates that the server has received and is processing the request, but no response is available yet. This prevents the client from timing out and assuming the request was lost.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Processing = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "102"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "Processing",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.ProxyAuthenticationRequired:member",
+              "docComment": "/**\n * The client must first authenticate itself with the proxy.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ProxyAuthenticationRequired = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "407"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "ProxyAuthenticationRequired",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.RangeNotSatisfiable:member",
+              "docComment": "/**\n * The client has asked for a portion of the file (byte serving), but the server cannot supply that portion. For example, if the client asked for a part of the file that lies beyond the end of the file. Called \"Requested Range Not Satisfiable\" previously.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "RangeNotSatisfiable = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "416"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "RangeNotSatisfiable",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.RequestHeaderFieldsTooLarge:member",
+              "docComment": "/**\n * The server is unwilling to process the request because either an individual header field, or all the header fields collectively, are too large.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "RequestHeaderFieldsTooLarge = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "431"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "RequestHeaderFieldsTooLarge",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.RequestTimeout:member",
+              "docComment": "/**\n * The server timed out waiting for the request. According to HTTP specifications: \"The client did not produce a request within the time that the server was prepared to wait. The client MAY repeat the request without modifications at any later time.\"\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "RequestTimeout = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "408"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "RequestTimeout",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.ResetContent:member",
+              "docComment": "/**\n * The server successfully processed the request, asks that the requester reset its document view, and is not returning any content.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ResetContent = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "205"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "ResetContent",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.SeeOther:member",
+              "docComment": "/**\n * The response to the request can be found under another URI using the GET method. When received in response to a POST (or PUT/DELETE), the client should presume that the server has received the data and should issue a new GET request to the given URI.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "SeeOther = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "303"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "SeeOther",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.ServiceUnavailable:member",
+              "docComment": "/**\n * The server cannot handle the request (because it is overloaded or down for maintenance). Generally, this is a temporary state.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "ServiceUnavailable = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "503"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "ServiceUnavailable",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.SwitchingProtocols:member",
+              "docComment": "/**\n * The requester has asked the server to switch protocols and the server has agreed to do so.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "SwitchingProtocols = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "101"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "SwitchingProtocols",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.SwitchProxy:member",
+              "docComment": "/**\n * No longer used. Originally meant \"Subsequent requests should use the specified proxy.\"\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "SwitchProxy = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "306"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "SwitchProxy",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.TemporaryRedirect:member",
+              "docComment": "/**\n * In this case, the request should be repeated with another URI; however, future requests should still use the original URI. In contrast to how 302 was historically implemented, the request method is not allowed to be changed when reissuing the original request. For example, a POST request should be repeated using another POST request.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "TemporaryRedirect = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "307"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "TemporaryRedirect",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.TooEarly:member",
+              "docComment": "/**\n * Indicates that the server is unwilling to risk processing a request that might be replayed.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "TooEarly = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "425"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "TooEarly",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.TooManyRequests:member",
+              "docComment": "/**\n * The user has sent too many requests in a given amount of time. Intended for use with rate-limiting schemes.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "TooManyRequests = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "429"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "TooManyRequests",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.Unauthorized:member",
+              "docComment": "/**\n * Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided. The response must include a WWW-Authenticate header field containing a challenge applicable to the requested resource. See Basic access authentication and Digest access authentication. 401 semantically means \"unauthorised\", the user does not have valid authentication credentials for the target resource. Note: Some sites incorrectly issue HTTP 401 when an IP address is banned from the website (usually the website domain) and that specific address is refused permission to access a website.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "Unauthorized = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "401"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "Unauthorized",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.UnavailableForLegalReasons:member",
+              "docComment": "/**\n * A server operator has received a legal demand to deny access to a resource or to a set of resources that includes the requested resource. The code 451 was chosen as a reference to the novel Fahrenheit 451 (see the Acknowledgements in the RFC).\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "UnavailableForLegalReasons = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "451"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "UnavailableForLegalReasons",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.UnprocessableEntity:member",
+              "docComment": "/**\n * The request was well-formed but was unable to be followed due to semantic errors.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "UnprocessableEntity = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "422"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "UnprocessableEntity",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.UnsupportedMediaType:member",
+              "docComment": "/**\n * The request entity has a media type which the server or resource does not support. For example, the client uploads an image as image/svg+xml, but the server requires that images use a different format.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "UnsupportedMediaType = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "415"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "UnsupportedMediaType",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.UpgradeRequired:member",
+              "docComment": "/**\n * The client should switch to a different protocol such as TLS/1.3, given in the Upgrade header field.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "UpgradeRequired = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "426"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "UpgradeRequired",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.URITooLong:member",
+              "docComment": "/**\n * The URI provided was too long for the server to process. Often the result of too much data being encoded as a query-string of a GET request, in which case it should be converted to a POST request. Called \"Request-URI Too Long\" previously.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "URITooLong = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "414"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "URITooLong",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.UseProxy:member",
+              "docComment": "/**\n * The requested resource is available only through a proxy, the address for which is provided in the response. For security reasons, many HTTP clients (such as Mozilla Firefox and Internet Explorer) do not obey this status code.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "UseProxy = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "305"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "UseProxy",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "EnumMember",
+              "canonicalReference": "@typeofweb/server!HttpStatusCode.VariantAlsoNegotiates:member",
+              "docComment": "/**\n * Transparent content negotiation for the request results in a circular reference.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "VariantAlsoNegotiates = "
+                },
+                {
+                  "kind": "Content",
+                  "text": "506"
+                }
+              ],
+              "releaseTag": "Beta",
+              "name": "VariantAlsoNegotiates",
+              "initializerTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ]
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@typeofweb/server!isStatusError:var",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "isStatusError: "
+            },
+            {
+              "kind": "Content",
+              "text": "(err: unknown) => "
+            },
+            {
+              "kind": "Reference",
+              "text": "err",
+              "canonicalReference": "@typeofweb/server!~err"
+            },
+            {
+              "kind": "Content",
+              "text": " is "
+            },
+            {
+              "kind": "Reference",
+              "text": "StatusError",
+              "canonicalReference": "@typeofweb/server!StatusError:interface"
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "isStatusError",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@typeofweb/server!parseRequestId:function(1)",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function parseRequestId(id: "
+            },
+            {
+              "kind": "Reference",
+              "text": "RequestId",
+              "canonicalReference": "@typeofweb/server!RequestId:type"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    requestReceivedAt: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Date",
+              "canonicalReference": "!Date:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";\n    requestCounter: number;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
+          "releaseTag": "Beta",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "id",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "parseRequestId"
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@typeofweb/server!ParseRouteParams:type",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type ParseRouteParams<Path> = "
+            },
+            {
+              "kind": "Content",
+              "text": "string extends Path ? string : Path extends `${string}/:${infer Param}/${infer Rest}` ? Param | "
+            },
+            {
+              "kind": "Reference",
+              "text": "ParseRouteParams",
+              "canonicalReference": "@typeofweb/server!ParseRouteParams:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<`/${Rest}`> : Path extends `${string}:${infer LastParam}` ? LastParam : never"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "ParseRouteParams",
+          "typeParameters": [
+            {
+              "typeParameterName": "Path",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@typeofweb/server!RequestId:type",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type RequestId = "
+            },
+            {
+              "kind": "Reference",
+              "text": "Nominal",
+              "canonicalReference": "@typeofweb/utils!Nominal:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, 'RequestId'>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "RequestId",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@typeofweb/server!ServerId:type",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type ServerId = "
+            },
+            {
+              "kind": "Reference",
+              "text": "Nominal",
+              "canonicalReference": "@typeofweb/utils!Nominal:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string, 'ServerId'>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "ServerId",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!StatusError:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface StatusError "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "StatusError",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!StatusError#statusCode:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly statusCode: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpStatusCode",
+                  "canonicalReference": "@typeofweb/server!HttpStatusCode:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "statusCode",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!TypeOfWebApp:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface TypeOfWebApp "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "TypeOfWebApp",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebApp#events:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly events: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "EventBus",
+                  "canonicalReference": "@typeofweb/server!EventBus:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "events",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebApp#inject:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "inject(injection: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{\n        readonly method: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpMethod",
+                  "canonicalReference": "@typeofweb/server!HttpMethod:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";\n        readonly path: string;\n        readonly payload?: string | object | undefined;\n        readonly headers?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Record",
+                  "canonicalReference": "!Record:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string, string>;\n        readonly cookies?: readonly `${string}=${string}`[];\n    }"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Superagent.Response",
+                  "canonicalReference": "@types/superagent!~request.Response:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 11
+              },
+              "releaseTag": "Beta",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "injection",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 6
+                  }
+                }
+              ],
+              "name": "inject"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebApp#plugin:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "plugin(plugin: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebPlugin",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebPlugin:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybeAsync",
+                  "canonicalReference": "@typeofweb/utils!MaybeAsync:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebApp",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebApp:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 8
+              },
+              "releaseTag": "Beta",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "plugin",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  }
+                }
+              ],
+              "name": "plugin"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebApp#route:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "route<Path extends "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", ParamsKeys extends "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ParseRouteParams",
+                  "canonicalReference": "@typeofweb/server!ParseRouteParams:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Path>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", Params extends "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SchemaRecord",
+                  "canonicalReference": "@typeofweb/schema!SchemaRecord:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<ParamsKeys>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", Query extends "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SchemaRecord",
+                  "canonicalReference": "@typeofweb/schema!SchemaRecord:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", Payload extends "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SomeSchema",
+                  "canonicalReference": "@typeofweb/schema!SomeSchema:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Json",
+                  "canonicalReference": "@typeofweb/utils!Json:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", Response extends "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SomeSchema",
+                  "canonicalReference": "@typeofweb/schema!SomeSchema:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Json",
+                  "canonicalReference": "@typeofweb/utils!Json:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">(config: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{\n        readonly path: Path;\n        readonly method: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpMethod",
+                  "canonicalReference": "@typeofweb/server!HttpMethod:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";\n        readonly validation: {\n            readonly params?: Params;\n            readonly query?: Query;\n            readonly payload?: Payload;\n            readonly response?: Response;\n        };\n        handler(request: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebRequest",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebRequest:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Path, "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfRecord",
+                  "canonicalReference": "@typeofweb/schema!TypeOfRecord:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Params>, "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfRecord",
+                  "canonicalReference": "@typeofweb/schema!TypeOfRecord:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Query>, "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Pretty",
+                  "canonicalReference": "@typeofweb/utils!Pretty:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOf",
+                  "canonicalReference": "@typeofweb/schema!TypeOf:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Payload>>>, toolkit: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebRequestToolkit",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebRequestToolkit:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybeAsync",
+                  "canonicalReference": "@typeofweb/utils!MaybeAsync:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOf",
+                  "canonicalReference": "@typeofweb/schema!TypeOf:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Response>>;\n        readonly _rawMiddlewares?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ReadonlyArray",
+                  "canonicalReference": "!ReadonlyArray:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Express.RequestHandler",
+                  "canonicalReference": "@types/express!~e.RequestHandler:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Express.ErrorRequestHandler",
+                  "canonicalReference": "@types/express!~e.ErrorRequestHandler:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">;\n    }"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebApp",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebApp:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 48,
+                "endIndex": 49
+              },
+              "releaseTag": "Beta",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "config",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 22,
+                    "endIndex": 47
+                  }
+                }
+              ],
+              "typeParameters": [
+                {
+                  "typeParameterName": "Path",
+                  "constraintTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                },
+                {
+                  "typeParameterName": "ParamsKeys",
+                  "constraintTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 5
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                },
+                {
+                  "typeParameterName": "Params",
+                  "constraintTokenRange": {
+                    "startIndex": 6,
+                    "endIndex": 8
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                },
+                {
+                  "typeParameterName": "Query",
+                  "constraintTokenRange": {
+                    "startIndex": 9,
+                    "endIndex": 11
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                },
+                {
+                  "typeParameterName": "Payload",
+                  "constraintTokenRange": {
+                    "startIndex": 12,
+                    "endIndex": 16
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                },
+                {
+                  "typeParameterName": "Response",
+                  "constraintTokenRange": {
+                    "startIndex": 17,
+                    "endIndex": 21
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                }
+              ],
+              "name": "route"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebApp#start:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "start(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebServer",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebServer:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              },
+              "releaseTag": "Beta",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "start"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebApp#stop:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "stop(): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              },
+              "releaseTag": "Beta",
+              "overloadIndex": 1,
+              "parameters": [],
+              "name": "stop"
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!TypeOfWebEvents:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface TypeOfWebEvents "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "TypeOfWebEvents",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebEvents#\":afterResponse\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly ':afterResponse': "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebResponse",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebResponse:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "\":afterResponse\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebEvents#\":error\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly ':error': "
+                },
+                {
+                  "kind": "Content",
+                  "text": "unknown"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "\":error\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebEvents#\":request\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly ':request': "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebRequest",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebRequest:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "\":request\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebEvents#\":server\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly ':server': "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebServer",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebServer:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "\":server\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!TypeOfWebPlugin:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface TypeOfWebPlugin<PluginName extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
+            }
+          ],
+          "releaseTag": "Beta",
+          "typeParameters": [
+            {
+              "typeParameterName": "PluginName",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "TypeOfWebPlugin",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebPlugin#cb:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly cb: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "(app: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebApp",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebApp:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ") => PluginName extends "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PluginName_",
+                  "canonicalReference": "@typeofweb/server!~PluginName_:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": " ? "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybeAsync",
+                  "canonicalReference": "@typeofweb/utils!MaybeAsync:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PluginCallbackReturnValue",
+                  "canonicalReference": "@typeofweb/server!PluginCallbackReturnValue:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<PluginName>> : "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybeAsync",
+                  "canonicalReference": "@typeofweb/utils!MaybeAsync:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<undefined | void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "cb",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 12
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebPlugin#name:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly name: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "PluginName"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "name",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!TypeOfWebRequest:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface TypeOfWebRequest<Path extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string "
+            },
+            {
+              "kind": "Content",
+              "text": "= "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", Params extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{} "
+            },
+            {
+              "kind": "Content",
+              "text": "= "
+            },
+            {
+              "kind": "Content",
+              "text": "{}"
+            },
+            {
+              "kind": "Content",
+              "text": ", Query extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{} "
+            },
+            {
+              "kind": "Content",
+              "text": "= "
+            },
+            {
+              "kind": "Content",
+              "text": "{}"
+            },
+            {
+              "kind": "Content",
+              "text": ", Payload = "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
+            }
+          ],
+          "releaseTag": "Beta",
+          "typeParameters": [
+            {
+              "typeParameterName": "Path",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              }
+            },
+            {
+              "typeParameterName": "Params",
+              "constraintTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
+              }
+            },
+            {
+              "typeParameterName": "Query",
+              "constraintTokenRange": {
+                "startIndex": 9,
+                "endIndex": 10
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 11,
+                "endIndex": 12
+              }
+            },
+            {
+              "typeParameterName": "Payload",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 13,
+                "endIndex": 14
+              }
+            }
+          ],
+          "name": "TypeOfWebRequest",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequest#cookies:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly cookies: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Record",
+                  "canonicalReference": "!Record:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<string, string>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "cookies",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequest#id:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly id: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "RequestId",
+                  "canonicalReference": "@typeofweb/server!RequestId:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "id",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequest#params:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly params: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "Params"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "params",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequest#path:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly path: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "Path"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "path",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequest#payload:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly payload: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "Payload"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "payload",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequest#plugins:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly plugins: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebRequestMeta",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebRequestMeta:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "plugins",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequest#query:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly query: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "Query"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "query",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequest#server:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly server: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebServer",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebServer:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "server",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequest#timestamp:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly timestamp: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ReturnType",
+                  "canonicalReference": "!ReturnType:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<typeof "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "performance.now",
+                  "canonicalReference": "!Performance#now:member"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "timestamp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!TypeOfWebRequestMeta:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface TypeOfWebRequestMeta "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "TypeOfWebRequestMeta",
+          "members": [],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!TypeOfWebRequestToolkit:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface TypeOfWebRequestToolkit "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "TypeOfWebRequestToolkit",
+          "members": [
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequestToolkit#removeCookie:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "removeCookie(name: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SetCookieOptions",
+                  "canonicalReference": "@typeofweb/server!SetCookieOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybeAsync",
+                  "canonicalReference": "@typeofweb/utils!MaybeAsync:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 7
+              },
+              "releaseTag": "Beta",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "name",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "removeCookie"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequestToolkit#setCookie:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setCookie(name: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", value: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", options?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "SetCookieOptions",
+                  "canonicalReference": "@typeofweb/server!SetCookieOptions:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybeAsync",
+                  "canonicalReference": "@typeofweb/utils!MaybeAsync:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 9
+              },
+              "releaseTag": "Beta",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "name",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "value",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                },
+                {
+                  "parameterName": "options",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  }
+                }
+              ],
+              "name": "setCookie"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequestToolkit#setHeader:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setHeader(headerName: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", value: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybeAsync",
+                  "canonicalReference": "@typeofweb/utils!MaybeAsync:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 7
+              },
+              "releaseTag": "Beta",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "headerName",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                },
+                {
+                  "parameterName": "value",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  }
+                }
+              ],
+              "name": "setHeader"
+            },
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebRequestToolkit#setStatus:member(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "setStatus(statusCode: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpStatusCode",
+                  "canonicalReference": "@typeofweb/server!HttpStatusCode:enum"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybeAsync",
+                  "canonicalReference": "@typeofweb/utils!MaybeAsync:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<void>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "releaseTag": "Beta",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "statusCode",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
+              "name": "setStatus"
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!TypeOfWebResponse:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface TypeOfWebResponse "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "TypeOfWebResponse",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebResponse#_rawRes:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly _rawRes: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Express.Response",
+                  "canonicalReference": "@types/express!~e.Response:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "_rawRes",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebResponse#payload:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly payload: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Json",
+                  "canonicalReference": "@typeofweb/utils!Json:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | null"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "payload",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebResponse#request:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly request: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebRequest",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebRequest:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "request",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebResponse#statusCode:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly statusCode: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "statusCode",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebResponse#timestamp:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly timestamp: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ReturnType",
+                  "canonicalReference": "!ReturnType:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<typeof "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "performance.now",
+                  "canonicalReference": "!Performance#now:member"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "timestamp",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!TypeOfWebServer:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface TypeOfWebServer "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "TypeOfWebServer",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebServer#address:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly address: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "URL",
+                  "canonicalReference": "!\"\\\"url\\\"\".URL:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | null"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "address",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 3
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebServer#events:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly events: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "EventBus",
+                  "canonicalReference": "@typeofweb/server!EventBus:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "events",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebServer#id:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly id: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ServerId",
+                  "canonicalReference": "@typeofweb/server!ServerId:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "id",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!TypeOfWebServer#plugins:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly plugins: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebServerMeta",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebServerMeta:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Beta",
+              "name": "plugins",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!TypeOfWebServerMeta:interface",
+          "docComment": "/**\n * @beta\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface TypeOfWebServerMeta "
+            }
+          ],
+          "releaseTag": "Beta",
+          "name": "TypeOfWebServerMeta",
+          "members": [],
+          "extendsTokenRanges": []
+        }
+      ]
+    }
+  ]
+}
