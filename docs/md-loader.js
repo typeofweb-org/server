@@ -7,33 +7,17 @@ const GrayMatter = require('gray-matter');
 // @see https://github.com/tannerlinsley/react-query/blob/16b7d290c70639b627d9ada32951d211eac3adc3/docs/src/lib/docs/md-loader.js
 // @see https://github.com/expo/expo/blob/303cb7b689603223401c091c6a2e1e01f182d355/docs/common/md-loader.js
 
-/**
- * 
- * @param {{
-      resource: string;
-      realResource: string;
-      resourceQuery: string;
-      resourceFragment: string;
-      mimetype: string;
-      dependency: string;
-      descriptionData: object;
-      issuer: string;
-      compiler: string;
-      issuerLayer: string;
-    }} args 
- */
 module.exports = function addLayoutToMdx(source) {
   const callback = this.async();
 
   const { content, data } = GrayMatter(source);
-  const layout = data.layout || 'Docs';
   const code =
-    `import { Layout${layout} } from '/src/components/Layout${layout}';
+    `import { Layout } from '/src/components/Layout';
 export const meta = ${JSON.stringify(data)};
 export default ({ children, ...props }) => (
-  <Layout${layout} meta={meta} {...props}>{children}</Layout${layout}>
+  <Layout meta={meta} {...props}>{children}</Layout>
 );
-` + content.replace(/<!-- (.*?) -->/g);
+` + content.replace(/<!-- (.*?) -->/g, '');
 
   return callback(null, code);
 };

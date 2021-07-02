@@ -65,6 +65,20 @@ config.redirects = async () => {
       destination: '/:paths',
       permanent: false,
     },
+    {
+      source: '/reference',
+      destination: '/reference/index',
+      permanent: false,
+    },
+  ];
+};
+
+config.rewrites = async () => {
+  return [
+    {
+      source: '/reference/index',
+      destination: '/reference',
+    },
   ];
 };
 
