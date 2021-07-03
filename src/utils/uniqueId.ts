@@ -8,6 +8,7 @@ const MAX_NUM = 2 ** 24;
  * @beta
  */
 export type ServerId = Nominal<string, 'ServerId'>;
+
 /**
  * @beta
  */

@@ -5,10 +5,10 @@ const is = require('unist-util-is');
 // @see https://github.com/tannerlinsley/react-query/blob/16b7d290c70639b627d9ada32951d211eac3adc3/docs/src/lib/docs/remark-paragraph-alerts.js
 module.exports.remarkParagraphAlerts = function remarkParagraphAlerts() {
   const sigils = {
-    '=>': 'success',
-    '->': 'info',
-    '~>': 'warning',
-    '!>': 'danger',
+    '==': 'success',
+    '--': 'info',
+    '^^': 'warning',
+    '!!': 'danger',
   };
 
   return function transformer(tree) {
@@ -51,5 +51,23 @@ module.exports.fixMarkdownLinks = function remarkParagraphAlerts() {
         }
       }
     });
+  };
+};
+
+module.exports.toc = function toc(options) {
+  const util = require('mdast-util-toc');
+  const settings = options || {};
+
+  return function transformer(node) {
+    const result = util(node, settings);
+    if (!result.map) {
+      return;
+    }
+
+    result.map.data = result.map.data || {};
+    result.map.data.hProperties = result.map.data.hProperties || {};
+    result.map.data.hProperties.className = result.map.data.hProperties.className || [];
+    result.map.data.hProperties.className.push('typeofweb-toc');
+    node.children = [].concat(node.children, result.map);
   };
 };

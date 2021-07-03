@@ -18,6 +18,7 @@ export type {
   TypeOfWebRequestToolkit,
   TypeOfWebResponse,
   TypeOfWebServer,
+  RouteConfig,
 } from './modules/shared';
 
 export type { TypeOfWebServerMeta, TypeOfWebRequestMeta, TypeOfWebEvents } from './modules/augment';

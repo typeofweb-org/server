@@ -41,6 +41,9 @@ const defaultAppOptions: AppOptions = {
 };
 
 /**
+ * Function for creating an instance of {@link TypeOfWebApp}.
+ * Takes {@link AppOptions} as an argument, however, all the properties are optional and will be filled with the defaults if omitted.
+ *
  * @beta
  */
 export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp {

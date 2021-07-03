@@ -172,7 +172,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "@typeofweb/server!AppOptions:interface",
-          "docComment": "/**\n * @beta\n */\n",
+          "docComment": "/**\n * Options you can provide when creating your app.\n *\n * @beta\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -185,7 +185,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!AppOptions#cookies:member",
-              "docComment": "",
+              "docComment": "/**\n * Mind that cookies cannot be encrypted unless you provide a random 32 characters value as `secret`.\n *\n * @defaultValue\n * ```ts\n * {\n *   encrypted: true,\n *   secure: true,\n *   httpOnly: true,\n *   sameSite: 'lax',\n * }\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -212,7 +212,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!AppOptions#cors:member",
-              "docComment": "",
+              "docComment": "/**\n * CORS is enabled by default for all origins. Set to `false` to disable it completely.\n *\n * @defaultValue\n *\n * `{ origin: true, credentials: true }`\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -256,7 +256,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!AppOptions#hostname:member",
-              "docComment": "",
+              "docComment": "/**\n * @defaultValue\n *\n * `\"localhost\"`\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -282,7 +282,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!AppOptions#openapi:member",
-              "docComment": "",
+              "docComment": "/**\n * Whether automatic generation of Swagger (OpenAPI) definitions should be enabled. It also includes a UI for testing requests.\n *\n * @defaultValue\n *\n * `false`\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -308,7 +308,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!AppOptions#port:member",
-              "docComment": "",
+              "docComment": "/**\n * @defaultValue\n *\n * `3000`\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -419,7 +419,7 @@
         {
           "kind": "TypeAlias",
           "canonicalReference": "@typeofweb/server!CorsOrigin:type",
-          "docComment": "/**\n * @beta\n */\n",
+          "docComment": "/**\n * Origin which is accepted in CORS.\n *\n * - `true` means all origins are allowed (`*`)\n *\n * - string or an array os strings means only given origins are allowed\n *\n * - regular expression or an array of regular expressions means any matching origins are allowed\n *\n * @beta\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -534,7 +534,7 @@
         {
           "kind": "Function",
           "canonicalReference": "@typeofweb/server!createApp:function(1)",
-          "docComment": "/**\n * @beta\n */\n",
+          "docComment": "/**\n * Function for creating an instance of {@link TypeOfWebApp}. Takes {@link AppOptions} as an argument, however, all the properties are optional and will be filled with the defaults if omitted.\n *\n * @beta\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -865,7 +865,7 @@
         {
           "kind": "Class",
           "canonicalReference": "@typeofweb/server!HttpError:class",
-          "docComment": "/**\n * @beta\n */\n",
+          "docComment": "/**\n * `HttpError` should be used for returning erroneous HTTP responses. `HttpError` can be thrown synchronously or asynchronously inside the handler. It'll be caught and automatically turned into a proper Node.js HTTP response.\n *\n * @example\n * ```ts\n * import { HttpError, HttpStatusCode } from \"@typeofweb/server\";\n *\n * import { app } from \"./app\";\n *\n * app.route({\n *   path: \"/teapot/coffe\",\n *   method: \"get\",\n *   validation: {},\n *   handler() {\n *     throw new HttpError(\n *       HttpStatusCode.ImaTeapot,\n *       \"Try using the coffe machine instead!\"\n *     );\n *   },\n * });\n * ```\n *\n * @beta\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -900,7 +900,7 @@
             {
               "kind": "Constructor",
               "canonicalReference": "@typeofweb/server!HttpError:constructor(1)",
-              "docComment": "/**\n * Constructs a new instance of the `HttpError` class\n */\n",
+              "docComment": "/**\n * Constructs a new instance of the `HttpError` class\n *\n * @param statusCode - HTTP Status code. If an invalid code is provided, 500 will be used instead. Use {@link HttpStatusCode} for readability.\n *\n * @param message - Message to be included in the response. If not provided, name of HttpStatusCode is used by default.\n *\n * @param body - Additional data to be included in the response. Useful for returning nested errors or details.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2554,6 +2554,375 @@
           }
         },
         {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!RouteConfig:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface RouteConfig<Path extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", ParamsKeys extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "ParseRouteParams",
+              "canonicalReference": "@typeofweb/server!ParseRouteParams:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<Path>"
+            },
+            {
+              "kind": "Content",
+              "text": ", Params extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "SchemaRecord",
+              "canonicalReference": "@typeofweb/schema!SchemaRecord:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<ParamsKeys>"
+            },
+            {
+              "kind": "Content",
+              "text": ", Query extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "SchemaRecord",
+              "canonicalReference": "@typeofweb/schema!SchemaRecord:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<string>"
+            },
+            {
+              "kind": "Content",
+              "text": ", Payload extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "SomeSchema",
+              "canonicalReference": "@typeofweb/schema!SomeSchema:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Json",
+              "canonicalReference": "@typeofweb/utils!Json:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": ", Response extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "SomeSchema",
+              "canonicalReference": "@typeofweb/schema!SomeSchema:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Json",
+              "canonicalReference": "@typeofweb/utils!Json:type"
+            },
+            {
+              "kind": "Content",
+              "text": ">"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "Path",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "ParamsKeys",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "Params",
+              "constraintTokenRange": {
+                "startIndex": 6,
+                "endIndex": 8
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "Query",
+              "constraintTokenRange": {
+                "startIndex": 9,
+                "endIndex": 11
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "Payload",
+              "constraintTokenRange": {
+                "startIndex": 12,
+                "endIndex": 16
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "Response",
+              "constraintTokenRange": {
+                "startIndex": 17,
+                "endIndex": 21
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "RouteConfig",
+          "members": [
+            {
+              "kind": "MethodSignature",
+              "canonicalReference": "@typeofweb/server!RouteConfig#handler:member(1)",
+              "docComment": "/**\n * Handler should be a sync or async function and must return a value or throw an error.\n *\n * - Any value returned for the handler will be used as the response body. HTTP status code 200 is used by default.\n *\n * - Return `null` for an empty response and 204 HTTP status code.\n *\n * - Throwing an object compatible with the {@link StatusError} interface (an instance of {@link HttpError} class in particular) will result in returning an HTTP error with the given status code.\n *\n * - Throwing any other value will result in a generic 500 error being returned.\n *\n * == Returning `undefined` is also allowed but not recommended and will issue a runtime warning.\n *\n * -- Returning `undefined` is also allowed but not recommended and will issue a runtime warning.\n *\n * ^^ Returning `undefined` is also allowed but not recommended and will issue a runtime warning.\n *\n * !! Returning `undefined` is also allowed but not recommended and will issue a runtime warning.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "handler(request: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebRequest",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebRequest:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Path, "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfRecord",
+                  "canonicalReference": "@typeofweb/schema!TypeOfRecord:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Params>, "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfRecord",
+                  "canonicalReference": "@typeofweb/schema!TypeOfRecord:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Query>, "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Pretty",
+                  "canonicalReference": "@typeofweb/utils!Pretty:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOf",
+                  "canonicalReference": "@typeofweb/schema!TypeOf:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Payload>>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", toolkit: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOfWebRequestToolkit",
+                  "canonicalReference": "@typeofweb/server!TypeOfWebRequestToolkit:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "MaybeAsync",
+                  "canonicalReference": "@typeofweb/utils!MaybeAsync:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "TypeOf",
+                  "canonicalReference": "@typeofweb/schema!TypeOf:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<Response>>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "returnTypeTokenRange": {
+                "startIndex": 14,
+                "endIndex": 18
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "request",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 11
+                  }
+                },
+                {
+                  "parameterName": "toolkit",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 12,
+                    "endIndex": 13
+                  }
+                }
+              ],
+              "name": "handler"
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!RouteConfig#method:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly method: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HttpMethod",
+                  "canonicalReference": "@typeofweb/server!HttpMethod:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "method",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!RouteConfig#path:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly path: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "Path"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "path",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!RouteConfig#validation:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly validation: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{\n        readonly params?: Params;\n        readonly query?: Query;\n        readonly payload?: Payload;\n        readonly response?: Response;\n    }"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "validation",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
           "kind": "TypeAlias",
           "canonicalReference": "@typeofweb/server!ServerId:type",
           "docComment": "/**\n * @beta\n */\n",
@@ -2586,7 +2955,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "@typeofweb/server!StatusError:interface",
-          "docComment": "/**\n * @beta\n */\n",
+          "docComment": "/**\n * Shape of an object which can be used to produce erroneous HTTP responses.\n *\n * @beta\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -2906,116 +3275,13 @@
                   "text": ">(config: "
                 },
                 {
-                  "kind": "Content",
-                  "text": "{\n        readonly path: Path;\n        readonly method: "
-                },
-                {
                   "kind": "Reference",
-                  "text": "HttpMethod",
-                  "canonicalReference": "@typeofweb/server!HttpMethod:type"
+                  "text": "RouteConfig",
+                  "canonicalReference": "@typeofweb/server!RouteConfig:interface"
                 },
                 {
                   "kind": "Content",
-                  "text": ";\n        readonly validation: {\n            readonly params?: Params;\n            readonly query?: Query;\n            readonly payload?: Payload;\n            readonly response?: Response;\n        };\n        handler(request: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "TypeOfWebRequest",
-                  "canonicalReference": "@typeofweb/server!TypeOfWebRequest:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<Path, "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "TypeOfRecord",
-                  "canonicalReference": "@typeofweb/schema!TypeOfRecord:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<Params>, "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "TypeOfRecord",
-                  "canonicalReference": "@typeofweb/schema!TypeOfRecord:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<Query>, "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Pretty",
-                  "canonicalReference": "@typeofweb/utils!Pretty:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "TypeOf",
-                  "canonicalReference": "@typeofweb/schema!TypeOf:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<Payload>>>, toolkit: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "TypeOfWebRequestToolkit",
-                  "canonicalReference": "@typeofweb/server!TypeOfWebRequestToolkit:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "): "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "MaybeAsync",
-                  "canonicalReference": "@typeofweb/utils!MaybeAsync:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "TypeOf",
-                  "canonicalReference": "@typeofweb/schema!TypeOf:type"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<Response>>;\n        readonly _rawMiddlewares?: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "ReadonlyArray",
-                  "canonicalReference": "!ReadonlyArray:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": "<"
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Express.RequestHandler",
-                  "canonicalReference": "@types/express!~e.RequestHandler:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": " | "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Express.ErrorRequestHandler",
-                  "canonicalReference": "@types/express!~e.ErrorRequestHandler:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ">;\n    }"
+                  "text": "<Path, ParamsKeys, Params, Query, Payload, Response>"
                 },
                 {
                   "kind": "Content",
@@ -3033,8 +3299,8 @@
               ],
               "isOptional": false,
               "returnTypeTokenRange": {
-                "startIndex": 48,
-                "endIndex": 49
+                "startIndex": 25,
+                "endIndex": 26
               },
               "releaseTag": "Beta",
               "overloadIndex": 1,
@@ -3043,7 +3309,7 @@
                   "parameterName": "config",
                   "parameterTypeTokenRange": {
                     "startIndex": 22,
-                    "endIndex": 47
+                    "endIndex": 24
                   }
                 }
               ],
@@ -3570,7 +3836,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!TypeOfWebRequest#cookies:member",
-              "docComment": "",
+              "docComment": "/**\n * Record of cookies in the request. Encrypted cookies are automatically validated, deciphered, and included in this object.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -3601,7 +3867,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!TypeOfWebRequest#id:member",
-              "docComment": "",
+              "docComment": "/**\n * `RequestId` is a unique number consisting of:\n *\n * - a 4-byte timestamp when the request was initiated in seconds\n *\n * - a 3-byte incrementing counter, initialized to a random value when the process started\n *\n * Use {@link @typeofweb/server#parseRequestId | `parseRequestId`} to retrieve the timestamp.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -3628,7 +3894,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!TypeOfWebRequest#params:member",
-              "docComment": "",
+              "docComment": "/**\n * Parameters from the URL.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -3680,7 +3946,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!TypeOfWebRequest#payload:member",
-              "docComment": "",
+              "docComment": "/**\n * Payload is always a valid JSON or `null`. Only present for POST, PUT, and PATCH requests.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -3733,7 +3999,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!TypeOfWebRequest#query:member",
-              "docComment": "",
+              "docComment": "/**\n * An object which a result of parsing and validating the query string.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -3759,7 +4025,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!TypeOfWebRequest#server:member",
-              "docComment": "",
+              "docComment": "/**\n * A reference to the server instance. Useful for accessing `server.plugins` or `server.events`.\n *\n * @see\n *\n * {@link https://example.com/docs/@todo}\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -3786,7 +4052,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!TypeOfWebRequest#timestamp:member",
-              "docComment": "",
+              "docComment": "/**\n * This is NOT a standard Unix timestamp. `request.timestamp` is a result of calling `require('perf_hooks').performance.now()` and should only be used for measuring performance.\n *\n * If you're looking for a Unix timestamp see {@link TypeOfWebRequest.id} and {@link @typeofweb/server#parseRequestId}.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -3844,7 +4110,7 @@
         {
           "kind": "Interface",
           "canonicalReference": "@typeofweb/server!TypeOfWebRequestToolkit:interface",
-          "docComment": "/**\n * @beta\n */\n",
+          "docComment": "/**\n * Request Toolkit is a set of functions used to modify resulting http response.\n *\n * @example\n * ```ts\n * app.route({\n *   path: '/actionable',\n *   method: 'post',\n *   validation: {},\n *   handler: async (req, t) => {\n *     await t.setStatus(HttpStatusCode.Accepted);\n *     return null;\n *   },\n * });\n * ```\n *\n * @beta\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -4131,35 +4397,8 @@
           "members": [
             {
               "kind": "PropertySignature",
-              "canonicalReference": "@typeofweb/server!TypeOfWebResponse#_rawRes:member",
-              "docComment": "",
-              "excerptTokens": [
-                {
-                  "kind": "Content",
-                  "text": "readonly _rawRes: "
-                },
-                {
-                  "kind": "Reference",
-                  "text": "Express.Response",
-                  "canonicalReference": "@types/express!~e.Response:interface"
-                },
-                {
-                  "kind": "Content",
-                  "text": ";"
-                }
-              ],
-              "isOptional": false,
-              "releaseTag": "Beta",
-              "name": "_rawRes",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              }
-            },
-            {
-              "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!TypeOfWebResponse#payload:member",
-              "docComment": "",
+              "docComment": "/**\n * Response body. It should be always a valid JSON or `null`.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -4190,7 +4429,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!TypeOfWebResponse#request:member",
-              "docComment": "",
+              "docComment": "/**\n * A reference to the related request. Useful during the `:afterResponse` event.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -4217,7 +4456,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!TypeOfWebResponse#statusCode:member",
-              "docComment": "",
+              "docComment": "/**\n * HTTP status code. Could be any number between 100 and 599.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -4243,7 +4482,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!TypeOfWebResponse#timestamp:member",
-              "docComment": "",
+              "docComment": "/**\n * This is NOT a standard Unix timestamp. `response.timestamp` is a result of calling `require('perf_hooks').performance.now()` and should only be used for measuring performance.\n *\n * @example\n * ```ts\n * app.events.on(':afterResponse', (response) => {\n *   const elapsed = response.timestamp - response.request.timestamp;\n *\n *   console.info(`The server has responded in:`, elapsed);\n * });\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",

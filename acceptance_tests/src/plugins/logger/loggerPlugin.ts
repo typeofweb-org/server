@@ -11,7 +11,7 @@ export const loggerPlugin = createPlugin('logger', (app) => {
   });
 
   app.events.on(':afterResponse', (r) => {
-    const requestTimestamp = requestsMap.get(r.request);
-    console.info(`The server has responded.`, r.timestamp - (requestTimestamp ?? 0));
+    const elapsed = r.timestamp - r.request.timestamp;
+    console.info(`The server has responded.`, elapsed);
   });
 });

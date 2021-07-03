@@ -18,17 +18,10 @@ const remarkPlugins = [
   ],
 
   require('remark-emoji'),
-  require('remark-footnotes'),
   require('remark-images'),
   [require('remark-github'), { repository: 'https://github.com/typeofweb/server' }],
   require('remark-unwrap-images'),
-  [
-    require('remark-toc'),
-    {
-      skip: 'Reference',
-      maxDepth: 6,
-    },
-  ],
+  require('./remark-plugins').toc,
 ];
 
 const rehypePlugins = [];

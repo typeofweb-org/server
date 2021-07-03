@@ -4,9 +4,9 @@ import { memo } from 'react';
 
 export const Layout = memo<PropsWithChildren<{}>>(({ children }) => {
   return (
-    <div>
+    <article>
       <MDXProvider components={{}}>{children}</MDXProvider>
-    </div>
+    </article>
   );
 });
 Layout.displayName = 'Layout';

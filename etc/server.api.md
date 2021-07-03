@@ -20,18 +20,15 @@ import type { TypeOf } from '@typeofweb/schema';
 import type { TypeOfRecord } from '@typeofweb/schema';
 import type { URL as URL_2 } from 'url';
 
-// @beta (undocumented)
+// @beta
 export interface AppOptions {
-    // (undocumented)
     readonly cookies: AppOptionsCookies;
-    // (undocumented)
     readonly cors: {
         readonly origin: CorsOrigin | CorsOriginFunction;
         readonly credentials: boolean;
     } | false;
     // (undocumented)
     readonly hostname: string;
-    // (undocumented)
     readonly openapi: {
         readonly title: string;
         readonly description: string;
@@ -54,7 +51,7 @@ export interface AppOptionsCookies extends SetCookieOptions {
     readonly secret: string;
 }
 
-// @beta (undocumented)
+// @beta
 export type CorsOrigin = true | string | RegExp | string[] | RegExp[];
 
 // @beta (undocumented)
@@ -63,7 +60,7 @@ export interface CorsOriginFunction {
     (requestOrigin: string | undefined): MaybeAsync<CorsOrigin>;
 }
 
-// @beta (undocumented)
+// @beta
 export function createApp(opts: DeepPartial<AppOptions>): TypeOfWebApp;
 
 // @beta (undocumented)
@@ -79,7 +76,7 @@ export interface EventBus {
     readonly on: <Name extends keyof TypeOfWebEvents>(name: Name, cb: Callback<TypeOfWebEvents[Name]>) => void;
 }
 
-// @beta (undocumented)
+// @beta
 export class HttpError extends Error implements StatusError {
     constructor(statusCode: HttpStatusCode, message?: string, body?: unknown);
     // (undocumented)
@@ -173,10 +170,34 @@ export type ParseRouteParams<Path> = string extends Path ? string : Path extends
 // @beta (undocumented)
 export type RequestId = Nominal<string, 'RequestId'>;
 
+// Warning: (ae-incompatible-release-tags) The symbol "RouteConfig" is marked as @public, but its signature references "ParseRouteParams" which is marked as @beta
+//
+// @public (undocumented)
+export interface RouteConfig<Path extends string, ParamsKeys extends ParseRouteParams<Path>, Params extends SchemaRecord<ParamsKeys>, Query extends SchemaRecord<string>, Payload extends SomeSchema<Json>, Response extends SomeSchema<Json>> {
+    // Warning: (ae-incompatible-release-tags) The symbol "handler" is marked as @public, but its signature references "TypeOfWebRequest" which is marked as @beta
+    // Warning: (ae-incompatible-release-tags) The symbol "handler" is marked as @public, but its signature references "TypeOfWebRequestToolkit" which is marked as @beta
+    handler(request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, Pretty<TypeOf<Payload>>>, toolkit: TypeOfWebRequestToolkit): MaybeAsync<TypeOf<Response>>;
+    // Warning: (ae-incompatible-release-tags) The symbol "method" is marked as @public, but its signature references "HttpMethod" which is marked as @beta
+    //
+    // (undocumented)
+    readonly method: HttpMethod;
+    // (undocumented)
+    readonly path: Path;
+    // @alpha (undocumented)
+    readonly _rawMiddlewares?: ReadonlyArray<Express_2.RequestHandler | Express_2.ErrorRequestHandler>;
+    // (undocumented)
+    readonly validation: {
+        readonly params?: Params;
+        readonly query?: Query;
+        readonly payload?: Payload;
+        readonly response?: Response;
+    };
+}
+
 // @beta (undocumented)
 export type ServerId = Nominal<string, 'ServerId'>;
 
-// @beta (undocumented)
+// @beta
 export interface StatusError {
     // (undocumented)
     readonly statusCode: HttpStatusCode;
@@ -196,25 +217,14 @@ export interface TypeOfWebApp {
     }): Promise<Superagent.Response>;
     // (undocumented)
     plugin(plugin: TypeOfWebPlugin<string>): MaybeAsync<TypeOfWebApp>;
-    // @alpha (undocumented)
+    // @alpha
     readonly _rawExpressApp: Express_2.Application;
-    // @alpha (undocumented)
+    // @alpha
     readonly _rawExpressRouter?: Express_2.Router;
-    // @alpha (undocumented)
+    // @alpha
     readonly _rawExpressServer?: StoppableServer;
     // (undocumented)
-    route<Path extends string, ParamsKeys extends ParseRouteParams<Path>, Params extends SchemaRecord<ParamsKeys>, Query extends SchemaRecord<string>, Payload extends SomeSchema<Json>, Response extends SomeSchema<Json>>(config: {
-        readonly path: Path;
-        readonly method: HttpMethod;
-        readonly validation: {
-            readonly params?: Params;
-            readonly query?: Query;
-            readonly payload?: Payload;
-            readonly response?: Response;
-        };
-        handler(request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, Pretty<TypeOf<Payload>>>, toolkit: TypeOfWebRequestToolkit): MaybeAsync<TypeOf<Response>>;
-        readonly _rawMiddlewares?: ReadonlyArray<Express_2.RequestHandler | Express_2.ErrorRequestHandler>;
-    }): TypeOfWebApp;
+    route<Path extends string, ParamsKeys extends ParseRouteParams<Path>, Params extends SchemaRecord<ParamsKeys>, Query extends SchemaRecord<string>, Payload extends SomeSchema<Json>, Response extends SomeSchema<Json>>(config: RouteConfig<Path, ParamsKeys, Params, Query, Payload, Response>): TypeOfWebApp;
     // (undocumented)
     start(): Promise<TypeOfWebServer>;
     // (undocumented)
@@ -246,27 +256,20 @@ export interface TypeOfWebPlugin<PluginName extends string> {
 
 // @beta (undocumented)
 export interface TypeOfWebRequest<Path extends string = string, Params extends {} = {}, Query extends {} = {}, Payload = unknown> {
-    // (undocumented)
     readonly cookies: Record<string, string>;
-    // (undocumented)
     readonly id: RequestId;
-    // (undocumented)
     readonly params: Params;
     // (undocumented)
     readonly path: Path;
-    // (undocumented)
     readonly payload: Payload;
     // (undocumented)
     readonly plugins: TypeOfWebRequestMeta;
-    // (undocumented)
     readonly query: Query;
-    // @alpha (undocumented)
+    // @alpha
     readonly _rawReq: Express_2.Request;
-    // @alpha (undocumented)
+    // @alpha
     readonly _rawRes: Express_2.Response;
-    // (undocumented)
     readonly server: TypeOfWebServer;
-    // (undocumented)
     readonly timestamp: ReturnType<typeof performance.now>;
 }
 
@@ -274,7 +277,7 @@ export interface TypeOfWebRequest<Path extends string = string, Params extends {
 export interface TypeOfWebRequestMeta {
 }
 
-// @beta (undocumented)
+// @beta
 export interface TypeOfWebRequestToolkit {
     // (undocumented)
     removeCookie(name: string, options?: SetCookieOptions): MaybeAsync<void>;
@@ -288,15 +291,11 @@ export interface TypeOfWebRequestToolkit {
 
 // @beta (undocumented)
 export interface TypeOfWebResponse {
-    // (undocumented)
     readonly payload: Json | null;
-    // (undocumented)
+    // @alpha
     readonly _rawRes: Express_2.Response;
-    // (undocumented)
     readonly request: TypeOfWebRequest;
-    // (undocumented)
     readonly statusCode: number;
-    // (undocumented)
     readonly timestamp: ReturnType<typeof performance.now>;
 }
 
