@@ -1,0 +1,8 @@
+.reference {
+  position: sticky;
+  top: 0;
+  width: var(--reference-width);
+  background-color: var(--section-background);
+  padding: 1.25rem;
+  flex-shrink: 0;
+}

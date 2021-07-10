@@ -1,0 +1,28 @@
+.header {
+  width: 100%;
+  padding: 1.35rem 0;
+  background-color: var(--nav-background);
+}
+
+.nav {
+  width: 100%;
+  max-width: calc(100% - var(--reference-width) - var(--table-of-contents-width));
+  margin: 0 auto;
+  background-color: var(--nav-background);
+}
+
+.navList {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+}
+
+.navItem {
+  padding: 0.25rem 1rem;
+}
+
+.navAnchor {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--white);
+}

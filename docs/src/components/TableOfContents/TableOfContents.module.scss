@@ -1,0 +1,41 @@
+.tableOfContentsWrapper {
+  width: var(--table-of-contents-width);
+  flex-shrink: 0;
+  padding: 3rem 2rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+}
+
+.listItem {
+  position: relative;
+  padding: 0.25rem 1rem;
+}
+
+.anchor {
+  position: relative;
+  font-size: 0.875rem;
+  font-weight: 400;
+  text-decoration: none;
+  color: var(--text-700);
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -1.5rem;
+    top: 50%;
+    width: 0.5rem;
+    height: 0.5rem;
+    transform: translateY(-50%);
+    border: 1px solid var(--gray-500);
+    border-radius: 50%;
+  }
+
+  &Active {
+    font-weight: 600;
+    color: var(--primary);
+  }
+}

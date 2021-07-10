@@ -1,0 +1,30 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+}
+
+.article {
+  flex-grow: 1;
+  padding: 2rem 4rem;
+}
+
+.articleHeading {
+  color: var(--gray-900);
+  margin-top: 1.6rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.articleParagraph {
+  color: var(--gray-700);
+  margin: 0.35rem 0;
+  line-height: 1.65;
+}

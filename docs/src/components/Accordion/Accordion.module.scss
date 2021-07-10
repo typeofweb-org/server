@@ -1,0 +1,38 @@
+.accordionWrapper {
+  margin-bottom: 0.45rem;
+}
+
+.accordionHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordionHeading {
+  font-size: 0.875rem;
+  color: var(--gray-900);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.accordionChevron {
+  transform: rotate(0);
+
+  &Expanded {
+    transform: rotate(180deg);
+  }
+}
+
+.accordionSectionList {
+  padding: 0 0.75rem;
+  list-style: none;
+}
+
+.accordionSection {
+  padding: 0.125rem 0;
+}
+
+.accordionSectionAnchor {
+  font-size: 0.75rem;
+  color: var(--gray-700);
+}
