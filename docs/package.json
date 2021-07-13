@@ -11,6 +11,7 @@
     "build:api": "yarn ts-node --compiler-options '{\"module\":\"commonjs\"}' tools/apiExtractorUtils.ts"
   },
   "dependencies": {
+    "@types/prettier": "2.3.2",
     "mdast-builder": "1.1.1",
     "next": "11.0.1",
     "prettier": "2.3.2",
