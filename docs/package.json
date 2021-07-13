@@ -8,8 +8,7 @@
     "build": "yarn build:api && yarn build:next",
     "start": "next start",
     "build:next": "next build",
-    "build:api": "api-documenter generate --input-folder . --output-folder src/pages/reference/",
-    "build:api2": "yarn ts-node --compiler-options '{\"module\":\"commonjs\"}' tools/apiExtractorUtils.ts"
+    "build:api": "yarn ts-node --compiler-options '{\"module\":\"commonjs\"}' tools/apiExtractorUtils.ts"
   },
   "dependencies": {
     "mdast-builder": "1.1.1",
