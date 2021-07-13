@@ -1,7 +1,12 @@
 .tableOfContentsWrapper {
-  width: var(--table-of-contents-width);
-  flex-shrink: 0;
-  padding: 3rem 2rem;
+  display: none;
+
+  @media screen and (min-width: 60rem) {
+    display: block;
+    width: var(--table-of-contents-width);
+    flex-shrink: 0;
+    padding: 3rem 2rem;
+  }
 }
 
 .list {

@@ -2,6 +2,7 @@ import styles from '../styles/Layout.module.scss';
 import { Header } from '../components/Header/Header';
 import { Reference, ReferenceType } from '../components/Reference/Reference';
 import { TableOfContents } from '../components/TableOfContents/TableOfContents';
+import { useCallback, useState } from 'react';
 
 const reference: ReferenceType = [
   {
@@ -26,11 +27,14 @@ const reference: ReferenceType = [
 ];
 
 export default function Layout() {
+  const [menuOpened, setMenuOpened] = useState<boolean>(false);
+  const toggleMenuOpened = useCallback(() => setMenuOpened((prev) => !prev), []);
+
   return (
     <div className={styles.container}>
-      <Header />
+      <Header toggleMenuOpened={toggleMenuOpened} />
       <main className={styles.main}>
-        <Reference reference={reference} />
+        <Reference reference={reference} menuOpened={menuOpened} />
         <article className={styles.article}>
           <h1 className={styles.articleHeading}>Getting started</h1>
           <p className={styles.articleParagraph}>

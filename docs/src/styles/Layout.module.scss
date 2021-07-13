@@ -11,7 +11,11 @@
 
 .article {
   flex-grow: 1;
-  padding: 2rem 4rem;
+  padding: 2rem 1.25rem;
+
+  @media screen and (min-width: 60rem) {
+    padding: 2rem 4rem;
+  }
 }
 
 .articleHeading {

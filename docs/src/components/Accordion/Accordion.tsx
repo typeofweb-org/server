@@ -17,6 +17,7 @@ const Accordion = memo<AccordionProps>(({ heading, sections }) => {
           <img
             className={`${styles.accordionChevron} ${expanded ? styles.accordionChevronExpanded : ''}`}
             src="/icons/chevron-down.svg"
+            alt={expanded ? 'Accordion expanded' : 'Accordion collapsed'}
           />
         )}
       </header>

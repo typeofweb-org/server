@@ -9,10 +9,11 @@ type ReferenceType = {
 
 type ReferenceProps = {
   reference: ReferenceType;
+  menuOpened: boolean;
 };
 
-const Reference = memo<ReferenceProps>(({ reference }) => (
-  <section className={styles.reference}>
+const Reference = memo<ReferenceProps>(({ reference, menuOpened }) => (
+  <section className={`${styles.reference} ${menuOpened ? styles.referenceOpened : ''}`}>
     {reference.map(({ heading, sections }) => (
       <Accordion key={heading} heading={heading} sections={sections} />
     ))}
