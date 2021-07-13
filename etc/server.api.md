@@ -170,15 +170,9 @@ export type ParseRouteParams<Path> = string extends Path ? string : Path extends
 // @beta (undocumented)
 export type RequestId = Nominal<string, 'RequestId'>;
 
-// Warning: (ae-incompatible-release-tags) The symbol "RouteConfig" is marked as @public, but its signature references "ParseRouteParams" which is marked as @beta
-//
-// @public (undocumented)
+// @beta (undocumented)
 export interface RouteConfig<Path extends string, ParamsKeys extends ParseRouteParams<Path>, Params extends SchemaRecord<ParamsKeys>, Query extends SchemaRecord<string>, Payload extends SomeSchema<Json>, Response extends SomeSchema<Json>> {
-    // Warning: (ae-incompatible-release-tags) The symbol "handler" is marked as @public, but its signature references "TypeOfWebRequest" which is marked as @beta
-    // Warning: (ae-incompatible-release-tags) The symbol "handler" is marked as @public, but its signature references "TypeOfWebRequestToolkit" which is marked as @beta
     handler(request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, Pretty<TypeOf<Payload>>>, toolkit: TypeOfWebRequestToolkit): MaybeAsync<TypeOf<Response>>;
-    // Warning: (ae-incompatible-release-tags) The symbol "method" is marked as @public, but its signature references "HttpMethod" which is marked as @beta
-    //
     // (undocumented)
     readonly method: HttpMethod;
     // (undocumented)
@@ -197,7 +191,7 @@ export interface RouteConfig<Path extends string, ParamsKeys extends ParseRouteP
 // @beta (undocumented)
 export type ServerId = Nominal<string, 'ServerId'>;
 
-// @public (undocumented)
+// @beta (undocumented)
 export interface SetCookieOptions {
     // (undocumented)
     readonly domain?: string;
