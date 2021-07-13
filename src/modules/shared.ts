@@ -244,7 +244,6 @@ export interface TypeOfWebResponse {
    * ```ts
    * app.events.on(':afterResponse', (response) => {
    *   const elapsed = response.timestamp - response.request.timestamp;
-   *
    *   console.info(`The server has responded in:`, elapsed);
    * });
    * ```

@@ -21,6 +21,7 @@ const remarkPlugins = [
   require('remark-images'),
   [require('remark-github'), { repository: 'https://github.com/typeofweb/server' }],
   require('remark-unwrap-images'),
+  [require('remark-prism'), { plugins: ['inline-color'] }],
   require('./remark-plugins').toc,
 ];
 

@@ -9,7 +9,7 @@ import type { Callback } from '@typeofweb/utils';
 import type { DeepPartial } from '@typeofweb/utils';
 import type * as Express_2 from 'express';
 import type { Json } from '@typeofweb/utils';
-import type { MaybeAsync } from '@typeofweb/utils';
+import { MaybeAsync } from '@typeofweb/utils';
 import type { Nominal } from '@typeofweb/utils';
 import type { Pretty } from '@typeofweb/utils';
 import type { SchemaRecord } from '@typeofweb/schema';
@@ -43,8 +43,6 @@ export interface AppOptions {
     };
 }
 
-// Warning: (ae-forgotten-export) The symbol "SetCookieOptions" needs to be exported by the entry point index.d.ts
-//
 // @beta (undocumented)
 export interface AppOptionsCookies extends SetCookieOptions {
     // (undocumented)
@@ -156,7 +154,9 @@ export enum HttpStatusCode {
 }
 
 // @beta (undocumented)
-export const isStatusError: (err: unknown) => err is StatusError;
+export function isStatusError(err: unknown): err is StatusError;
+
+export { MaybeAsync }
 
 // @beta (undocumented)
 export function parseRequestId(id: RequestId): {
@@ -196,6 +196,26 @@ export interface RouteConfig<Path extends string, ParamsKeys extends ParseRouteP
 
 // @beta (undocumented)
 export type ServerId = Nominal<string, 'ServerId'>;
+
+// @public (undocumented)
+export interface SetCookieOptions {
+    // (undocumented)
+    readonly domain?: string;
+    // (undocumented)
+    readonly encrypted?: boolean;
+    // (undocumented)
+    readonly expires?: Date;
+    // (undocumented)
+    readonly httpOnly?: boolean;
+    // (undocumented)
+    readonly maxAge?: number;
+    // (undocumented)
+    readonly path?: string;
+    // (undocumented)
+    readonly sameSite?: boolean | 'lax' | 'strict' | 'none';
+    // (undocumented)
+    readonly secure?: boolean;
+}
 
 // @beta
 export interface StatusError {

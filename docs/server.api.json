@@ -2389,17 +2389,21 @@
           ]
         },
         {
-          "kind": "Variable",
-          "canonicalReference": "@typeofweb/server!isStatusError:var",
+          "kind": "Function",
+          "canonicalReference": "@typeofweb/server!isStatusError:function(1)",
           "docComment": "/**\n * @beta\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
-              "text": "isStatusError: "
+              "text": "export declare function isStatusError(err: "
             },
             {
               "kind": "Content",
-              "text": "(err: unknown) => "
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
             },
             {
               "kind": "Reference",
@@ -2414,14 +2418,28 @@
               "kind": "Reference",
               "text": "StatusError",
               "canonicalReference": "@typeofweb/server!StatusError:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
             }
           ],
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
           "releaseTag": "Beta",
-          "name": "isStatusError",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 5
-          }
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "err",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "name": "isStatusError"
         },
         {
           "kind": "Function",
@@ -2728,7 +2746,7 @@
             {
               "kind": "MethodSignature",
               "canonicalReference": "@typeofweb/server!RouteConfig#handler:member(1)",
-              "docComment": "/**\n * Handler should be a sync or async function and must return a value or throw an error.\n *\n * - Any value returned for the handler will be used as the response body. HTTP status code 200 is used by default.\n *\n * - Return `null` for an empty response and 204 HTTP status code.\n *\n * - Throwing an object compatible with the {@link StatusError} interface (an instance of {@link HttpError} class in particular) will result in returning an HTTP error with the given status code.\n *\n * - Throwing any other value will result in a generic 500 error being returned.\n *\n * == Returning `undefined` is also allowed but not recommended and will issue a runtime warning.\n *\n * -- Returning `undefined` is also allowed but not recommended and will issue a runtime warning.\n *\n * ^^ Returning `undefined` is also allowed but not recommended and will issue a runtime warning.\n *\n * !! Returning `undefined` is also allowed but not recommended and will issue a runtime warning.\n */\n",
+              "docComment": "/**\n * Handler should be a sync or async function and must return a value or throw an error.\n *\n * - Any value returned for the handler will be used as the response body. HTTP status code 200 is used by default.\n *\n * - Return `null` for an empty response and 204 HTTP status code.\n *\n * - Throwing an object compatible with the {@link StatusError} interface (an instance of {@link HttpError} class in particular) will result in returning an HTTP error with the given status code.\n *\n * - Throwing any other value will result in a generic 500 error being returned.\n *\n * ^^ Returning `undefined` is also allowed but not recommended and will issue a runtime warning.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2951,6 +2969,231 @@
             "startIndex": 1,
             "endIndex": 3
           }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@typeofweb/server!SetCookieOptions:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface SetCookieOptions "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "SetCookieOptions",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!SetCookieOptions#domain:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly domain?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "domain",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!SetCookieOptions#encrypted:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly encrypted?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "encrypted",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!SetCookieOptions#expires:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly expires?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Date",
+                  "canonicalReference": "!Date:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "expires",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!SetCookieOptions#httpOnly:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly httpOnly?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "httpOnly",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!SetCookieOptions#maxAge:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly maxAge?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "maxAge",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!SetCookieOptions#path:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly path?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "path",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!SetCookieOptions#sameSite:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly sameSite?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean | 'lax' | 'strict' | 'none'"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "sameSite",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@typeofweb/server!SetCookieOptions#secure:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly secure?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "secure",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
           "kind": "Interface",
@@ -4482,7 +4725,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@typeofweb/server!TypeOfWebResponse#timestamp:member",
-              "docComment": "/**\n * This is NOT a standard Unix timestamp. `response.timestamp` is a result of calling `require('perf_hooks').performance.now()` and should only be used for measuring performance.\n *\n * @example\n * ```ts\n * app.events.on(':afterResponse', (response) => {\n *   const elapsed = response.timestamp - response.request.timestamp;\n *\n *   console.info(`The server has responded in:`, elapsed);\n * });\n * ```\n *\n */\n",
+              "docComment": "/**\n * This is NOT a standard Unix timestamp. `response.timestamp` is a result of calling `require('perf_hooks').performance.now()` and should only be used for measuring performance.\n *\n * @example\n * ```ts\n * app.events.on(':afterResponse', (response) => {\n *   const elapsed = response.timestamp - response.request.timestamp;\n *   console.info(`The server has responded in:`, elapsed);\n * });\n * ```\n *\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
