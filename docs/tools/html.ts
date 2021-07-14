@@ -68,5 +68,7 @@ export function getHtmlEscapedText(text: string) {
     .replace(/"/g, '&quot;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;')
-    .replace(/\|/g, '&#124;');
+    .replace(/\|/g, '&#124;')
+    .replace(/{/g, '&#123;')
+    .replace(/}/g, '&#125;');
 }

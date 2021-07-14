@@ -1,6 +1,5 @@
 import {
   ApiItem,
-  ApiItemKind,
   ApiModel,
   ApiParameterListMixin,
   ApiDocumentedItem,
@@ -45,8 +44,8 @@ import { Node, Parent, Literal } from 'unist';
 
 import Path from 'path';
 
-import { Context } from './types';
-import { getTSBlock, getTSBlockInHtml, printTsDoc } from './tsdoc';
+import { ApiItemKind, Context } from './types';
+import { getTSBlock, getTSBlockInHtml, isEmptyOrWhitespace, printTsDoc } from './tsdoc';
 import { rimraf, getFilePath, getHashLink, referenceToLink, getFileUrl } from './files';
 import { StandardTags } from '@microsoft/tsdoc';
 
@@ -189,14 +188,14 @@ async function printTypePage({ apiItem, apiModel }: Context) {
         }),
       ),
     ),
-    ...(summary.length > 0 ? [heading(2, text('Summary')), paragraph(summary)] : []),
+    ...(!isEmptyOrWhitespace(summary) ? [heading(2, text('Summary')), paragraph(summary)] : []),
     ...(tbody.length > 0
       ? [
           heading(2, text('Signatures')),
           html(h.table([h.thead(h.tr([h.td('Property'), h.td('Type'), h.td('Description')])), h.tbody(tbody)])),
         ]
       : []),
-    ...(examples.length > 0 ? [heading(2, text('Examples')), ...examples] : []),
+    ...(!isEmptyOrWhitespace(examples) ? [heading(2, text('Examples')), ...examples] : []),
   ]);
 }
 

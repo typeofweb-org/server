@@ -19,7 +19,6 @@ import {
   DocMemberSelector,
   DocMemberSymbol,
   DocNode,
-  DocNodeKind,
   DocParagraph,
   DocParamBlock,
   DocParamCollection,
@@ -31,11 +30,30 @@ import {
 } from '@microsoft/tsdoc';
 import { Node, Literal, Parent } from 'unist';
 import { inlineCode, text, paragraph, link, code, root } from 'mdast-builder';
-import { Context } from './types';
+import { Context, DocNodeKind } from './types';
 import { as } from './utils';
 import { referenceToLink } from './files';
 import { ApiDocumentedItem, ApiItem } from '@microsoft/api-extractor-model';
 import { toHtmlString } from './stringify';
+
+export function nodeIsParent(node: Node): node is Parent {
+  return 'children' in node;
+}
+export function nodeIsLiteral(node: Node): node is Literal {
+  return 'value' in node;
+}
+
+export function isEmptyOrWhitespace(tree: Node[] | Node): boolean {
+  return [tree].flat().every((node) => {
+    if (nodeIsLiteral(node)) {
+      return (typeof node.value === 'string' && !node.value.trim()) || node.value === null || node.value === undefined;
+    } else if (nodeIsParent(node)) {
+      return node.children.every(isEmptyOrWhitespace);
+    } else {
+      return true;
+    }
+  });
+}
 
 export function printTsDoc(context: Context, doc: DocNode): Node[] | Node {
   switch (doc.kind) {

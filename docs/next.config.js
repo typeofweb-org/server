@@ -2,10 +2,13 @@
 
 const Path = require('path');
 
+/**
+ * @type {import('unified').PluggableList}
+ */
 const remarkPlugins = [
+  require('remark-gfm'),
+  require('remark-frontmatter'),
   require('remark-slug'),
-  require('./remark-plugins').remarkParagraphAlerts,
-  require('./remark-plugins').fixMarkdownLinks,
   [
     require('remark-autolink-headings'),
     {
@@ -16,13 +19,11 @@ const remarkPlugins = [
       },
     },
   ],
-
   require('remark-emoji'),
   require('remark-images'),
   [require('remark-github'), { repository: 'https://github.com/typeofweb/server' }],
   require('remark-unwrap-images'),
   [require('remark-prism'), { plugins: ['inline-color'] }],
-  require('./remark-plugins').toc,
 ];
 
 const rehypePlugins = [];
@@ -34,7 +35,12 @@ const config = {
   pageExtensions: ['tsx', 'ts', 'mdx', 'md'],
   webpack: (config, { dev, isServer, ...options }) => {
     config.module.rules.push({
-      test: /.mdx?$/,
+      test: /.md$/,
+      use: [options.defaultLoaders.babel, { loader: Path.join(__dirname, './md-loader'), options: { remarkPlugins } }],
+    });
+
+    config.module.rules.push({
+      test: /.mdx$/,
       use: [
         options.defaultLoaders.babel,
         {
@@ -44,7 +50,7 @@ const config = {
             rehypePlugins,
           },
         },
-        Path.join(__dirname, './md-loader'),
+        Path.join(__dirname, './md-layout'),
       ],
     });
 
