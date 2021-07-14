@@ -112,11 +112,6 @@ async function printIndexPage(apiModel: ApiModel, apiItem: ApiPackage) {
 
 async function printTypePage({ apiItem, apiModel }: Context) {
   const fileDestination = apiItem instanceof ApiDeclaredItem ? await findReferenceTo(apiItem.excerpt.text) : null;
-  if (apiItem instanceof ApiDeclaredItem) {
-    if (fileDestination === null) {
-      console.log(apiItem.excerpt.text);
-    }
-  }
 
   const summary =
     apiItem instanceof ApiDocumentedItem && apiItem.tsdocComment
@@ -306,6 +301,7 @@ const getFunctionParamsSignature = (
 };
 
 function frontmatter(
+  context: Context,
   apiItem: ApiItem,
   fileDestination: {
     path: string;
@@ -315,6 +311,12 @@ function frontmatter(
   const value = Object.entries({
     releaseTag: ApiReleaseTagMixin.isBaseClassOf(apiItem) ? ReleaseTag[apiItem.releaseTag] : null,
     ...(fileDestination && { fileDestination: `${fileDestination.path.replace(/^\//, '')}#L${fileDestination.line}` }),
+    title: getDisplayName(context, apiItem, {
+      includeParamTypes: false,
+      includeParams: true,
+      includeReleaseTag: true,
+      includeReturnType: false,
+    }),
   })
     .map(([key, val]) => `${key}: ${val}`)
     .join('\n');
