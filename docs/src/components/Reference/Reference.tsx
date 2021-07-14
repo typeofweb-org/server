@@ -15,7 +15,8 @@ type ReferenceProps = {
 const Reference = memo<ReferenceProps>(({ reference, menuOpened }) => (
   <section className={`${styles.reference} ${menuOpened ? styles.referenceOpened : ''}`}>
     {reference.map(({ heading, sections }) => (
-      <Accordion key={heading} heading={heading} sections={sections} />
+      // isActive should be derived from the current url
+      <Accordion isActive={false} key={heading} heading={heading} sections={sections} />
     ))}
   </section>
 ));

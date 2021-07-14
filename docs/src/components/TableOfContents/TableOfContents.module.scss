@@ -1,7 +1,7 @@
 .tableOfContentsWrapper {
   display: none;
 
-  @media screen and (min-width: 60rem) {
+  @media screen and (min-width: 75rem) {
     display: block;
     width: var(--table-of-contents-width);
     flex-shrink: 0;
@@ -41,6 +41,11 @@
 
   &Active {
     font-weight: 600;
-    color: var(--primary);
+    color: var(--active);
+
+    &::before {
+      border: 1px solid var(--active);
+      background-color: var(--active);
+    }
   }
 }

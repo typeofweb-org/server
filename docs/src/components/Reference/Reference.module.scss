@@ -7,19 +7,21 @@
   padding: 1.25rem;
   padding-top: calc(2rem + var(--header-height));
   transform: translateX(-100%);
-  transition: 250ms;
+  transition: var(--transition);
 
   &Opened {
     transform: translateX(0);
   }
 
-  @media screen and (min-width: 60rem) {
-    padding-top: 2rem;
-    transform: translateX(0);
-    position: sticky;
-    top: var(--header-height);
+  @media screen and (min-width: 55rem) {
+    // padding-top: 2rem;
+    // height: auto;
+    // max-height: calc(100vh - var(--header-height));
+    // transform: translateX(0);
+    // position: sticky;
+    // top: var(--header-height);
     width: var(--reference-width);
-    background-color: var(--section-background);
-    flex-shrink: 0;
+    // background-color: var(--section-background);
+    // flex-shrink: 0;
   }
 }

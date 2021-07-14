@@ -19,13 +19,12 @@ a {
 }
 
 :root {
-  --primary: #006d77;
-  --primary-light: #83c5be;
-  --secondary: #e29578;
-  --secondary-light: #83c5be;
+  --active: #006d77;
   --section-background: #f5f5f5;
   --section-background-tint: #fdfdfd;
   --nav-background: #151515;
+
+  --white: #ffffff;
 
   --gray-100: #939393;
   --gray-300: #6a6a6a;
@@ -37,5 +36,10 @@ a {
   --table-of-contents-width: 20rem;
   --header-height: 5rem;
 
-  --white: #ffffff;
+  --transition: 200ms all ease-in-out;
+
+  // The default breakpoints are the following:
+  // mobile 0 - 55rem;
+  // tablet 55rem - 70rem;
+  // desktop 70 rem - Infinity;
 }

@@ -12,9 +12,18 @@
 .article {
   flex-grow: 1;
   padding: 2rem 1.25rem;
+  transition: var(--transition);
 
-  @media screen and (min-width: 60rem) {
+  &WithMenuOpened {
+    padding: 2rem 1.25rem 2rem calc(1.25rem + var(--reference-width));
+  }
+
+  @media screen and (min-width: 55rem) {
     padding: 2rem 4rem;
+
+    &WithMenuOpened {
+      padding: 2rem 4rem 2rem calc(4rem + var(--reference-width));
+    }
   }
 }
 

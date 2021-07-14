@@ -9,25 +9,45 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
+  @media screen and (min-width: 55rem) {
+    padding: 0;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.toggleButton {
+  background-color: transparent;
+  border: none;
+  @media screen and (min-width: 55rem) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--reference-width);
+  }
 }
 
 .menuIcon {
   cursor: pointer;
   filter: invert(100%);
-
-  @media screen and (min-width: 60rem) {
-    display: none;
-  }
 }
 
 .nav {
   display: none;
 
-  @media screen and (min-width: 60rem) {
+  @media screen and (min-width: 75rem) {
     display: block;
     width: 100%;
     max-width: calc(100% - var(--reference-width) - var(--table-of-contents-width));
-    margin: 0 auto;
+    margin: 0 var(--table-of-contents-width) 0 auto;
     background-color: var(--nav-background);
   }
 }
@@ -43,7 +63,7 @@
 }
 
 .navAnchor {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 1rem;
+  font-weight: 400;
   color: var(--white);
 }

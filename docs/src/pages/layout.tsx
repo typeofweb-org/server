@@ -35,7 +35,7 @@ export default function Layout() {
       <Header toggleMenuOpened={toggleMenuOpened} />
       <main className={styles.main}>
         <Reference reference={reference} menuOpened={menuOpened} />
-        <article className={styles.article}>
+        <article className={`${styles.article} ${menuOpened ? styles.articleWithMenuOpened : ''}`}>
           <h1 className={styles.articleHeading}>Getting started</h1>
           <p className={styles.articleParagraph}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil modi nobis, accusantium ipsum quis aspernatur

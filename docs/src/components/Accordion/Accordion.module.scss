@@ -6,6 +6,13 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    .accordionHeading {
+      color: var(--active);
+    }
+  }
 }
 
 .accordionHeading {
@@ -13,6 +20,11 @@
   color: var(--gray-900);
   font-weight: 600;
   text-transform: uppercase;
+  transition: var(--transition);
+
+  &Active {
+    color: var(--active);
+  }
 }
 
 .accordionChevron {

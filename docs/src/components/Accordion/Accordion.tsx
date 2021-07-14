@@ -3,16 +3,17 @@ import styles from './Accordion.module.scss';
 
 type AccordionProps = {
   heading: string;
+  isActive: boolean;
   sections?: string[];
 };
-const Accordion = memo<AccordionProps>(({ heading, sections }) => {
+const Accordion = memo<AccordionProps>(({ heading, isActive, sections }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const hasSections = sections && sections.length > 0;
   const toggleExpanded = useCallback(() => setExpanded((prev) => !prev), []);
   return (
     <div className={styles.accordionWrapper}>
       <header className={styles.accordionHeader} onClick={toggleExpanded}>
-        <h3 className={styles.accordionHeading}>{heading}</h3>
+        <h3 className={`${styles.accordionHeading} ${isActive ? styles.accordionHeadingActive : ''}`}>{heading}</h3>
         {hasSections && (
           <img
             className={`${styles.accordionChevron} ${expanded ? styles.accordionChevronExpanded : ''}`}

@@ -9,7 +9,10 @@ type HeaderProps = {
 const Header = memo<HeaderProps>(({ toggleMenuOpened }) => {
   return (
     <header className={styles.header}>
-      <img className={styles.menuIcon} src="/icons/menu.svg" alt="Menu" onClick={toggleMenuOpened} />
+      <button className={styles.toggleButton} onClick={toggleMenuOpened}>
+        <span className={styles.srOnly}>Toggle reference sidebar</span>
+        <img className={styles.menuIcon} src="/icons/menu.svg" alt="Menu" />
+      </button>
       <nav className={styles.nav}>
         <ul className={styles.navList}>
           <li className={styles.navItem}>
