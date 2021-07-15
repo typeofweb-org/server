@@ -4,12 +4,14 @@
 
 ```ts
 
+/// <reference types="node" />
+
 import type { AnyAsyncFunction } from '@typeofweb/utils';
 import type { Callback } from '@typeofweb/utils';
 import type { DeepPartial } from '@typeofweb/utils';
 import type * as Express_2 from 'express';
 import type { Json } from '@typeofweb/utils';
-import type { MaybeAsync } from '@typeofweb/utils';
+import { MaybeAsync } from '@typeofweb/utils';
 import type { Nominal } from '@typeofweb/utils';
 import type { Pretty } from '@typeofweb/utils';
 import type { SchemaRecord } from '@typeofweb/schema';
@@ -43,8 +45,6 @@ export interface AppOptions {
     };
 }
 
-// Warning: (ae-forgotten-export) The symbol "SetCookieOptions" needs to be exported by the entry point index.d.ts
-//
 // @beta (undocumented)
 export interface AppOptionsCookies extends SetCookieOptions {
     // (undocumented)
@@ -156,7 +156,9 @@ export enum HttpStatusCode {
 }
 
 // @beta (undocumented)
-export const isStatusError: (err: unknown) => err is StatusError;
+export function isStatusError(err: unknown): err is StatusError;
+
+export { MaybeAsync }
 
 // @beta (undocumented)
 export function parseRequestId(id: RequestId): {
@@ -170,15 +172,9 @@ export type ParseRouteParams<Path> = string extends Path ? string : Path extends
 // @beta (undocumented)
 export type RequestId = Nominal<string, 'RequestId'>;
 
-// Warning: (ae-incompatible-release-tags) The symbol "RouteConfig" is marked as @public, but its signature references "ParseRouteParams" which is marked as @beta
-//
-// @public (undocumented)
+// @beta (undocumented)
 export interface RouteConfig<Path extends string, ParamsKeys extends ParseRouteParams<Path>, Params extends SchemaRecord<ParamsKeys>, Query extends SchemaRecord<string>, Payload extends SomeSchema<Json>, Response extends SomeSchema<Json>> {
-    // Warning: (ae-incompatible-release-tags) The symbol "handler" is marked as @public, but its signature references "TypeOfWebRequest" which is marked as @beta
-    // Warning: (ae-incompatible-release-tags) The symbol "handler" is marked as @public, but its signature references "TypeOfWebRequestToolkit" which is marked as @beta
     handler(request: TypeOfWebRequest<Path, TypeOfRecord<Params>, TypeOfRecord<Query>, Pretty<TypeOf<Payload>>>, toolkit: TypeOfWebRequestToolkit): MaybeAsync<TypeOf<Response>>;
-    // Warning: (ae-incompatible-release-tags) The symbol "method" is marked as @public, but its signature references "HttpMethod" which is marked as @beta
-    //
     // (undocumented)
     readonly method: HttpMethod;
     // (undocumented)
@@ -196,6 +192,26 @@ export interface RouteConfig<Path extends string, ParamsKeys extends ParseRouteP
 
 // @beta (undocumented)
 export type ServerId = Nominal<string, 'ServerId'>;
+
+// @beta (undocumented)
+export interface SetCookieOptions {
+    // (undocumented)
+    readonly domain?: string;
+    // (undocumented)
+    readonly encrypted?: boolean;
+    // (undocumented)
+    readonly expires?: Date;
+    // (undocumented)
+    readonly httpOnly?: boolean;
+    // (undocumented)
+    readonly maxAge?: number;
+    // (undocumented)
+    readonly path?: string;
+    // (undocumented)
+    readonly sameSite?: boolean | 'lax' | 'strict' | 'none';
+    // (undocumented)
+    readonly secure?: boolean;
+}
 
 // @beta
 export interface StatusError {
@@ -314,7 +330,6 @@ export interface TypeOfWebServer {
 // @beta (undocumented)
 export interface TypeOfWebServerMeta {
 }
-
 
 // (No @packageDocumentation comment for this package)
 

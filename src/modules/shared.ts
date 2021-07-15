@@ -127,6 +127,9 @@ export interface TypeOfWebRequestToolkit {
   setHeader(headerName: string, value: string): MaybeAsync<void>;
 }
 
+/**
+ * @beta
+ */
 export interface SetCookieOptions {
   readonly maxAge?: number;
   readonly encrypted?: boolean;
@@ -244,7 +247,6 @@ export interface TypeOfWebResponse {
    * ```ts
    * app.events.on(':afterResponse', (response) => {
    *   const elapsed = response.timestamp - response.request.timestamp;
-   *
    *   console.info(`The server has responded in:`, elapsed);
    * });
    * ```
@@ -278,6 +280,9 @@ export interface EventBus {
   readonly off: <Name extends keyof TypeOfWebEvents>(name: Name, cb: Callback<TypeOfWebEvents[Name]>) => void;
 }
 
+/**
+ * @beta
+ */
 export interface RouteConfig<
   Path extends string,
   ParamsKeys extends ParseRouteParams<Path>,

@@ -41,3 +41,7 @@ a {
   // tablet 55rem - 70rem;
   // desktop 70 rem - Infinity;
 }
+
+:target {
+  background-color: gold;
+}

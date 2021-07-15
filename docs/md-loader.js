@@ -1,23 +1,53 @@
+// @ts-check
 const GrayMatter = require('gray-matter');
+const Unified = require('unified');
+const RemarkParse = require('remark-parse');
+const RemarkRehype = require('remark-rehype');
+const RehypeStringify = require('rehype-stringify');
+const RehypeRaw = require('rehype-raw');
 
-// makes mdx in next.js suck less by injecting necessary exports so that
-// the docs are still readable on github
-// (Shamelessly stolen from React Query docs)
-// (Which was shamelessly stolen from Expo.io docs)
-// @see https://github.com/tannerlinsley/react-query/blob/16b7d290c70639b627d9ada32951d211eac3adc3/docs/src/lib/docs/md-loader.js
-// @see https://github.com/expo/expo/blob/303cb7b689603223401c091c6a2e1e01f182d355/docs/common/md-loader.js
+/**
+ * @typedef {{remarkPlugins: import('unified').PluggableList, rehypePlugins: import('unified').PluggableList}} MdLoaderOptions
+ */
 
-module.exports = function addLayoutToMdx(source) {
+/**
+ * @param {string} source
+ * @param {MdLoaderOptions} options
+ * @returns {import('vfile').VFile}
+ */
+function toHtmlString(source, options) {
+  const processor = Unified()
+    .use(RemarkParse)
+    .use(options.remarkPlugins)
+    .use(RemarkRehype, { allowDangerousHtml: true })
+    .use(RehypeRaw)
+    .use(options.rehypePlugins)
+    .use(RehypeStringify);
+
+  return processor.processSync(source);
+}
+
+/**
+ * @type {import('webpack').LoaderDefinitionFunction<MdLoaderOptions>}
+ * @this {import('webpack').LoaderContext<MdLoaderOptions>}
+ */
+module.exports = function loadMarkdownWithHtml(source, sourceMap, additionalData) {
   const callback = this.async();
 
   const { content, data } = GrayMatter(source);
-  const code =
-    `import { Layout } from '/src/components/Layout';
+
+  const html = toHtmlString(content, this.getOptions()).contents;
+
+  const code = `
+import { ReferenceLayout } from '/src/components/Layout';
 export const meta = ${JSON.stringify(data)};
-export default ({ children, ...props }) => (
-  <Layout meta={meta} {...props}>{children}</Layout>
+const Page = ({ children, ...props }) => (
+  <ReferenceLayout meta={meta} {...props}><div dangerouslySetInnerHTML={{__html: ${JSON.stringify(
+    html,
+  )} }} /></ReferenceLayout>
 );
-` + content.replace(/<!-- (.*?) -->/g, '');
+export default Page;
+`.trim();
 
   return callback(null, code);
 };

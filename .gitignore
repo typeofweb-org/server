@@ -11,7 +11,6 @@ temp
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-docs/src/pages/reference/
 # next.js
 docs/.next/
 docs/out/
