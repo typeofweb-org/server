@@ -6,7 +6,7 @@ type AccordionProps = {
   isActive: boolean;
   sections?: string[];
 };
-const Accordion = memo<AccordionProps>(({ heading, isActive, sections }) => {
+export const Accordion = memo<AccordionProps>(({ heading, isActive, sections }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
   const hasSections = sections && sections.length > 0;
   const toggleExpanded = useCallback(() => setExpanded((prev) => !prev), []);
@@ -37,5 +37,3 @@ const Accordion = memo<AccordionProps>(({ heading, isActive, sections }) => {
   );
 });
 Accordion.displayName = 'Accordion';
-
-export { Accordion };

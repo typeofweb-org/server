@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Accordion } from '../Accordion/Accordion';
 import styles from './Reference.module.scss';
 
-type ReferenceType = {
+export type ReferenceType = {
   heading: string;
   sections?: string[];
 }[];
@@ -12,7 +12,7 @@ type ReferenceProps = {
   menuOpened: boolean;
 };
 
-const Reference = memo<ReferenceProps>(({ reference, menuOpened }) => (
+export const Reference = memo<ReferenceProps>(({ reference, menuOpened }) => (
   <section className={`${styles.reference} ${menuOpened ? styles.referenceOpened : ''}`}>
     {reference.map(({ heading, sections }) => (
       // isActive should be derived from the current url
@@ -20,6 +20,3 @@ const Reference = memo<ReferenceProps>(({ reference, menuOpened }) => (
     ))}
   </section>
 ));
-
-export { Reference };
-export type { ReferenceType };

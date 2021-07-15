@@ -6,7 +6,7 @@ type HeaderProps = {
   toggleMenuOpened: () => void;
 };
 
-const Header = memo<HeaderProps>(({ toggleMenuOpened }) => {
+export const Header = memo<HeaderProps>(({ toggleMenuOpened }) => {
   return (
     <header className={styles.header}>
       <button className={styles.toggleButton} onClick={toggleMenuOpened}>
@@ -35,5 +35,3 @@ const Header = memo<HeaderProps>(({ toggleMenuOpened }) => {
     </header>
   );
 });
-
-export { Header };

@@ -20,7 +20,7 @@
   color: var(--gray-900);
   font-weight: 600;
   text-transform: uppercase;
-  transition: var(--transition);
+  transition: 300ms color ease-in;
 
   &Active {
     color: var(--active);

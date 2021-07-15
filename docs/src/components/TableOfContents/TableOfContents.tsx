@@ -5,7 +5,7 @@ type TableOfContentsProps = {
   headings: string[];
   activeHeading: string;
 };
-const TableOfContents = memo<TableOfContentsProps>(({ headings, activeHeading }) => {
+export const TableOfContents = memo<TableOfContentsProps>(({ headings, activeHeading }) => {
   return (
     <section className={styles.tableOfContentsWrapper}>
       <ol className={styles.list}>
@@ -19,5 +19,3 @@ const TableOfContents = memo<TableOfContentsProps>(({ headings, activeHeading })
   );
 });
 TableOfContents.displayName = 'TableOfContents';
-
-export { TableOfContents };

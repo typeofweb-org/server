@@ -7,7 +7,7 @@
   padding: 1.25rem;
   padding-top: calc(2rem + var(--header-height));
   transform: translateX(-100%);
-  transition: var(--transition);
+  transition: 200ms transform ease-in;
 
   &Opened {
     transform: translateX(0);
