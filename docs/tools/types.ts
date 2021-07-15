@@ -5,6 +5,12 @@ export type Context = {
   apiItem: ApiItem;
 };
 
+export interface FrontmatterMeta {
+  fileDestination?: string | null;
+  releaseTag?: string | null;
+  title?: string | null;
+}
+
 export enum ApiItemKind {
   CallSignature = 'CallSignature',
   Class = 'Class',

@@ -46,8 +46,9 @@ export function th(c: Html) {
   return `<th>${toString(c)}</th>`;
 }
 
-export function tr(c: Html) {
-  return `<tr>${toString(c)}</tr>`;
+export function tr(c: Html, attributes = '') {
+  attributes = attributes ? ' ' + attributes.trim() : attributes;
+  return `<tr${attributes}>${toString(c)}</tr>`;
 }
 
 export function td(c: Html) {
@@ -60,6 +61,11 @@ export function p(c: Html) {
 
 export function div(c: Html) {
   return `<div>${toString(c)}</div>`;
+}
+
+export function h3(c: Html, attributes = '') {
+  attributes = attributes ? ' ' + attributes.trim() : attributes;
+  return `<h3${attributes}>${toString(c)}</h3>`;
 }
 
 export function getHtmlEscapedText(text: string) {

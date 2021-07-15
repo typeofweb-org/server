@@ -8,25 +8,22 @@ const Path = require('path');
 const remarkPlugins = [
   require('remark-gfm'),
   require('remark-frontmatter'),
-  require('remark-slug'),
-  [
-    require('remark-autolink-headings'),
-    {
-      behavior: 'append',
-      linkProperties: {
-        class: ['anchor'],
-        title: 'Direct link to heading',
-      },
-    },
-  ],
-  require('remark-emoji'),
-  require('remark-images'),
-  [require('remark-github'), { repository: 'https://github.com/typeofweb/server' }],
-  require('remark-unwrap-images'),
-  [require('remark-prism'), { plugins: ['inline-color'] }],
+  // require('remark-slug'),
+  // require('remark-autolink-headings'),
+  // require('remark-emoji'),
+  // require('remark-images'),
+  [require('remark-github'), { repository: 'typeofweb/server' }],
+  // require('remark-unwrap-images'),
+  // [require('remark-prism'), { plugins: ['inline-color'] }],
+  // require('remark-toc'),
 ];
 
-const rehypePlugins = [];
+const rehypePlugins = [
+  require('rehype-slug'),
+  require('rehype-autolink-headings'),
+  require('@jsdevtools/rehype-toc'),
+  require('@mapbox/rehype-prism'),
+];
 
 /**
  * @type {Partial<import('next/dist/next-server/server/config-shared').NextConfig>}
@@ -36,7 +33,16 @@ const config = {
   webpack: (config, { dev, isServer, ...options }) => {
     config.module.rules.push({
       test: /.md$/,
-      use: [options.defaultLoaders.babel, { loader: Path.join(__dirname, './md-loader'), options: { remarkPlugins } }],
+      use: [
+        options.defaultLoaders.babel,
+        {
+          loader: Path.join(__dirname, './md-loader'),
+          options: {
+            remarkPlugins,
+            rehypePlugins,
+          },
+        },
+      ],
     });
 
     config.module.rules.push({

@@ -1,27 +1,30 @@
-import { MDXProvider } from '@mdx-js/react';
 import type { PropsWithChildren } from 'react';
 import { memo } from 'react';
 import Head from 'next/head';
+import { FrontmatterMeta } from '../../tools/types';
 
 interface LayoutProps {
-  meta?: {
-    fileDestination?: string;
-    releaseTag?: string;
-    title?: string;
-  };
+  meta?: FrontmatterMeta;
 }
 
-export const Layout = memo<PropsWithChildren<LayoutProps>>(({ meta, children }) => {
+export const ReferenceLayout = memo<PropsWithChildren<LayoutProps>>(({ meta, children }) => {
+  const titleSuffix = meta?.title ? ` · ${meta.title}` : '';
   return (
     <>
-      <Head>{meta?.title && <title>{meta.title}</title>}</Head>
+      <Head><title>@typeofweb/server{titleSuffix}</title></Head>
       <article>
         {meta?.fileDestination && (
-          <a href={`https://github.com/typeofweb/server/tree/main/${meta.fileDestination}`}>Edit this file</a>
+          <a
+            href={`https://github.com/typeofweb/server/edit/main/${meta.fileDestination}`}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Edit this file
+          </a>
         )}
-        <MDXProvider components={{}}>{children}</MDXProvider>
+        {children}
       </article>
     </>
   );
 });
-Layout.displayName = 'Layout';
+ReferenceLayout.displayName = 'Layout';

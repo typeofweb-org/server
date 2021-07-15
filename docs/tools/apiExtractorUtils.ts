@@ -44,8 +44,8 @@ import { Node, Parent, Literal } from 'unist';
 
 import Path from 'path';
 
-import { ApiItemKind, Context } from './types';
-import { getTSBlock, getTSBlockInHtml, isEmptyOrWhitespace, printTsDoc } from './tsdoc';
+import { ApiItemKind, Context, FrontmatterMeta } from './types';
+import { findReferenceTo, getTSBlock, getTSBlockInHtml, isEmptyOrWhitespace, printTsDoc } from './tsdoc';
 import { rimraf, getFilePath, getHashLink, referenceToLink, getFileUrl } from './files';
 import { StandardTags } from '@microsoft/tsdoc';
 
@@ -103,11 +103,13 @@ async function printIndexPage(apiModel: ApiModel, apiItem: ApiPackage) {
 
   await save(main, indexPage);
 
-  await Promise.all(typesToPrint.map(async (m) => save(m, await printTypePage({ apiItem: m, apiModel }))));
-  await Promise.all(functionsToPrint.map(async (m) => save(m, await printTypePage({ apiItem: m, apiModel }))));
-  await Promise.all(enumsToPrint.map(async (m) => save(m, await printTypePage({ apiItem: m, apiModel }))));
-  await Promise.all(classesToPrint.map(async (m) => save(m, await printTypePage({ apiItem: m, apiModel }))));
-  await Promise.all(otherToPrint.map(async (m) => save(m, await printTypePage({ apiItem: m, apiModel }))));
+  await Promise.all([
+    ...typesToPrint.map(async (m) => save(m, await printTypePage({ apiItem: m, apiModel }))),
+    ...functionsToPrint.map(async (m) => save(m, await printTypePage({ apiItem: m, apiModel }))),
+    ...enumsToPrint.map(async (m) => save(m, await printTypePage({ apiItem: m, apiModel }))),
+    ...classesToPrint.map(async (m) => save(m, await printTypePage({ apiItem: m, apiModel }))),
+    ...otherToPrint.map(async (m) => save(m, await printTypePage({ apiItem: m, apiModel }))),
+  ]);
 }
 
 async function printTypePage({ apiItem, apiModel }: Context) {
@@ -148,30 +150,30 @@ async function printTypePage({ apiItem, apiModel }: Context) {
 
     const releaseTag = ApiReleaseTagMixin.isBaseClassOf(m) ? [h.strong(ReleaseTag[m.releaseTag])] : [];
 
-    return h.tr([
-      h.td([
-        h.anchor(getHashLink(m)),
-        h.code(
-          getDisplayName({ apiItem: m, apiModel }, m, {
-            includeParams: false,
-            includeParamTypes: false,
-            includeReturnType: false,
-            includeReleaseTag: false,
-          }),
-        ),
-      ]),
-      h.td(type),
-      h.td([
-        description.length > 0 && h.div(description),
-        memberExamples.length > 0 && h.div(memberExamples),
-        releaseTag.length > 0 && h.div(releaseTag),
-        memberDefaultValues.length > 0 && h.div(memberDefaultValues),
-      ]),
-    ]);
+    const displayName = getDisplayName({ apiItem: m, apiModel }, m, {
+      includeParams: false,
+      includeParamTypes: false,
+      includeReturnType: false,
+      includeReleaseTag: false,
+    });
+
+    return h.tr(
+      [
+        h.td([h.h3(displayName, `aria-hidden="true" tabindex="-1" hidden`), h.code(displayName)]),
+        h.td(type),
+        h.td([
+          description.length > 0 && h.div(description),
+          memberExamples.length > 0 && h.div(memberExamples),
+          releaseTag.length > 0 && h.div(releaseTag),
+          memberDefaultValues.length > 0 && h.div(memberDefaultValues),
+        ]),
+      ],
+      `id="${getHashLink(m)}"`,
+    );
   });
 
   return root([
-    frontmatter(apiItem, fileDestination),
+    frontmatter({ apiItem, apiModel }, apiItem, fileDestination),
     heading(
       1,
       text(
@@ -187,7 +189,7 @@ async function printTypePage({ apiItem, apiModel }: Context) {
     ...(tbody.length > 0
       ? [
           heading(2, text('Signatures')),
-          html(h.table([h.thead(h.tr([h.td('Property'), h.td('Type'), h.td('Description')])), h.tbody(tbody)])),
+          html(h.table([h.thead(h.tr([h.th('Property'), h.th('Type'), h.th('Description')])), h.tbody(tbody)])),
         ]
       : []),
     ...(!isEmptyOrWhitespace(examples) ? [heading(2, text('Examples')), ...examples] : []),
@@ -308,7 +310,7 @@ function frontmatter(
     line: number;
   } | null,
 ): Literal {
-  const value = Object.entries({
+  const meta: FrontmatterMeta = {
     releaseTag: ApiReleaseTagMixin.isBaseClassOf(apiItem) ? ReleaseTag[apiItem.releaseTag] : null,
     ...(fileDestination && { fileDestination: `${fileDestination.path.replace(/^\//, '')}#L${fileDestination.line}` }),
     title: getDisplayName(context, apiItem, {
@@ -317,69 +319,11 @@ function frontmatter(
       includeReleaseTag: true,
       includeReturnType: false,
     }),
-  })
+  };
+  const value = Object.entries(meta)
     .map(([key, val]) => `${key}: ${val}`)
     .join('\n');
   return { type: 'yaml', value };
 }
 
 run();
-
-async function findReferenceTo(excerpt: string) {
-  // api-extractor emits _some_ types as `export declare `
-  excerpt = excerpt.replace('export declare ', 'export ');
-
-  // remove semicolon from functions without body
-  excerpt = excerpt.endsWith(';') ? excerpt.slice(0, -1) : excerpt;
-
-  // try formatting excerpt with prettier by adding an empty block to it
-  try {
-    excerpt = Prettier.format(excerpt + '{}', { ...prettierrc, parser: 'typescript' });
-  } catch {
-    excerpt = Prettier.format(excerpt, { ...prettierrc, parser: 'typescript' });
-  }
-
-  // get first line
-  [excerpt] = excerpt.split('\n');
-  excerpt = excerpt.trim();
-
-  // remove empty block added a few lines above
-  excerpt = excerpt.endsWith('{}') ? excerpt.slice(0, -2).trim() : excerpt;
-
-  // api-extractor incorrently emits empty return type as as `: {`
-  excerpt = excerpt.endsWith(': {') ? excerpt.slice(0, -3).trim() : excerpt;
-
-  const basePath = Path.join(process.cwd(), '..');
-  const match = await searchInDir(excerpt, Path.join(basePath, 'src'));
-  if (match) {
-    return {
-      ...match,
-      path: match.path.replace(basePath, ''),
-    };
-  }
-  return null;
-}
-
-async function searchInDir(excerpt: string, path = ''): Promise<{ line: number; path: string } | null> {
-  const directory = await Fs.opendir(path);
-
-  for await (const dirent of directory) {
-    const currentPath = Path.join(path, dirent.name);
-
-    if (dirent.isFile()) {
-      const file = await Fs.readFile(currentPath, 'utf-8');
-      const index = Prettier.format(file, { ...prettierrc, parser: 'typescript' })
-        .split('\n')
-        .findIndex((line) => line.includes(excerpt));
-      if (index > -1) {
-        return { line: index + 1, path: currentPath };
-      }
-    } else if (dirent.isDirectory()) {
-      const match = await searchInDir(excerpt, currentPath);
-      if (match) {
-        return match;
-      }
-    }
-  }
-  return null;
-}

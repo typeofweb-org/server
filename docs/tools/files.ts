@@ -6,6 +6,7 @@ import { UNSAFE_FILENAME, BASE_PATH, OUTDIR } from './constants';
 import Path from 'path';
 import Fs from 'fs/promises';
 import { last } from './utils';
+import GithubSlugger from 'github-slugger';
 
 export function referenceToLink(
   context: Context,
@@ -68,7 +69,8 @@ export function getApiItemName(apiItem: ApiItem): string {
 }
 
 export function getHashLink(apiItem: ApiItem): string {
-  return getSafeFilename(apiItem.displayName);
+  const slugger = new GithubSlugger();
+  return slugger.slug(apiItem.displayName);
 }
 
 export function getFileUrl(apiItem: ApiItem) {

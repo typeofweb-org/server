@@ -1,3 +1,6 @@
+import Path from 'path';
+import Fs from 'fs/promises';
+import Prettier from 'prettier';
 import {
   DocBlock,
   DocBlockTag,
@@ -35,10 +38,14 @@ import { as } from './utils';
 import { referenceToLink } from './files';
 import { ApiDocumentedItem, ApiItem } from '@microsoft/api-extractor-model';
 import { toHtmlString } from './stringify';
+import { readFileSync } from 'fs';
+
+const prettierrc = JSON.parse(readFileSync(Path.join(process.cwd(), '..', '.prettierrc'), 'utf-8'));
 
 export function nodeIsParent(node: Node): node is Parent {
   return 'children' in node;
 }
+
 export function nodeIsLiteral(node: Node): node is Literal {
   return 'value' in node;
 }
@@ -249,4 +256,76 @@ export function getTSBlockInHtml(
   const data = getTSBlock(context, { tagName, apiItem, getTitle });
 
   return data.map((markdown) => toHtmlString(markdown));
+}
+
+const readFileLines = (() => {
+  const map = new Map<string, string[]>();
+
+  return async function readFileLines(filePath: string) {
+    if (map.has(filePath)) {
+      return map.get(filePath)!;
+    }
+
+    const file = (await Fs.readFile(filePath, 'utf-8')).split('\n');
+    // we can skip this as all the files are already formatted
+    // const result = Prettier.format(file, { ...prettierrc, parser: 'typescript' });
+    map.set(filePath, file);
+    return file;
+  };
+})();
+
+export async function findReferenceTo(excerpt: string) {
+  // api-extractor emits _some_ types as `export declare `
+  excerpt = excerpt.replace('export declare ', 'export ');
+
+  // remove semicolon from functions without body
+  excerpt = excerpt.endsWith(';') ? excerpt.slice(0, -1) : excerpt;
+
+  // try formatting excerpt with prettier by adding an empty block to it
+  try {
+    excerpt = Prettier.format(excerpt + '{}', { ...prettierrc, parser: 'typescript' });
+  } catch {
+    excerpt = Prettier.format(excerpt, { ...prettierrc, parser: 'typescript' });
+  }
+
+  // get first line
+  [excerpt] = excerpt.split('\n');
+  excerpt = excerpt.trim();
+
+  // remove empty block added a few lines above
+  excerpt = excerpt.endsWith('{}') ? excerpt.slice(0, -2).trim() : excerpt;
+
+  // api-extractor incorrently emits empty return type as as `: {`
+  excerpt = excerpt.endsWith(': {') ? excerpt.slice(0, -3).trim() : excerpt;
+
+  const basePath = Path.join(process.cwd(), '..');
+  const match = await searchInDir(excerpt, Path.join(basePath, 'src'));
+  if (match) {
+    return {
+      ...match,
+      path: match.path.replace(basePath, ''),
+    };
+  }
+  return null;
+}
+
+async function searchInDir(excerpt: string, path = ''): Promise<{ line: number; path: string } | null> {
+  const directory = await Fs.opendir(path);
+
+  for await (const dirent of directory) {
+    const currentPath = Path.join(path, dirent.name);
+
+    if (dirent.isFile()) {
+      const index = (await readFileLines(currentPath)).findIndex((line) => line.includes(excerpt));
+      if (index > -1) {
+        return { line: index + 1, path: currentPath };
+      }
+    } else if (dirent.isDirectory()) {
+      const match = await searchInDir(excerpt, currentPath);
+      if (match) {
+        return match;
+      }
+    }
+  }
+  return null;
 }
