@@ -74,6 +74,6 @@ export class HttpError extends Error implements StatusError {
 /**
  * @beta
  */
-export const isStatusError = (err: unknown): err is StatusError => {
+export function isStatusError(err: unknown): err is StatusError {
   return typeof err === 'object' && !!err && 'statusCode' in err;
-};
+}

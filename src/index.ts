@@ -13,15 +13,18 @@ export type {
   CorsOrigin,
   CorsOriginFunction,
   EventBus,
+  RouteConfig,
+  SetCookieOptions,
   TypeOfWebApp,
   TypeOfWebRequest,
   TypeOfWebRequestToolkit,
   TypeOfWebResponse,
   TypeOfWebServer,
-  RouteConfig,
 } from './modules/shared';
 
 export type { TypeOfWebServerMeta, TypeOfWebRequestMeta, TypeOfWebEvents } from './modules/augment';
 
 export type { StatusError } from './utils/errors';
 export type { ServerId, RequestId } from './utils/uniqueId';
+
+export type { MaybeAsync } from '@typeofweb/utils';
