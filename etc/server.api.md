@@ -4,6 +4,8 @@
 
 ```ts
 
+/// <reference types="node" />
+
 import type { AnyAsyncFunction } from '@typeofweb/utils';
 import type { Callback } from '@typeofweb/utils';
 import type { DeepPartial } from '@typeofweb/utils';
@@ -328,7 +330,6 @@ export interface TypeOfWebServer {
 // @beta (undocumented)
 export interface TypeOfWebServerMeta {
 }
-
 
 // (No @packageDocumentation comment for this package)
 
