@@ -1,0 +1,69 @@
+.header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  padding: 1.35rem 1.25rem;
+  background-color: var(--nav-background);
+  min-height: var(--header-height);
+  z-index: 100;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+  @media screen and (min-width: 55rem) {
+    padding: 0;
+  }
+}
+
+.srOnly {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.toggleButton {
+  background-color: transparent;
+  border: none;
+  @media screen and (min-width: 55rem) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: var(--reference-width);
+  }
+}
+
+.menuIcon {
+  cursor: pointer;
+  filter: invert(100%);
+}
+
+.nav {
+  display: none;
+
+  @media screen and (min-width: 75rem) {
+    display: block;
+    width: 100%;
+    max-width: calc(100% - var(--reference-width) - var(--table-of-contents-width));
+    margin: 0 var(--table-of-contents-width) 0 auto;
+    background-color: var(--nav-background);
+  }
+}
+
+.navList {
+  display: flex;
+  justify-content: flex-end;
+  list-style: none;
+}
+
+.navItem {
+  padding: 0.25rem 1rem;
+}
+
+.navAnchor {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--white);
+}

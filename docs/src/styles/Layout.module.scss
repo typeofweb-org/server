@@ -1,0 +1,43 @@
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  display: flex;
+  flex-grow: 1;
+}
+
+.article {
+  flex-grow: 1;
+  padding: 2rem 1.25rem;
+  transition: 200ms padding ease-in;
+
+  &WithMenuOpened {
+    padding: 2rem 1.25rem 2rem calc(1.25rem + var(--reference-width));
+  }
+
+  @media screen and (min-width: 55rem) {
+    padding: 2rem 4rem;
+
+    &WithMenuOpened {
+      padding: 2rem 4rem 2rem calc(4rem + var(--reference-width));
+    }
+  }
+}
+
+.articleHeading {
+  color: var(--gray-900);
+  margin-top: 1.6rem;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.articleParagraph {
+  color: var(--gray-700);
+  margin: 0.35rem 0;
+  line-height: 1.65;
+}
