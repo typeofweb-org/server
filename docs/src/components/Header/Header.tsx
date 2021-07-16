@@ -35,3 +35,4 @@ export const Header = memo<HeaderProps>(({ toggleMenuOpened }) => {
     </header>
   );
 });
+Header.displayName = 'Header';

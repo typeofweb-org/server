@@ -69,7 +69,7 @@ export default function Layout() {
             debitis eos amet voluptatum vel officia enim veniam dolorem, reprehenderit cum quae maxime deleniti dolorum
             necessitatibus a nulla. Quae rerum corrupti ipsam?
           </p>
-          <h2 className={styles.articleHeading}>It's too late</h2>
+          <h2 className={styles.articleHeading}>It&apos;s too late</h2>
           <p className={styles.articleParagraph}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum atque labore, quos non veniam placeat ut eius
             nulla delectus dicta voluptatibus eveniet consequatur minima doloremque repudiandae numquam quod mollitia

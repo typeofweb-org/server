@@ -20,3 +20,4 @@ export const Reference = memo<ReferenceProps>(({ reference, menuOpened }) => (
     ))}
   </section>
 ));
+Reference.displayName = 'Reference';
