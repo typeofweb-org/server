@@ -1,4 +1,4 @@
-import BodyParser from 'body-parser';
+import { json, urlencoded } from 'body-parser';
 import Express from 'express';
 import Stoppable from 'stoppable';
 
@@ -7,7 +7,8 @@ import type { AppOptions } from './shared';
 export const initApp = () => {
   const app = Express();
 
-  app.use(BodyParser.json());
+  app.use(json());
+  app.use(urlencoded({ extended: true }));
   app.disable('x-powered-by');
 
   return app;
