@@ -9,7 +9,7 @@
   },
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
-  "types": "dist/server.d.ts",
+  "types": "dist/index.d.ts",
   "sideEffects": false,
   "repository": "git://github.com/typeofweb/server",
   "bugs": {
